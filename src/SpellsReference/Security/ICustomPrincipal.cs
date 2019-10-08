@@ -1,6 +1,8 @@
-﻿namespace SpellsReference.Security
+﻿using System.Security.Principal;
+
+namespace SpellsReference.Security
 {
-    public class ICustomPrincipal
+    public interface ICustomPrincipal : IPrincipal
     {
         int Id { get; }
         string Username { get; }

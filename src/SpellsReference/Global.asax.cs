@@ -6,6 +6,9 @@ using System.Web.Security;
 using System.Web.Http;
 using System.Security.Principal;
 using SpellsReference.Security;
+using Newtonsoft.Json.Serialization;
+using SpellsReference.Data.Repositories;
+using System.Threading;
 
 namespace SpellsReference
 {
@@ -14,10 +17,14 @@ namespace SpellsReference
         void Application_Start(object sender, EventArgs e)
         {
             AreaRegistration.RegisterAllAreas();
+            UnityConfig.RegisterComponents();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             RegisterGlobalFilters(GlobalFilters.Filters);
 
+            // Set up JSON formatting conventions
+            var jsonFormatter = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
+            jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
 
         void RegisterGlobalFilters(GlobalFilterCollection filters)
@@ -36,13 +43,13 @@ namespace SpellsReference
                 FormsAuthenticationTicket ticket = formsIdentity.Ticket;
                 CustomIdentity customIdentity = new CustomIdentity(ticket);
 
-                //var accountRepository = DependencyResolver.Current.GetService<IAccountRepository>();
-                //var userEntity = accountRepository.Get(customIdentity.Name);
+                var accountRepository = DependencyResolver.Current.GetService<IAccountRepository>();
+                var userEntity = accountRepository.Get(customIdentity.Name);
 
-                //CustomPrincipal customPrincipal = new CustomPrincipal(customIdentity, userEntity);
+                CustomPrincipal customPrincipal = new CustomPrincipal(customIdentity, userEntity);
 
-                //HttpContext.Current.User = customPrincipal;
-                //Thread.CurrentPrincipal = customPrincipal;
+                HttpContext.Current.User = customPrincipal;
+                Thread.CurrentPrincipal = customPrincipal;
             }
         }
     }
