@@ -7,7 +7,7 @@ namespace SpellsReference.Models
     {
         public Spell() { }
 
-        public Spell(string name, int level, string school, string castingTime, string range, 
+        public Spell(string name, int level, SchoolOfMagic school, string castingTime, string range, 
             bool verbal, bool somatic, string materials, string duration, string description)
         {
             Name = name;
@@ -28,7 +28,7 @@ namespace SpellsReference.Models
         [Required]
         public int Level { get; set; }
         [Required]
-        public string School { get; set; }
+        public SchoolOfMagic School { get; set; }
         [Required]
         public string CastingTime { get; set; }
         [Required]

@@ -7,7 +7,7 @@ namespace SpellsReference.Models
     {
         public Spellbook()
         {
-            List<Spell> spells = new List<Spell>();
+            List<Spell> Spells = new List<Spell>();
         }
 
         public Spellbook(string name)
@@ -20,7 +20,7 @@ namespace SpellsReference.Models
         [Required]
         public string Name { get; set; }
 
-        public List<Spell> spells { get; set; }
+        public List<Spell> Spells { get; set; }
 
         // addSpell()
 
