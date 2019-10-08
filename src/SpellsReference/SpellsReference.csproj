@@ -149,6 +149,9 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Data\Repositories\AccountRepository.cs" />
+    <Compile Include="Data\Repositories\IAccountRepository.cs" />
+    <Compile Include="Data\Repositories\IRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
