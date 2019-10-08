@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using SpellsReference.Models;
 
 namespace SpellsReference.Data.Repositories
 {
     public class AccountRepository : IAccountRepository
     {
+        private IContext context;
+
+        public AccountRepository(IContext context)
+        {
+            this.context = context;
+        }
+
         public int? Add(User entity)
         {
             throw new NotImplementedException();

@@ -142,6 +142,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\main.css" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -149,12 +150,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Data\Context.cs" />
+    <Compile Include="Data\DatabaseInitializer.cs" />
+    <Compile Include="Data\IContext.cs" />
     <Compile Include="Data\Repositories\AccountRepository.cs" />
     <Compile Include="Data\Repositories\IAccountRepository.cs" />
     <Compile Include="Data\Repositories\IRepository.cs" />
+    <Compile Include="Data\Repositories\ISpellRepository.cs" />
+    <Compile Include="Data\Repositories\SpellRepository.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Spell.cs" />
+    <Compile Include="Models\Spellbook.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\CustomIdentity.cs" />
@@ -164,6 +173,9 @@
   <ItemGroup>
     <Content Include="Views\web.config" />
     <Content Include="packages.config" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -173,7 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -186,7 +198,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>61211</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
