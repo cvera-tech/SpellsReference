@@ -4,7 +4,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace SpellsReference.Data
 {
-    public class Context : DbContext
+    public class Context : DbContext, IContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Spellbook> Spellbooks { get; set; }
