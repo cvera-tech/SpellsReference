@@ -1,21 +1,18 @@
 ﻿using SpellsReference.Data;
 using SpellsReference.Models;
-using SpellsReference.Repositories;
-using System;
+using SpellsReference.Data.Repositories;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SpellsReference.Controllers
 {
     public class HomeController : Controller
     {
-        private Context context;
+        private IContext context;
 
-        public HomeController()
+        public HomeController(IContext context)
         {
-            context = new Context();
+            this.context = context;
         }
 
         public ActionResult Index()
