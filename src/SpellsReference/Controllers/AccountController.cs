@@ -47,5 +47,12 @@ namespace SpellsReference.Controllers
             FormsAuthentication.SignOut();
             return RedirectToAction("Index", "Home");
         }
+
+        [AllowAnonymous]
+        public ActionResult Register()
+        {
+            var viewModel = new RegisterViewModel();
+            return View(viewModel);
+        }
     }
 }

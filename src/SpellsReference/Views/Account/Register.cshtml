@@ -1,0 +1,41 @@
+﻿@model SpellsReference.Models.ViewModels.RegisterViewModel
+
+@{
+    ViewBag.Title = "Register";
+}
+
+<h2>Register</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary()
+
+    <fieldset>
+        @Html.LabelFor(model => model.FirstName)
+        @Html.TextBoxFor(model => model.FirstName)
+        @Html.ValidationMessageFor(model => model.FirstName)
+    </fieldset>
+
+    <fieldset>
+        @Html.LabelFor(model => model.LastName)
+        @Html.TextBoxFor(model => model.LastName)
+        @Html.ValidationMessageFor(model => model.LastName)
+    </fieldset>
+
+    <fieldset>
+        @Html.LabelFor(model => model.EmailAddress)
+        @Html.TextBoxFor(model => model.EmailAddress)
+        @Html.ValidationMessageFor(model => model.EmailAddress)
+    </fieldset>
+
+    <fieldset>
+        @Html.LabelFor(model => model.Password)
+        @Html.PasswordFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+    </fieldset>
+
+    <input type="submit" value="Sign up" />
+    @Html.ActionLink("Cancel", "Index", "Home");
+}
