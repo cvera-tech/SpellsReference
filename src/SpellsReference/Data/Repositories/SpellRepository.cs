@@ -28,5 +28,19 @@ namespace SpellsReference.Data.Repositories
         {
             return _context.Spells.ToList();
         }
+
+        public bool Update(Spell entity)
+        {
+            try
+            {
+                _context.UpdateEntity(entity);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 }
