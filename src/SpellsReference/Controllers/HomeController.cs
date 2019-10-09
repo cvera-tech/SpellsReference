@@ -15,6 +15,7 @@ namespace SpellsReference.Controllers
             this.context = context;
         }
 
+        [AllowAnonymous]
         public ActionResult Index()
         {
             SpellRepository spellRepo = new SpellRepository(context);

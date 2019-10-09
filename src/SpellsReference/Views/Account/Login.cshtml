@@ -10,6 +10,8 @@
 {
     @Html.AntiForgeryToken()
 
+    @Html.ValidationSummary()
+
     <fieldset>
         @Html.LabelFor(model => model.EmailAddress)
         @Html.TextBoxFor(model => model.EmailAddress)
