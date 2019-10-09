@@ -1,7 +1,7 @@
 ﻿using SpellsReference.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System;
+using System.Data.Entity;
 
 namespace SpellsReference.Data.Repositories
 {
@@ -16,7 +16,16 @@ namespace SpellsReference.Data.Repositories
 
         public int? Add(Spell entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Spells.Add(entity);
+                _context.SaveChanges();
+                return entity.Id;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public Spell Get(int id)
@@ -41,6 +50,14 @@ namespace SpellsReference.Data.Repositories
             {
                 return false;
             }
+        }
+
+        public bool Delete(int id)
+        {
+            var goner = new Spell() { Id = id };
+            _context.Entry(goner).State = EntityState.Deleted;
+            _context.SaveChanges();
+            return true;
         }
     }
 }

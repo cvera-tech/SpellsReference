@@ -1,0 +1,23 @@
+﻿@model SpellsReference.Models.ViewModels.SpellViewModel
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<p>Are you sure you want to delete @Model.Name (Level @Model.Level)?</p>
+
+<p>It will be removed as a record from these spellbooks.</p>
+
+@using (Html.BeginForm("Delete", "Spell", FormMethod.Post, new { id = "DeleteSpell" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        <button id="DeleteSpellButton" type="submit" class="btn btn-danger btn-lg">Submit</button>
+        @Html.ActionLink("Cancel", "Select", "Spell", new { id = Model.Id }, new { @class = "btn btn-outline-secondary btn-lg" })
+    </div>
+}
+

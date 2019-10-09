@@ -1,4 +1,5 @@
-﻿using SpellsReference.Data;
+﻿using AutoMapper;
+using SpellsReference.Data;
 using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
 using SpellsReference.Models.ViewModels;
@@ -34,32 +35,71 @@ namespace SpellsReference.Controllers
         {
             Spell spell = _spellRepo.Get(id);
 
-            return View(spell);
+            // Maybe eventually set up Mapper DI.
+            //var mapper = new Mapper(config);
+            //SpellViewModel viewModel = mapper.Map<SpellViewModel>(spell);
+
+            var viewModel = new SpellViewModel();
+            viewModel.Id = spell.Id;
+            viewModel.Name = spell.Name;
+            viewModel.Level = spell.Level;
+            viewModel.School = spell.School;
+            viewModel.CastingTime = spell.CastingTime;
+            viewModel.Range = spell.Range;
+            viewModel.Verbal = spell.Verbal;
+            viewModel.Somatic = spell.Somatic;
+            viewModel.Materials = spell.Materials;
+            viewModel.Ritual = spell.Ritual;
+            viewModel.Description = spell.Description; 
+
+            return View(viewModel);
         }
 
-
-
-        // Definately [Authorize].
-        [AllowAnonymous]
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new SpellViewModel();
+            return View(viewModel);
         }
 
-        [AllowAnonymous]
         [HttpPost]
-        public ActionResult Create(Spell spell)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(SpellViewModel viewModel)
         {
-            // TODO
+            if (ModelState.IsValid)
+            {
+                var spell = new Spell()
+                {
+                    Name = viewModel.Name,
+                    Level = viewModel.Level,
+                    School = viewModel.School,
+                    CastingTime = viewModel.CastingTime,
+                    Range = viewModel.Range,
+                    Verbal = viewModel.Verbal,
+                    Somatic = viewModel.Somatic,
+                    Materials = viewModel.Materials,
+                    Duration = viewModel.Duration,
+                    Ritual = viewModel.Ritual,
+                    Description = viewModel.Description
+                };
 
-            return View(spell);
+                var success = _spellRepo.Add(spell);
+                if (success.HasValue)
+                {
+                    return RedirectToAction("Index", "Spell");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Unable to add spell.");
+                }
+            }
+
+            return View(viewModel);
         }
-
 
         public ActionResult Edit(int id)
         {
             var spell = _spellRepo.Get(id);
-            var viewModel = new EditSpellViewModel()
+            var viewModel = new SpellViewModel()
             {
                 Name = spell.Name,
                 Level = spell.Level,
@@ -78,7 +118,7 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, EditSpellViewModel viewModel)
+        public ActionResult Edit(int id, SpellViewModel viewModel)
         {
             var spell = new Spell()
             {
@@ -108,5 +148,32 @@ namespace SpellsReference.Controllers
             }
         }
 
+        public ActionResult Delete(int id)
+        {
+            Spell spell = _spellRepo.Get(id);
+
+            var viewModel = new SpellViewModel();
+            viewModel.Id = spell.Id;
+            viewModel.Name = spell.Name;
+            viewModel.Level = spell.Level;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id, SpellViewModel viewModel)
+        {
+            bool success = _spellRepo.Delete(id);
+
+            if (success)
+            {
+                return RedirectToAction("Index", "Spell");
+            } 
+            else
+            {
+                ModelState.AddModelError("", "Unable to delete Spell");
+                return View(viewModel);
+            }
+        }
     }
 }

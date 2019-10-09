@@ -11,6 +11,9 @@ using Newtonsoft.Json.Serialization;
 using SpellsReference.Data;
 using SpellsReference.Data.Repositories;
 using System.Threading;
+using AutoMapper;
+using SpellsReference.Models;
+using SpellsReference.Models.ViewModels;
 
 namespace SpellsReference
 {
@@ -29,6 +32,9 @@ namespace SpellsReference
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
             Database.SetInitializer(new DatabaseInitializer());
+
+            var config = new MapperConfiguration(cfg => cfg.CreateMap<Spell, SpellViewModel>());
+            var mapper = config.CreateMapper();
         }
 
         void RegisterGlobalFilters(GlobalFilterCollection filters)

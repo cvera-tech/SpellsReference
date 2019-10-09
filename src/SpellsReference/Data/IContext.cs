@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using SpellsReference.Models;
 using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure;
 
 namespace SpellsReference.Data
 {
@@ -14,5 +15,6 @@ namespace SpellsReference.Data
         Task<int> SaveChangesAsync();
         void UpdateEntity<TEntityType>(int id, params object[] parameters);
         void UpdateEntity<TEntityType>(TEntityType entity) where TEntityType : class;
+        DbEntityEntry Entry(object entity);
     }
 }

@@ -1,11 +1,14 @@
-﻿@model SpellsReference.Models.Spell
+﻿@model SpellsReference.Models.ViewModels.SpellViewModel
 
 @{
     ViewBag.Title = "Select Spell";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@ViewBag.Title</h2>
+<div class="mt-2">
+    @Html.ActionLink("Delete", "Delete", "Spell", new { id = Model.Id }, new { @class = "btn btn-danger btn-lg float-right" })
+    <h2>@ViewBag.Title</h2>
+</div>
 
 @using (Html.BeginForm("Select", "Spell", FormMethod.Post, new { id = "SelectSpell" }))
 {
@@ -79,3 +82,4 @@
         @Html.ActionLink("Cancel", "Index", "Spell", null, new { @class = "btn btn-secondary btn-lg" })
     </div>
 }
+
