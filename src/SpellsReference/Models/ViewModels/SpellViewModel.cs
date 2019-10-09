@@ -4,7 +4,6 @@ namespace SpellsReference.Models
 {
     public class SpellViewModel
     {
-        public int Id { get; set; }
         [Required]
         public string Name { get; set; }
         [Required]

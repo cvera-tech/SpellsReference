@@ -16,7 +16,16 @@ namespace SpellsReference.Data.Repositories
 
         public int? Add(Spell entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Spells.Add(entity);
+                _context.SaveChanges();
+                return entity.Id;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public Spell Get(int id)

@@ -7,9 +7,13 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Select", "Spell", FormMethod.Post, new { id = "SelectSpell" }))
+@using (Html.BeginForm("Create", "Spell", FormMethod.Post, new { id = "SelectSpell" }))
 {
+    @Html.AntiForgeryToken()
+
     @Html.ValidationSummary()
+
+
 
     <div class="form-group row">
         <div class="col-sm-3">

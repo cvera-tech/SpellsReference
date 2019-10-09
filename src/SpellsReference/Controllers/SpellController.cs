@@ -6,20 +6,21 @@ using System.Web.Mvc;
 
 namespace SpellsReference.Controllers
 {
-    [Authorize]
     public class SpellController : Controller
     {
-        private ISpellRepository repository;
+        private IContext _context;
+        private ISpellRepository _spellRepo;
 
-        public SpellController(ISpellRepository repository)
+        public SpellController(IContext context, ISpellRepository spellRepo)
         {
-            this.repository = repository;
+            _context = context;
+            _spellRepo = spellRepo;
         }
 
         [AllowAnonymous]
         public ActionResult Index()
         {
-            List<Spell> spells = repository.List();
+            List<Spell> spells = _spellRepo.List();
 
             return View(spells);
         }
@@ -30,7 +31,7 @@ namespace SpellsReference.Controllers
         [AllowAnonymous]
         public ActionResult Select(int id)
         {
-            Spell spell = repository.Get(id);
+            Spell spell = _spellRepo.Get(id);
 
             return View(spell);
         }
@@ -62,10 +63,10 @@ namespace SpellsReference.Controllers
                     Description = viewModel.Description
                 };
 
-                var success = repository.Add(spell);
+                var success = _spellRepo.Add(spell);
                 if (success.HasValue)
                 {
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Spell");
                 }
                 else
                 {
