@@ -1,0 +1,44 @@
+﻿@model List<SpellsReference.Models.Spell>
+
+@{
+    ViewBag.Title = "Spell Index Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewBag.Title</h1>
+
+<table class="table table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Level</th>
+            <th>School</th>
+            <th>Casting Time</th>
+            <th>Range</th>
+            <th>Verbal</th>
+            <th>Somatic</th>
+            <th>Materials</th>
+            <th>Duration</th>
+            <th>Ritual</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var spell in Model)
+        {
+            <tr>
+                <td>@spell.Name</td>
+                <td>@spell.Level</td>
+                <td>@spell.School</td>
+                <td>@spell.CastingTime</td>
+                <td>@spell.Range</td>
+                <td>@spell.Verbal</td>
+                <td>@spell.Somatic</td>
+                <td>@spell.Materials</td>
+                <td>@spell.Duration</td>
+                <td>@spell.Ritual</td>
+                <td>@spell.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>
