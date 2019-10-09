@@ -1,0 +1,27 @@
+﻿@model SpellsReference.Models.ViewModels.LoginViewModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<h2>Login</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <fieldset>
+        @Html.LabelFor(model => model.EmailAddress)
+        @Html.TextBoxFor(model => model.EmailAddress)
+        @Html.ValidationMessageFor(model => model.EmailAddress)
+    </fieldset>
+
+    <fieldset>
+        @Html.LabelFor(model => model.Password)
+        @Html.PasswordFor(model => model.Password)
+        @Html.ValidationMessageFor(model => model.Password)
+    </fieldset>
+
+    <input type="submit" value="Log in"/>
+    @Html.ActionLink("Cancel", "Index", "Home");
+}

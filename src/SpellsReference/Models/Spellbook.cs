@@ -7,7 +7,7 @@ namespace SpellsReference.Models
     {
         public Spellbook()
         {
-            List<Spell> Spells = new List<Spell>();
+            Spells = new List<Spell>();
         }
 
         public Spellbook(string name)
