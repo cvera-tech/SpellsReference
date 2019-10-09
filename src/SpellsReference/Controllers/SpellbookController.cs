@@ -49,10 +49,13 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddSpell(int id, int spellId)
+        public ActionResult AddSpell(int id, int spellId, AddSpellToSpellbookViewModel viewModel)
         {
-
-            return RedirectToAction("Select", "Spellbook", routeValues: new { id = id });
+            if (_spellbookRepo.AddSpellToSpellbook(id, spellId))
+            {
+                return RedirectToAction("Select", "Spellbook", routeValues: new { id = id });
+            }
+            return View(viewModel);
         }
     }
 }
