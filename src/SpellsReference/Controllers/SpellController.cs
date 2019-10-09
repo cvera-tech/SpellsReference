@@ -26,12 +26,29 @@ namespace SpellsReference.Controllers
         }
 
         // Selects a single spell from a list of spells. This might later be moved 
-        // to a functionality from spellbook. Also, maybe [Authorize], not sure.
+        // to a functionality from spellbook. The Spell Edit and Delete will be tied into this view. 
+        // Also, maybe [Authorize], not sure.
         [AllowAnonymous]
         public ActionResult Select(int id)
         {
             SpellRepository spellRepo = new SpellRepository(context);
             Spell spell = spellRepo.Get(id);
+
+            return View(spell);
+        }
+
+        // Definately [Authorize].
+        [AllowAnonymous]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Create(Spell spell)
+        {
+            // TODO
 
             return View(spell);
         }

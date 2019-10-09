@@ -1,0 +1,81 @@
+﻿@model SpellsReference.Models.Spell
+
+@{
+    ViewBag.Title = "Create Spell";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("Select", "Spell", FormMethod.Post, new { id = "SelectSpell" }))
+{
+    @Html.ValidationSummary()
+
+    <div class="form-group row">
+        <div class="col-sm-3">
+            @Html.LabelFor(s => s.Name)
+            @Html.TextBoxFor(s => s.Name, new { @class = "form-control" })
+        </div>
+
+        <div class="col-sm-1">
+            @Html.LabelFor(s => s.Level)
+            @Html.TextBoxFor(s => s.Level, new { @class = "form-control" })
+        </div>
+
+        <div class="col-sm-2">
+            @Html.LabelFor(s => s.School)
+            @Html.TextBoxFor(s => s.School, new { @class = "form-control" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(s => s.CastingTime)
+            @Html.TextBoxFor(s => s.CastingTime, new { @class = "form-control" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(s => s.Range)
+            @Html.TextBoxFor(s => s.Range, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-3">
+            @Html.LabelFor(s => s.Verbal)
+            @Html.TextBoxFor(s => s.Verbal, new { @class = "form-control" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(s => s.Somatic)
+            @Html.TextBoxFor(s => s.Somatic, new { @class = "form-control" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(s => s.Duration)
+            @Html.TextBoxFor(s => s.Duration, new { @class = "form-control" })
+        </div>
+
+        <div class="col-sm-3">
+            @Html.LabelFor(s => s.Ritual)
+            @Html.TextBoxFor(s => s.Ritual, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-6">
+            @Html.LabelFor(s => s.Description)
+            @Html.TextAreaFor(s => s.Description, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-4">
+            @Html.LabelFor(s => s.Materials)
+            @Html.TextBoxFor(s => s.Materials, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div>
+        <button id="CreateSpellButton" type="submit" class="btn btn-success btn-lg">Submit</button>
+        @Html.ActionLink("Cancel", "Index", "Spell", null, new { @class = "btn btn-secondary btn-lg" })
+    </div>
+}
