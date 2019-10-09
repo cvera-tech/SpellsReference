@@ -1,5 +1,4 @@
-﻿using SpellsReference.Data;
-using SpellsReference.Models;
+﻿using SpellsReference.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System;
@@ -22,17 +21,12 @@ namespace SpellsReference.Data.Repositories
 
         public Spell Get(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public List<Spell> GetSpells()
-        {
-            return _context.Spells.ToList();
+            return _context.Spells.SingleOrDefault(s => s.Id == id);
         }
 
         public List<Spell> List()
         {
-            throw new NotImplementedException();
+            return _context.Spells.ToList();
         }
     }
 }

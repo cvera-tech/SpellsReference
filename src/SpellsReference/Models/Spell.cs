@@ -30,6 +30,7 @@ namespace SpellsReference.Models
         [Required]
         public SchoolOfMagic School { get; set; }
         [Required]
+        [Display(Name = "Casting Time")]
         public string CastingTime { get; set; }
         [Required]
         public string Range { get; set; }

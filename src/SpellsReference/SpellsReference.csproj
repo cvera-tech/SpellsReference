@@ -150,6 +150,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\SpellbookController.cs" />
+    <Compile Include="Controllers\SpellController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Data\Context.cs" />
     <Compile Include="Data\DatabaseInitializer.cs" />
@@ -157,7 +159,9 @@
     <Compile Include="Data\Repositories\AccountRepository.cs" />
     <Compile Include="Data\Repositories\IAccountRepository.cs" />
     <Compile Include="Data\Repositories\IRepository.cs" />
+    <Compile Include="Data\Repositories\ISpellbookRepository.cs" />
     <Compile Include="Data\Repositories\ISpellRepository.cs" />
+    <Compile Include="Data\Repositories\SpellbookRepository.cs" />
     <Compile Include="Data\Repositories\SpellRepository.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
@@ -180,6 +184,11 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Spell\Index.cshtml" />
+    <Content Include="Views\Spell\Select.cshtml" />
+    <Content Include="Views\Spell\Create.cshtml" />
+    <Content Include="Views\Spellbook\Index.cshtml" />
+    <Content Include="Views\Spellbook\Select.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <None Include="Web.Debug.config">
@@ -189,9 +198,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

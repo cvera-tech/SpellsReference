@@ -19,7 +19,7 @@ namespace SpellsReference.Controllers
         public ActionResult Index()
         {
             SpellRepository spellRepo = new SpellRepository(context);
-            List<Spell> spells = spellRepo.GetSpells();
+            List<Spell> spells = spellRepo.List();
 
             return View(spells);
         }

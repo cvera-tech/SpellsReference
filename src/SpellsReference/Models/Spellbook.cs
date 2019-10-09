@@ -10,7 +10,7 @@ namespace SpellsReference.Models
             Spells = new List<Spell>();
         }
 
-        public Spellbook(string name)
+        public Spellbook(string name) : this()
         {
             Name = name;
         }
