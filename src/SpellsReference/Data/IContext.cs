@@ -1,5 +1,6 @@
 ﻿using System.Data.Entity;
 using SpellsReference.Models;
+using System.Threading.Tasks;
 
 namespace SpellsReference.Data
 {
@@ -8,5 +9,8 @@ namespace SpellsReference.Data
         DbSet<Spellbook> Spellbooks { get; set; }
         DbSet<Spell> Spells { get; set; }
         DbSet<User> Users { get; set; }
+
+        int SaveChanges();
+        Task<int> SaveChangesAsync();
     }
 }
