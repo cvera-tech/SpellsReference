@@ -6,21 +6,21 @@ using System.Web.Mvc;
 
 namespace SpellsReference.Controllers
 {
-    [Authorize]
     public class SpellbookController : Controller
     {
-        private IContext context;
+        private IContext _context;
+        private ISpellbookRepository _spellbookRepo;
 
-        public SpellbookController(IContext context)
+        public SpellbookController(IContext context, ISpellbookRepository spellbookRepo)
         {
-            this.context = context;
+            _context = context;
+            _spellbookRepo = spellbookRepo;
         }
 
         [AllowAnonymous]
         public ActionResult Index()
         {
-            SpellbookRepository spellbookRepo = new SpellbookRepository(context);
-            List<Spellbook> spellbooks = spellbookRepo.List();
+            List<Spellbook> spellbooks = _spellbookRepo.List();
 
             return View(spellbooks);
         }
@@ -29,8 +29,7 @@ namespace SpellsReference.Controllers
         [AllowAnonymous]
         public ActionResult Select(int id)
         {
-            SpellbookRepository spellbookRepo = new SpellbookRepository(context);
-            Spellbook spellbook = spellbookRepo.Get(id);
+            Spellbook spellbook = _spellbookRepo.Get(id);
 
             return View(spellbook);
         }
