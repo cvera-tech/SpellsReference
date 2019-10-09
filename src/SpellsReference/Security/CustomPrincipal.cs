@@ -7,6 +7,8 @@ namespace SpellsReference.Security
     {
         private CustomIdentity _customIdentity;
 
+        public string Email { get; private set; }
+
         public string FirstName { get; private set; }
 
         public int Id { get; private set; }
@@ -23,16 +25,13 @@ namespace SpellsReference.Security
             }
         }
 
-        public string Username { get; private set; }
-
-
         public CustomPrincipal(CustomIdentity customIdentity, User user)
         {
             _customIdentity = customIdentity;
-            //Id = user.Id;
-            //Username = user.Username;
-            //FirstName = user.FirstName;
-            //LastName = user.LastName;
+            Id = user.Id;
+            Email = user.Email;
+            FirstName = user.FirstName;
+            LastName = user.LastName;
         }
 
         public bool IsInRole(string role)

@@ -13,7 +13,7 @@ namespace SpellsReference.Data
                 FirstName = "John",
                 LastName = "Doe",
                 Email = "johndoe@gmail.com",
-                HashedPassword = "password"
+                HashedPassword = "$2a$10$7Ty0buogfZimBXe/yDsygOd94v3.YUmQJ0Kc0lZyLFlGvbEbZCbmC" // password
             };
             context.Users.Add(user1);
             var user2 = new User()
@@ -21,7 +21,7 @@ namespace SpellsReference.Data
                 FirstName = "Mo",
                 LastName = "Salam",
                 Email = "hufflepuff4life@gmail.com",
-                HashedPassword = "password"
+                HashedPassword = "$2a$10$7Ty0buogfZimBXe/yDsygOd94v3.YUmQJ0Kc0lZyLFlGvbEbZCbmC" // password
             };
             context.Users.Add(user2);
             var user3 = new User()
@@ -29,9 +29,18 @@ namespace SpellsReference.Data
                 FirstName = "Gandalf",
                 LastName = "the Gray",
                 Email = "hobbits2isengard@gmail.com",
-                HashedPassword = "password"
+                HashedPassword = "$2a$10$7Ty0buogfZimBXe/yDsygOd94v3.YUmQJ0Kc0lZyLFlGvbEbZCbmC" // password
             };
             context.Users.Add(user3);
+
+            var user4 = new User()
+            {
+                FirstName = "John",
+                LastName = "Vera",
+                Email = "john@email.com",
+                HashedPassword = "$2a$10$K5v.r9uhAPHyF7Vz63BC2uPRSWaXYPFpFvUoa6aiUe.Lv.2rG.Rf." // john
+            };
+            context.Users.Add(user4);
 
             // Spells
             var fireball = new Spell()
