@@ -77,5 +77,13 @@ namespace SpellsReference.Data.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public bool Delete(int id)
+        {
+            var goner = new Spellbook() { Id = id };
+            _context.Entry(goner).State = EntityState.Deleted;
+            _context.SaveChanges();
+            return true;
+        }
     }
 }

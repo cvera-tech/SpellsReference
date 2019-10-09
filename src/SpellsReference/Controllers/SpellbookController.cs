@@ -85,5 +85,33 @@ namespace SpellsReference.Controllers
             }
             return View(viewModel);
         }
+
+        public ActionResult Delete(int id)
+        {
+            Spellbook spellbook = _spellbookRepo.Get(id);
+
+            var viewModel = new SpellbookViewModel();
+            viewModel.Id = spellbook.Id;
+            viewModel.Name = spellbook.Name;
+            viewModel.Spells = spellbook.Spells;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id, SpellViewModel viewModel)
+        {
+            bool success = _spellbookRepo.Delete(id);
+
+            if (success)
+            {
+                return RedirectToAction("Index", "Spellbook");
+            }
+            else
+            {
+                ModelState.AddModelError("", "Unable to delete Spell");
+                return View(viewModel);
+            }
+        }
     }
 }

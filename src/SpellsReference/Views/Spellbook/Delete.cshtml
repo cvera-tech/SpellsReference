@@ -1,0 +1,30 @@
+﻿@model SpellsReference.Models.ViewModels.SpellbookViewModel
+
+@{
+    ViewBag.Title = "Delete Spellbook";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>Are you sure you want to delete @Model.Name?</p>
+
+<p>It contains the following spells:</p>
+<ul>
+    @foreach(var spell in Model.Spells)
+    {
+        <li>@spell.Name</li>
+    }
+</ul>
+
+@using (Html.BeginForm("Delete", "Spellbook", FormMethod.Post, new { id = "DeleteSpellbook" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        <button id="DeleteSpellbookButton" type="submit" class="btn btn-danger btn-lg">Delete</button>
+        @Html.ActionLink("Cancel", "Select", "Spellbook", new { id = Model.Id }, new { @class = "btn btn-outline-secondary btn-lg" })
+    </div>
+}
+
+
