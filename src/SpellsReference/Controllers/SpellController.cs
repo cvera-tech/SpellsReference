@@ -77,8 +77,10 @@ namespace SpellsReference.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Delete()
+        public ActionResult Delete(int id)
         {
+            Spell spell = _spellRepo.Get(id);
+
             return View();
         }
     }
