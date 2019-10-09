@@ -76,5 +76,10 @@ namespace SpellsReference.Controllers
 
             return View(viewModel);
         }
+
+        public ActionResult Delete()
+        {
+            return View();
+        }
     }
 }
