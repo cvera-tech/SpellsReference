@@ -17,6 +17,7 @@ namespace SpellsReference
             container.RegisterType<IContext, Context>(new HierarchicalLifetimeManager());
             container.RegisterType<IAccountRepository, AccountRepository>();
             container.RegisterType<ISpellRepository, SpellRepository>();
+            container.RegisterType<ISpellbookRepository, SpellbookRepository>();
             
             DependencyResolver.SetResolver(new Unity.Mvc5.UnityDependencyResolver(container));
             GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
