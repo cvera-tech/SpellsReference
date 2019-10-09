@@ -139,14 +139,14 @@ namespace SpellsReference.Data
             {
                 Name = "Necronomicon",
             };
-            spellbook1.Spells.Add(animateDead);
+            spellbook2.Spells.Add(animateDead);
             context.Spellbooks.Add(spellbook2);
             var spellbook3 = new Spellbook()
             {
                 Name = "Overpowered A.F.",
             };
-            spellbook1.Spells.Add(timeStop);
-            spellbook1.Spells.Add(mageHand);
+            spellbook3.Spells.Add(timeStop);
+            spellbook3.Spells.Add(mageHand);
             context.Spellbooks.Add(spellbook3);
 
             context.SaveChanges();
