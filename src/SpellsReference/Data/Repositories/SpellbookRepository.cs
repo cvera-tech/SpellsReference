@@ -18,7 +18,16 @@ namespace SpellsReference.Data.Repositories
 
         public int? Add(Spellbook entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Spellbooks.Add(entity);
+                _context.SaveChanges();
+                return entity.Id;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public Spellbook Get(int id)
