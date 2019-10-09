@@ -30,5 +30,10 @@ namespace SpellsReference.Data.Repositories
         {
             return _context.Spellbooks.ToList();
         }
+
+        public bool Update(Spellbook entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

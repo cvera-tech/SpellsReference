@@ -67,5 +67,10 @@ namespace SpellsReference.Data.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public bool Update(User entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
