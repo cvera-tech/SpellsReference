@@ -1,27 +1,9 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SpellsReference.Models
 {
-    public class Spell
+    public class SpellViewModel
     {
-        public Spell() { }
-
-        public Spell(string name, int level, SchoolOfMagic school, string castingTime, string range, 
-            bool verbal, bool somatic, string materials, string duration, string description)
-        {
-            Name = name;
-            Level = level;
-            School = school;
-            CastingTime = castingTime;
-            Range = range;
-            Verbal = verbal;
-            Somatic = somatic;
-            Materials = materials;
-            Duration = duration;
-            Description = description;
-        }
-
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
@@ -30,6 +12,7 @@ namespace SpellsReference.Models
         [Required]
         public SchoolOfMagic School { get; set; }
         [Required]
+        [Display(Name = "Casting Time")]
         public string CastingTime { get; set; }
         [Required]
         public string Range { get; set; }
@@ -44,13 +27,5 @@ namespace SpellsReference.Models
         public bool Ritual { get; set; }
         [Required]
         public string Description { get; set; }
-
-        public List<Spellbook> Spellbooks { get; set; }
-
-        // compareTo()
-
-        // equals()
-
-        //toString()
     }
 }

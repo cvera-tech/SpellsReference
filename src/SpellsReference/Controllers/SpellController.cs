@@ -9,18 +9,17 @@ namespace SpellsReference.Controllers
     [Authorize]
     public class SpellController : Controller
     {
-        private IContext context;
+        private ISpellRepository repository;
 
-        public SpellController(IContext context)
+        public SpellController(ISpellRepository repository)
         {
-            this.context = context;
+            this.repository = repository;
         }
 
         [AllowAnonymous]
         public ActionResult Index()
         {
-            SpellRepository spellRepo = new SpellRepository(context);
-            List<Spell> spells = spellRepo.List();
+            List<Spell> spells = repository.List();
 
             return View(spells);
         }
@@ -31,29 +30,50 @@ namespace SpellsReference.Controllers
         [AllowAnonymous]
         public ActionResult Select(int id)
         {
-            SpellRepository spellRepo = new SpellRepository(context);
-            Spell spell = spellRepo.Get(id);
+            Spell spell = repository.Get(id);
 
             return View(spell);
         }
 
-        // Definately [Authorize].
-        [AllowAnonymous]
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new SpellViewModel();
+            return View(viewModel);
         }
 
-        [AllowAnonymous]
         [HttpPost]
-        public ActionResult Create(Spell spell)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(SpellViewModel viewModel)
         {
-            // TODO
+            if (ModelState.IsValid)
+            {
+                var spell = new Spell()
+                {
+                    Name = viewModel.Name,
+                    Level = viewModel.Level,
+                    School = viewModel.School,
+                    CastingTime = viewModel.CastingTime,
+                    Range = viewModel.Range,
+                    Verbal = viewModel.Verbal,
+                    Somatic = viewModel.Somatic,
+                    Materials = viewModel.Materials,
+                    Duration = viewModel.Duration,
+                    Ritual = viewModel.Ritual,
+                    Description = viewModel.Description
+                };
 
-            return View(spell);
+                var success = repository.Add(spell);
+                if (success.HasValue)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Unable to add spell.");
+                }
+            }
+
+            return View(viewModel);
         }
-
-
-
     }
 }

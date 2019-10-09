@@ -16,7 +16,6 @@ namespace SpellsReference.Controllers
             this.context = context;
         }
 
-        [AllowAnonymous]
         public ActionResult Index()
         {
             SpellbookRepository spellbookRepo = new SpellbookRepository(context);
@@ -25,8 +24,6 @@ namespace SpellsReference.Controllers
             return View(spellbooks);
         }
 
-        // Maybe [Authorize]?
-        [AllowAnonymous]
         public ActionResult Select(int id)
         {
             SpellbookRepository spellbookRepo = new SpellbookRepository(context);

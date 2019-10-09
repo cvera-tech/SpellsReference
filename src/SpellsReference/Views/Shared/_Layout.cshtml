@@ -31,7 +31,7 @@
         <div>
             @if (Request.IsAuthenticated)
             {
-                <span>Logged in as: @User.Identity.Name</span>
+                <span class="text-white">Welcome @(((SpellsReference.Security.CustomPrincipal)User).Name)</span>
                 <div class="navbar-text navbar-right">
                     @using (Html.BeginForm("Logout", "Account", FormMethod.Post, new { style = "display: inline" }))
                     {
