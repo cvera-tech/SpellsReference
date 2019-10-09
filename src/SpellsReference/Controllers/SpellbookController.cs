@@ -59,7 +59,30 @@ namespace SpellsReference.Controllers
                     ModelState.AddModelError("", "Unable to add spellbook.");
                 }
             }
+            return View(viewModel);
+        }
 
+        public ActionResult AddSpell(int id)
+        {
+            var spellbook = _spellbookRepo.Get(id);
+            var spells = _spellbookRepo.GetNonmemberSpells(id);
+            var viewModel = new AddSpellToSpellbookViewModel()
+            {
+                SpellbookId = spellbook.Id,
+                SpellbookName = spellbook.Name,
+                Spells = spells
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult AddSpell(int id, int spellId, AddSpellToSpellbookViewModel viewModel)
+        {
+            if (_spellbookRepo.AddSpellToSpellbook(id, spellId))
+            {
+                return RedirectToAction("Select", "Spellbook", routeValues: new { id = id });
+            }
             return View(viewModel);
         }
     }

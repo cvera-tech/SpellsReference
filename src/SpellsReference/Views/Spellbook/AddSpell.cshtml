@@ -1,23 +1,16 @@
-﻿@model SpellsReference.Models.Spellbook
+﻿@model SpellsReference.Models.ViewModels.AddSpellToSpellbookViewModel
 
 @{
-    ViewBag.Title = "Spellbook Select";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Add Spell";
 }
 
 <h2>@ViewBag.Title</h2>
 
-<div class="form-group row">
-    <div class="col-sm-3">
-        @Html.LabelFor(sb => sb.Name)
-        @Html.TextBoxFor(sb => sb.Name, new { @class = "form-control", disabled = "disabled" })
-    </div>
+<div>
+    @Html.LabelFor(model => model.SpellbookName)
+    @Html.DisplayTextFor(model => model.SpellbookName)
 </div>
 
-<div>
-    @Html.ActionLink("Add an Existing Spell", "AddSpell",
-        routeValues: new { id = Model.Id })
-</div>
 <table class="table table-sm">
     <thead class="thead-dark">
         <tr>
@@ -33,6 +26,7 @@
             <th>Ritual</th>
             <th>Description</th>
             <th>&nbsp;</th>
+
         </tr>
     </thead>
     <tbody>
@@ -50,7 +44,12 @@
                 <td>@spell.Duration</td>
                 <td>@spell.Ritual</td>
                 <td>@spell.Description</td>
-                <td>@Html.ActionLink("Select", "Select", "Spell", new { id = spell.Id }, new { @class = "btn btn-info btn-sm" })</td>
+                <td>
+                    @using (Html.BeginForm("AddSpell", "Spellbook", routeValues: new { id = Model.SpellbookId, spellId = spell.Id }))
+                    {
+                        <input type="submit" class="btn btn-info btn-sm" value="Add" />
+                    }
+                </td>
             </tr>
         }
     </tbody>
