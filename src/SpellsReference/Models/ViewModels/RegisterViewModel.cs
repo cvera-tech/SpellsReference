@@ -7,7 +7,7 @@ namespace SpellsReference.Models.ViewModels
         [Required]
         [EmailAddress]
         [Display(Name = "Email Address")]
-        public string EmailAddress { get; set; }
+        public string Email { get; set; }
         [Required]
         [Display(Name = "First Name")]
         public string FirstName { get; set; }

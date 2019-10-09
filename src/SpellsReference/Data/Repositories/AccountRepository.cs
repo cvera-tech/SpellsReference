@@ -23,7 +23,19 @@ namespace SpellsReference.Data.Repositories
 
         public int? Add(User entity, string password)
         {
-            throw new NotImplementedException();
+            var hashedPassword = BCrypt.HashPassword(password);
+            entity.HashedPassword = hashedPassword;
+
+            try
+            {
+                context.Users.Add(entity);
+                context.SaveChanges();
+                return entity.Id;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public bool Authenticate(string username, string password)
