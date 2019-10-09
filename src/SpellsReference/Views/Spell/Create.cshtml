@@ -1,4 +1,4 @@
-﻿@model SpellsReference.Models.Spell
+﻿@model SpellsReference.Models.SpellViewModel
 
 @{
     ViewBag.Title = "Create Spell";
@@ -7,9 +7,13 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Select", "Spell", FormMethod.Post, new { id = "SelectSpell" }))
+@using (Html.BeginForm("Create", "Spell", FormMethod.Post, new { id = "CreateSpell" }))
 {
+    @Html.AntiForgeryToken()
+
     @Html.ValidationSummary()
+
+
 
     <div class="form-group row">
         <div class="col-sm-3">
@@ -24,7 +28,7 @@
 
         <div class="col-sm-2">
             @Html.LabelFor(s => s.School)
-            @Html.TextBoxFor(s => s.School, new { @class = "form-control" })
+            @Html.EnumDropDownListFor(s => s.School, new { @class = "form-control" })
         </div>
 
         <div class="col-sm-3">
@@ -38,15 +42,15 @@
         </div>
     </div>
 
-    <div class="form-group row">
-        <div class="col-sm-3">
+    <div class="form-group row ml-1">
+        <div class="col-xs-1 mr-2">
             @Html.LabelFor(s => s.Verbal)
-            @Html.TextBoxFor(s => s.Verbal, new { @class = "form-control" })
+            @Html.CheckBoxFor(s => s.Verbal, new { @class = "form-control" })
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-xs-1">
             @Html.LabelFor(s => s.Somatic)
-            @Html.TextBoxFor(s => s.Somatic, new { @class = "form-control" })
+            @Html.CheckBoxFor(s => s.Somatic, new { @class = "form-control" })
         </div>
 
         <div class="col-sm-3">
@@ -54,9 +58,9 @@
             @Html.TextBoxFor(s => s.Duration, new { @class = "form-control" })
         </div>
 
-        <div class="col-sm-3">
+        <div class="col-xs-1 ml-2">
             @Html.LabelFor(s => s.Ritual)
-            @Html.TextBoxFor(s => s.Ritual, new { @class = "form-control" })
+            @Html.CheckBoxFor(s => s.Ritual, new { @class = "form-control" })
         </div>
     </div>
 
@@ -76,6 +80,6 @@
 
     <div>
         <button id="CreateSpellButton" type="submit" class="btn btn-success btn-lg">Submit</button>
-        @Html.ActionLink("Cancel", "Index", "Spell", null, new { @class = "btn btn-secondary btn-lg" })
+        @Html.ActionLink("Cancel", "Index", "Spell", null, new { @class = "btn btn-outline-danger btn-lg" })
     </div>
 }

@@ -17,7 +17,6 @@ namespace SpellsReference.Controllers
             _spellbookRepo = spellbookRepo;
         }
 
-        [AllowAnonymous]
         public ActionResult Index()
         {
             List<Spellbook> spellbooks = _spellbookRepo.List();
@@ -25,8 +24,6 @@ namespace SpellsReference.Controllers
             return View(spellbooks);
         }
 
-        // Maybe [Authorize]?
-        [AllowAnonymous]
         public ActionResult Select(int id)
         {
             Spellbook spellbook = _spellbookRepo.Get(id);

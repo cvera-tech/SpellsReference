@@ -37,24 +37,46 @@ namespace SpellsReference.Controllers
             return View(spell);
         }
 
-
-
-        // Definately [Authorize].
-        [AllowAnonymous]
         public ActionResult Create()
         {
-            return View();
+            var viewModel = new SpellViewModel();
+            return View(viewModel);
         }
 
-        [AllowAnonymous]
         [HttpPost]
-        public ActionResult Create(Spell spell)
+        [ValidateAntiForgeryToken]
+        public ActionResult Create(SpellViewModel viewModel)
         {
-            // TODO
+            if (ModelState.IsValid)
+            {
+                var spell = new Spell()
+                {
+                    Name = viewModel.Name,
+                    Level = viewModel.Level,
+                    School = viewModel.School,
+                    CastingTime = viewModel.CastingTime,
+                    Range = viewModel.Range,
+                    Verbal = viewModel.Verbal,
+                    Somatic = viewModel.Somatic,
+                    Materials = viewModel.Materials,
+                    Duration = viewModel.Duration,
+                    Ritual = viewModel.Ritual,
+                    Description = viewModel.Description
+                };
 
-            return View(spell);
+                var success = _spellRepo.Add(spell);
+                if (success.HasValue)
+                {
+                    return RedirectToAction("Index", "Spell");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Unable to add spell.");
+                }
+            }
+
+            return View(viewModel);
         }
-
 
         public ActionResult Edit(int id)
         {
@@ -108,5 +130,32 @@ namespace SpellsReference.Controllers
             }
         }
 
+        public ActionResult Delete(int id)
+        {
+            Spell spell = _spellRepo.Get(id);
+
+            var viewModel = new SpellViewModel();
+            viewModel.Id = spell.Id;
+            viewModel.Name = spell.Name;
+            viewModel.Level = spell.Level;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id, SpellViewModel viewModel)
+        {
+            bool success = _spellRepo.Delete(id);
+
+            if (success)
+            {
+                return RedirectToAction("Index", "Spell");
+            } 
+            else
+            {
+                ModelState.AddModelError("", "Unable to delete Spell");
+                return View(viewModel);
+            }
+        }
     }
 }
