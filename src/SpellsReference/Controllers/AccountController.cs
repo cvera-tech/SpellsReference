@@ -8,11 +8,11 @@ namespace SpellsReference.Controllers
 {
     public class AccountController : Controller
     {
-        private IAccountRepository repository;
+        private IAccountRepository _accountRepo;
 
-        public AccountController(IAccountRepository repository)
+        public AccountController(IAccountRepository accountRepo)
         {
-            this.repository = repository;
+            _accountRepo = accountRepo;
         }
 
         [AllowAnonymous]
@@ -29,7 +29,7 @@ namespace SpellsReference.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (repository.Authenticate(viewModel.EmailAddress, viewModel.Password))
+                if (_accountRepo.Authenticate(viewModel.EmailAddress, viewModel.Password))
                 {
                     FormsAuthentication.SetAuthCookie(viewModel.EmailAddress, false);
                     return RedirectToAction("Index", "Home");
@@ -70,7 +70,7 @@ namespace SpellsReference.Controllers
                     LastName = viewModel.LastName
                 };
 
-                var success = repository.Add(user, viewModel.Password);
+                var success = _accountRepo.Add(user, viewModel.Password);
                 if (success.HasValue)
                 {
                     FormsAuthentication.SetAuthCookie(user.Email, false);

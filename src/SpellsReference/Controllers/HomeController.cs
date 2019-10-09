@@ -8,18 +8,19 @@ namespace SpellsReference.Controllers
 {
     public class HomeController : Controller
     {
-        private IContext context;
+        private IContext _context;
+        private ISpellRepository _spellRepo;
 
-        public HomeController(IContext context)
+        public HomeController(IContext context, ISpellRepository spellRepo)
         {
-            this.context = context;
+            _context = context;
+            _spellRepo = spellRepo;
         }
 
         [AllowAnonymous]
         public ActionResult Index()
         {
-            SpellRepository spellRepo = new SpellRepository(context);
-            List<Spell> spells = spellRepo.List();
+            List<Spell> spells = _spellRepo.List();
 
             return View(spells);
         }
