@@ -30,19 +30,18 @@ namespace SpellsReference.Data
         /// can be left null). Since automatic validation is disabled, all input parameters
         /// MUST be manually validated prior to calling this method.
         /// </summary>
-        /// <typeparam name="EntityType">The type of the entity to update.</typeparam>
-        /// <param name="context">The Context object for updating the database.</param>
+        /// <typeparam name="TEntityType">The type of the entity to update.</typeparam>
         /// <param name="id">The primary key Id of the entity.</param>
         /// <param name="parameters">The array of property names and values to update.</param>
-        public void UpdateEntity<EntityType>(int id, params object[] parameters)
+        public void UpdateEntity<TEntityType>(int id, params object[] parameters)
         {
             if (parameters.Count() % 2 != 0)
             {
                 throw new ArgumentException("Invalid number of parameters");
             }
 
-            Type entityType = typeof(EntityType);
-            EntityType entity = Activator.CreateInstance<EntityType>();
+            Type entityType = typeof(TEntityType);
+            TEntityType entity = Activator.CreateInstance<TEntityType>();
             entityType.GetProperty("Id").SetValue(entity, id);
             var set = Set(entityType);
             set.Attach(entity);

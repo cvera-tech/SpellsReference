@@ -30,5 +30,11 @@ namespace SpellsReference.Data.Repositories
         /// <returns>The list of entities.</returns>
         List<TEntityType> List();
 
+        /// <summary>
+        /// Attempts to update an entity in the database.
+        /// </summary>
+        /// <param name="entity">The entity to update.</param>
+        /// <returns>True if the entity was successfully updated; false otherwise.</returns>
+        bool Update(TEntityType entity);
     }
 }
