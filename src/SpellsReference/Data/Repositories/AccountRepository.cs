@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using SpellsReference.Models;
+using System.Linq;
 
 namespace SpellsReference.Data.Repositories
 {
+    using BCrypt.Net;
+
     public class AccountRepository : IAccountRepository
     {
         private IContext context;
@@ -25,12 +28,22 @@ namespace SpellsReference.Data.Repositories
 
         public bool Authenticate(string username, string password)
         {
-            throw new NotImplementedException();
+            var user = Get(username);
+            if (user == null)
+            {
+                return false;
+            }
+            else
+            {
+                return BCrypt.Verify(password, user.HashedPassword);
+            }
         }
 
         public User Get(string username)
         {
-            throw new NotImplementedException();
+            var user = context.Users
+                .SingleOrDefault(u => u.Email == username);
+            return user;
         }
 
         public User Get(int id)
