@@ -4,6 +4,8 @@ namespace SpellsReference.Models.ViewModels
 {
     public class AddSpellToSpellbookViewModel
     {
-        List<Spell> Spells { get; set; }
+        public int SpellbookId { get; set; }
+        public string SpellbookName { get; set; }
+        public List<Spell> Spells { get; set; }
     }
 }

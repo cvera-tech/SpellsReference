@@ -1,0 +1,56 @@
+﻿@model SpellsReference.Models.ViewModels.AddSpellToSpellbookViewModel
+
+@{
+    ViewBag.Title = "AddSpell";
+}
+
+<h2>AddSpell</h2>
+
+<div>
+    @Html.LabelFor(model => model.SpellbookName)
+    @Html.DisplayTextFor(model => model.SpellbookName)
+</div>
+
+<table class="table table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Level</th>
+            <th>School</th>
+            <th>Casting Time</th>
+            <th>Range</th>
+            <th>Verbal</th>
+            <th>Somatic</th>
+            <th>Materials</th>
+            <th>Duration</th>
+            <th>Ritual</th>
+            <th>Description</th>
+            <th>&nbsp;</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var spell in Model.Spells)
+        {
+            <tr>
+                <td>@spell.Name</td>
+                <td>@spell.Level</td>
+                <td>@spell.School</td>
+                <td>@spell.CastingTime</td>
+                <td>@spell.Range</td>
+                <td>@spell.Verbal</td>
+                <td>@spell.Somatic</td>
+                <td>@spell.Materials</td>
+                <td>@spell.Duration</td>
+                <td>@spell.Ritual</td>
+                <td>@spell.Description</td>
+                <td>
+                    @using (Html.BeginForm("AddSpell", "Spellbook", routeValues: new { id = Model.SpellbookId, spellId = spell.Id }))
+                    {
+                        <input type="submit" value="Add" />
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
