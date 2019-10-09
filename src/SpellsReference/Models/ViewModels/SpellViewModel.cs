@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace SpellsReference.Models
+namespace SpellsReference.Models.ViewModels
 {
     public class SpellViewModel
     {

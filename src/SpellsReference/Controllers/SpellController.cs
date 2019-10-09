@@ -1,4 +1,5 @@
-﻿using SpellsReference.Data;
+﻿using AutoMapper;
+using SpellsReference.Data;
 using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
 using SpellsReference.Models.ViewModels;
@@ -34,7 +35,24 @@ namespace SpellsReference.Controllers
         {
             Spell spell = _spellRepo.Get(id);
 
-            return View(spell);
+            // Maybe eventually set up Mapper DI.
+            //var mapper = new Mapper(config);
+            //SpellViewModel viewModel = mapper.Map<SpellViewModel>(spell);
+
+            var viewModel = new SpellViewModel();
+            viewModel.Id = spell.Id;
+            viewModel.Name = spell.Name;
+            viewModel.Level = spell.Level;
+            viewModel.School = spell.School;
+            viewModel.CastingTime = spell.CastingTime;
+            viewModel.Range = spell.Range;
+            viewModel.Verbal = spell.Verbal;
+            viewModel.Somatic = spell.Somatic;
+            viewModel.Materials = spell.Materials;
+            viewModel.Ritual = spell.Ritual;
+            viewModel.Description = spell.Description; 
+
+            return View(viewModel);
         }
 
         public ActionResult Create()
@@ -81,7 +99,7 @@ namespace SpellsReference.Controllers
         public ActionResult Edit(int id)
         {
             var spell = _spellRepo.Get(id);
-            var viewModel = new EditSpellViewModel()
+            var viewModel = new SpellViewModel()
             {
                 Name = spell.Name,
                 Level = spell.Level,
@@ -100,7 +118,7 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, EditSpellViewModel viewModel)
+        public ActionResult Edit(int id, SpellViewModel viewModel)
         {
             var spell = new Spell()
             {
