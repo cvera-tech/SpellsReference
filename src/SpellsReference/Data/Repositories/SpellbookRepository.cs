@@ -26,6 +26,19 @@ namespace SpellsReference.Data.Repositories
             return _context.Spellbooks.Include(sb => sb.Spells).SingleOrDefault(sb => sb.Id == id);
         }
 
+        public List<Spell> GetNonmemberSpells(int id)
+        {
+            var spellbook = _context.Spellbooks
+                .Include(sb => sb.Spells)
+                .SingleOrDefault(sb => sb.Id == id);
+            var memberSpellIds = spellbook.Spells.Select(s => s.Id);
+            var nonmemberSpells = _context.Spells
+                .Where(s => !memberSpellIds.Contains(s.Id))
+                .ToList();
+
+            return nonmemberSpells;
+        }
+
         public List<Spellbook> List()
         {
             return _context.Spellbooks.ToList();

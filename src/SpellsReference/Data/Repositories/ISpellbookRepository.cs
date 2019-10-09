@@ -1,9 +1,10 @@
 ﻿using SpellsReference.Models;
+using System.Collections.Generic;
 
 namespace SpellsReference.Data.Repositories
 {
     public interface ISpellbookRepository : IRepository<Spellbook>
     {
-
+        List<Spell> GetNonmemberSpells(int id);
     }
 }

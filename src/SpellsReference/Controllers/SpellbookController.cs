@@ -21,6 +21,7 @@ namespace SpellsReference.Controllers
         public ActionResult Index()
         {
             List<Spellbook> spellbooks = _spellbookRepo.List();
+            var spells = _spellbookRepo.GetNonmemberSpells(1);
 
             return View(spellbooks);
         }
@@ -32,6 +33,13 @@ namespace SpellsReference.Controllers
             Spellbook spellbook = _spellbookRepo.Get(id);
 
             return View(spellbook);
+        }
+
+        public ActionResult AddSpell(int id)
+        {
+            var spells = _spellbookRepo.GetNonmemberSpells(id);
+
+            return View();
         }
     }
 }
