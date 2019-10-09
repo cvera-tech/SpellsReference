@@ -20,9 +20,21 @@ namespace SpellsReference.Controllers
         public ActionResult Index()
         {
             SpellRepository spellRepo = new SpellRepository(context);
-            List<Spell> spells = spellRepo.GetSpells();
+            List<Spell> spells = spellRepo.List();
 
             return View(spells);
         }
+
+        // Selects a single spell from a list of spells. This might later be moved 
+        // to a functionality from spellbook. Also, maybe [Authorize], not sure.
+        [AllowAnonymous]
+        public ActionResult Select(int id)
+        {
+            SpellRepository spellRepo = new SpellRepository(context);
+            Spell spell = spellRepo.Get(id);
+
+            return View(spell);
+        }
+
     }
 }

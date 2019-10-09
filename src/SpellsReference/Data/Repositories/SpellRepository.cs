@@ -22,7 +22,7 @@ namespace SpellsReference.Data.Repositories
 
         public Spell Get(int id)
         {
-            throw new NotImplementedException();
+            return _context.Spells.SingleOrDefault(s => s.Id == id);
         }
 
         public List<Spell> GetSpells()
@@ -32,7 +32,7 @@ namespace SpellsReference.Data.Repositories
 
         public List<Spell> List()
         {
-            throw new NotImplementedException();
+            return _context.Spells.ToList();
         }
     }
 }
