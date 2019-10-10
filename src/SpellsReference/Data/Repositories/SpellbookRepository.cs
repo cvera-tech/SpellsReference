@@ -89,9 +89,18 @@ namespace SpellsReference.Data.Repositories
             return _context.Spellbooks.ToListAsync();
         }
 
-        public Task<bool> Update(Spellbook entity)
+        public async Task<bool> Update(Spellbook entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.UpdateEntity(entity);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public async Task<bool> Delete(int id)

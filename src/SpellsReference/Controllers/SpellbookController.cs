@@ -97,6 +97,38 @@ namespace SpellsReference.Controllers
             return View(viewModel);
         }
 
+        public async Task<ActionResult> Edit(int id)
+        {
+            Spellbook spellbook = await _spellbookRepo.Get(id);
+
+            var viewModel = new SpellbookViewModel();
+            viewModel.Name = spellbook.Name;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(int id, SpellbookViewModel viewModel)
+        {
+            var spellbook = new Spellbook()
+            {
+                Id = id,
+                Name = viewModel.Name
+            };
+
+            if (await _spellbookRepo.Update(spellbook))
+            {
+                return RedirectToAction("Select", "Spellbook",
+                    routeValues: new { id = spellbook.Id });
+            }
+            else
+            {
+                ModelState.AddModelError("", "Unable to update Spellbook");
+                return View(viewModel);
+            }
+        }
+
 
         public async Task<ActionResult> Delete(int id)
         {

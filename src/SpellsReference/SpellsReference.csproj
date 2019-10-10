@@ -203,6 +203,7 @@
     <Content Include="Views\Spellbook\Create.cshtml" />
     <Content Include="Views\Spellbook\AddSpell.cshtml" />
     <Content Include="Views\Spellbook\Delete.cshtml" />
+    <Content Include="Views\Spellbook\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
