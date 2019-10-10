@@ -62,7 +62,7 @@ namespace SpellsReference.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SpellViewModel viewModel)
+        public async Task<ActionResult> Create(SpellViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -81,7 +81,7 @@ namespace SpellsReference.Controllers
                     Description = viewModel.Description
                 };
 
-                var success = _spellRepo.Add(spell);
+                var success = await _spellRepo.Add(spell);
                 if (success.HasValue)
                 {
                     return RedirectToAction("Index", "Spell");

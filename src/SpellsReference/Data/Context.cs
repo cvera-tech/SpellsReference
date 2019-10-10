@@ -15,6 +15,16 @@ namespace SpellsReference.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<Spellbook>()
+            .HasMany<Spell>(sb => sb.Spells)
+            .WithMany(s => s.Spellbooks)
+            .Map(cs =>
+            {
+                cs.MapLeftKey("SpellbookId");
+                cs.MapRightKey("SpellId");
+                cs.ToTable("SpellSpellbook");
+            });
         }
 
         /// <summary>
