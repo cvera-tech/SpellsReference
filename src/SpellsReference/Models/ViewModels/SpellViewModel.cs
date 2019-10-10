@@ -27,5 +27,7 @@ namespace SpellsReference.Models.ViewModels
         public bool Ritual { get; set; }
         [Required]
         public string Description { get; set; }
+
+        public int? SpellbookId { get; set; }
     }
 }
