@@ -7,5 +7,6 @@ namespace SpellsReference.Data.Repositories
     {
         List<Spell> GetNonmemberSpells(int id);
         bool AddSpellToSpellbook(int spellbookId, int spellId);
+        bool Delete(int id);
     }
 }

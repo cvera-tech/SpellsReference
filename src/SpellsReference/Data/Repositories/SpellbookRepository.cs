@@ -20,7 +20,16 @@ namespace SpellsReference.Data.Repositories
 
         public int? Add(Spellbook entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Spellbooks.Add(entity);
+                _context.SaveChanges();
+                return entity.Id;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public bool AddSpellToSpellbook(int spellbookId, int spellId)
@@ -67,6 +76,14 @@ namespace SpellsReference.Data.Repositories
         public bool Update(Spellbook entity)
         {
             throw new NotImplementedException();
+        }
+
+        public bool Delete(int id)
+        {
+            var goner = new Spellbook() { Id = id };
+            _context.Entry(goner).State = EntityState.Deleted;
+            _context.SaveChanges();
+            return true;
         }
     }
 }

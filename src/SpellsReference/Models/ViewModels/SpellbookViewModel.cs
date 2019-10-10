@@ -3,11 +3,13 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SpellsReference.Models.ViewModels
 {
-    public class AddSpellToSpellbookViewModel
+    public class SpellbookViewModel
     {
-        public int SpellbookId { get; set; }
-        [Display(Name = "Spellbook Name:")]
-        public string SpellbookName { get; set; }
+        [Required]
+        public int Id { get; set; }
+        [Required]
+        public string Name { get; set; }
+
         public List<Spell> Spells { get; set; }
     }
 }
