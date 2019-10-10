@@ -18,46 +18,12 @@ namespace SpellsReference.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Index(string school, int? level)
+        public ActionResult Index(SpellFilterViewModel filter)
         {
-            var viewModel = new SpellListViewModel();
-            List<Spell> spells = new List<Spell>();
-
-            if (!string.IsNullOrWhiteSpace(school))
+            var viewModel = new SpellListViewModel()
             {
-                var schoolName = char.ToUpper(school[0]) + school.Substring(1).ToLower();
-
-                int enumIndex;
-                if (int.TryParse(school, out enumIndex))
-                {
-                    var enumSchool = (SchoolOfMagic)enumIndex;
-                    spells = _spellRepo.ListBySchool(enumSchool);
-                    viewModel.School = enumSchool;
-                }
-
-                //SchoolOfMagic enumSchool;
-                //if (Enum.TryParse(schoolName, out enumSchool))
-                //{
-                //    spells = _spellRepo.ListBySchool(enumSchool);
-                //    viewModel.School = enumSchool;
-                //}
-                else
-                {
-                    spells = _spellRepo.List();
-                }
-            }
-            else if (level.HasValue)
-            {
-                spells = _spellRepo.ListByLevel(level.Value);
-                viewModel.Level = level.Value;
-            }
-            else
-            {
-                spells = _spellRepo.List();
-            }
-
-            viewModel.Spells = spells;
-
+                Spells = filter.HasValues ? _spellRepo.List(filter) : _spellRepo.List()
+            };
             return View(viewModel);
         }
 
@@ -209,6 +175,25 @@ namespace SpellsReference.Controllers
                 ModelState.AddModelError("", "Unable to delete Spell");
                 return View(viewModel);
             }
+        }
+
+        [AllowAnonymous]
+        public ActionResult Filter()
+        {
+            var viewModel = new SpellFilterViewModel();
+            return View(viewModel);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Filter(SpellFilterViewModel viewModel)
+        {
+            var routeValues = new
+            {
+                level = viewModel.Level.ToString(),
+                school = viewModel.School.ToString()
+            };
+            return RedirectToAction("Index", routeValues: routeValues);
         }
     }
 }

@@ -1,0 +1,22 @@
+﻿@model SpellsReference.Models.ViewModels.SpellFilterViewModel
+
+@{
+    ViewBag.Title = "Filter";
+}
+
+<h2>Filter</h2>
+
+@using (Html.BeginForm())
+{
+    <div>
+        @Html.LabelFor(model => model.School)
+        @Html.EnumDropDownListFor(model => model.School, null, htmlAttributes: new { })
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Level)
+        @Html.DropDownListFor(model => model.Level, Model.LevelSelectItems, optionLabel: "")
+    </div>
+    <div>
+        <input type="submit" value="Filter" class="btn btn-default" />
+    </div>
+}

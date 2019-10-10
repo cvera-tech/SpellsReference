@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
 using System;
+using SpellsReference.Models.ViewModels;
 
 namespace SpellsReference.Data.Repositories
 {
@@ -45,6 +46,17 @@ namespace SpellsReference.Data.Repositories
         public List<Spell> List()
         {
             return _context.Spells.ToList();
+        }
+
+        public List<Spell> List(SpellFilterViewModel filter)
+        {
+            var spells = _context.Spells
+                .Where(s =>
+                    (!filter.Level.HasValue || filter.Level.Value == s.Level) &&
+                    (!filter.School.HasValue || filter.School.Value == s.School)
+                    )
+                .ToList();
+            return spells;
         }
 
         public List<Spell> ListByLevel(int level)
