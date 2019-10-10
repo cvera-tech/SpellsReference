@@ -54,7 +54,7 @@
                 <td>@spell.Duration</td>
                 <td>@spell.Ritual</td>
                 <td>@spell.Description</td>
-                <td>@Html.ActionLink("Select", "Select", "Spell", new { id = spell.Id }, new { @class = "btn btn-info btn-sm" })</td>
+                <td>@Html.ActionLink("Select", "Select", "Spell", new { id = spell.Id, spellbookId = Model.Id }, new { @class = "btn btn-info btn-sm" })</td>
                 <td>
                 @using (Html.BeginForm("RemoveSpell", "Spellbook", routeValues: new { id = Model.Id, spellId = spell.Id }))
                 {

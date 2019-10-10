@@ -23,7 +23,7 @@ namespace SpellsReference.Data
             {
                 cs.MapLeftKey("SpellbookId");
                 cs.MapRightKey("SpellId");
-                cs.ToTable("SpellSpellbook");
+                cs.ToTable("SpellbookSpell");
             });
         }
 
