@@ -3,6 +3,7 @@ using SpellsReference.Data;
 using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
 using SpellsReference.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -20,9 +21,32 @@ namespace SpellsReference.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(string school, int? level)
         {
-            List<Spell> spells = _spellRepo.List();
+            List<Spell> spells = new List<Spell>();
+
+            if (!string.IsNullOrWhiteSpace(school))
+            {
+                var schoolName = char.ToUpper(school[0]) + school.Substring(1).ToLower();
+
+                SchoolOfMagic enumSchool;
+                if (Enum.TryParse(schoolName, out enumSchool))
+                {
+                    spells = _spellRepo.ListBySchool(enumSchool);
+                }
+                else
+                {
+                    spells = _spellRepo.List();
+                }
+            }
+            else if (level.HasValue)
+            {
+                spells = _spellRepo.ListByLevel(level.Value);
+            }
+            else
+            {
+                spells = _spellRepo.List();
+            }
 
             return View(spells);
         }
@@ -50,7 +74,7 @@ namespace SpellsReference.Controllers
             viewModel.Somatic = spell.Somatic;
             viewModel.Materials = spell.Materials;
             viewModel.Ritual = spell.Ritual;
-            viewModel.Description = spell.Description; 
+            viewModel.Description = spell.Description;
 
             return View(viewModel);
         }
@@ -168,7 +192,7 @@ namespace SpellsReference.Controllers
             if (success)
             {
                 return RedirectToAction("Index", "Spell");
-            } 
+            }
             else
             {
                 ModelState.AddModelError("", "Unable to delete Spell");
