@@ -51,6 +51,11 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
+        public bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public User Get(string username)
         {
             var user = _context.Users
@@ -69,11 +74,6 @@ namespace SpellsReference.Data.Repositories
         }
 
         public bool Update(User entity)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool Delete(int id)
         {
             throw new NotImplementedException();
         }

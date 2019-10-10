@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using System;
+using SpellsReference.Models.ViewModels;
 
 namespace SpellsReference.Data.Repositories
 {
@@ -28,6 +30,14 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
+        public bool Delete(int id)
+        {
+            var goner = new Spell() { Id = id };
+            _context.Entry(goner).State = EntityState.Deleted;
+            _context.SaveChanges();
+            return true;
+        }
+
         public Spell Get(int id)
         {
             return _context.Spells.SingleOrDefault(s => s.Id == id);
@@ -36,6 +46,31 @@ namespace SpellsReference.Data.Repositories
         public List<Spell> List()
         {
             return _context.Spells.ToList();
+        }
+
+        public List<Spell> List(SpellFilterViewModel filter)
+        {
+            var spells = _context.Spells
+                .Where(s =>
+                    (!filter.Level.HasValue || filter.Level.Value == s.Level) &&
+                    (!filter.School.HasValue || filter.School.Value == s.School)
+                    )
+                .ToList();
+            return spells;
+        }
+
+        public List<Spell> ListByLevel(int level)
+        {
+            return _context.Spells
+                .Where(s => s.Level == level)
+                .ToList();
+        }
+
+        public List<Spell> ListBySchool(SchoolOfMagic school)
+        {
+            return _context.Spells
+                .Where(s => s.School == school)
+                .ToList();
         }
 
         public bool Update(Spell entity)
@@ -50,14 +85,6 @@ namespace SpellsReference.Data.Repositories
             {
                 return false;
             }
-        }
-
-        public bool Delete(int id)
-        {
-            var goner = new Spell() { Id = id };
-            _context.Entry(goner).State = EntityState.Deleted;
-            _context.SaveChanges();
-            return true;
         }
     }
 }

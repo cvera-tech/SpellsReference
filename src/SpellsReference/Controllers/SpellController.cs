@@ -2,6 +2,7 @@
 using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
 using SpellsReference.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -17,11 +18,13 @@ namespace SpellsReference.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(SpellFilterViewModel filter)
         {
-            List<Spell> spells = _spellRepo.List();
-
-            return View(spells);
+            var viewModel = new SpellListViewModel()
+            {
+                Spells = filter.HasValues ? _spellRepo.List(filter) : _spellRepo.List()
+            };
+            return View(viewModel);
         }
 
         // Selects a single spell from a list of spells. This might later be moved 
@@ -171,12 +174,31 @@ namespace SpellsReference.Controllers
             if (success)
             {
                 return RedirectToAction("Index", "Spell");
-            } 
+            }
             else
             {
                 ModelState.AddModelError("", "Unable to delete Spell");
                 return View(viewModel);
             }
+        }
+
+        [AllowAnonymous]
+        public ActionResult Filter()
+        {
+            var viewModel = new SpellFilterViewModel();
+            return View(viewModel);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Filter(SpellFilterViewModel viewModel)
+        {
+            var routeValues = new
+            {
+                level = viewModel.Level.ToString(),
+                school = viewModel.School.ToString()
+            };
+            return RedirectToAction("Index", routeValues: routeValues);
         }
     }
 }
