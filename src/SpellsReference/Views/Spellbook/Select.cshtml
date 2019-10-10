@@ -36,6 +36,7 @@
             <th>Ritual</th>
             <th>Description</th>
             <th>&nbsp;</th>
+            <th>&nbsp;</th>
         </tr>
     </thead>
     <tbody>
@@ -54,6 +55,12 @@
                 <td>@spell.Ritual</td>
                 <td>@spell.Description</td>
                 <td>@Html.ActionLink("Select", "Select", "Spell", new { id = spell.Id }, new { @class = "btn btn-info btn-sm" })</td>
+                <td>
+                @using (Html.BeginForm("RemoveSpell", "Spellbook", routeValues: new { id = Model.Id, spellId = spell.Id }))
+                {
+                    <button id="DeleteSpellFromSpellbookButton" type="submit" class="btn btn-danger btn-sm">Remove</button>
+                }
+                </td>
             </tr>
         }
     </tbody>

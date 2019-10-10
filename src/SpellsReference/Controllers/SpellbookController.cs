@@ -10,12 +10,10 @@ namespace SpellsReference.Controllers
     [Authorize]
     public class SpellbookController : Controller
     {
-        private IContext _context;
         private ISpellbookRepository _spellbookRepo;
 
-        public SpellbookController(IContext context, ISpellbookRepository spellbookRepo)
+        public SpellbookController(ISpellbookRepository spellbookRepo)
         {
-            _context = context;
             _spellbookRepo = spellbookRepo;
         }
 
@@ -40,6 +38,7 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(SpellbookViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -86,6 +85,18 @@ namespace SpellsReference.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public ActionResult RemoveSpell(int id, int spellId, SpellbookViewModel viewModel)
+        {
+            if (_spellbookRepo.RemoveSpellFromSpellbook(id, spellId))
+            {
+                return RedirectToAction("Select", "Spellbook", routeValues: new { id = id });
+            }
+
+            return View(viewModel);
+        }
+
+
         public ActionResult Delete(int id)
         {
             Spellbook spellbook = _spellbookRepo.Get(id);
@@ -99,6 +110,7 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, SpellViewModel viewModel)
         {
             bool success = _spellbookRepo.Delete(id);

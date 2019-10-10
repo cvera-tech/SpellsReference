@@ -8,12 +8,10 @@ namespace SpellsReference.Controllers
 {
     public class HomeController : Controller
     {
-        private IContext _context;
         private ISpellRepository _spellRepo;
 
-        public HomeController(IContext context, ISpellRepository spellRepo)
+        public HomeController(ISpellRepository spellRepo)
         {
-            _context = context;
             _spellRepo = spellRepo;
         }
 
