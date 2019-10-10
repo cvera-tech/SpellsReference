@@ -34,9 +34,9 @@ namespace SpellsReference.Data.Repositories
             return _context.Spells.FindAsync(id);
         }
 
-        public List<Spell> List()
+        public Task<List<Spell>> List()
         {
-            return _context.Spells.ToList();
+            return _context.Spells.ToListAsync();
         }
 
         public bool Update(Spell entity)

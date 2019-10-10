@@ -29,7 +29,7 @@ namespace SpellsReference.Data.Repositories
         /// Retrieves the list of records of the entity type from the database.
         /// </summary>
         /// <returns>The list of entities.</returns>
-        List<TEntityType> List();
+        Task<List<TEntityType>> List();
 
         /// <summary>
         /// Attempts to update an entity in the database.
