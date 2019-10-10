@@ -79,6 +79,13 @@
 
     <div>
         <button id="EditSpell" type="submit" class="btn btn-success btn-lg" disabled>Submit</button>
-        @Html.ActionLink("Cancel", "Index", "Spell", null, new { @class = "btn btn-secondary btn-lg" })
+        @if (Model.SpellbookId == null)
+        {
+            @Html.ActionLink("Back", "Index", "Spell", new { @class = "btn btn-secondary btn-lg", id = "SpellBackButton" })
+        }
+        else
+        {
+            @Html.ActionLink("Back", "Select", "Spellbook", new { id = Model.SpellbookId }, new { @class = "btn btn-secondary btn-lg", id = "SpellBackButton" })
+        }
     </div>
 }

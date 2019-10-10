@@ -91,7 +91,16 @@ namespace SpellsReference.Data.Repositories
 
         public bool Update(Spellbook entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.UpdateEntity(entity);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public bool Delete(int id)
