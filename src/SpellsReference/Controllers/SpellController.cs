@@ -31,7 +31,7 @@ namespace SpellsReference.Controllers
         // to a functionality from spellbook. The Spell Edit and Delete will be tied into this view. 
         // Also, maybe [Authorize], not sure.
         [AllowAnonymous]
-        public ActionResult Select(int id)
+        public ActionResult Select(int id, int? spellbookId)
         {
             Spell spell = _spellRepo.Get(id);
 
@@ -51,6 +51,11 @@ namespace SpellsReference.Controllers
             viewModel.Materials = spell.Materials;
             viewModel.Ritual = spell.Ritual;
             viewModel.Description = spell.Description;
+
+            if (spellbookId != null)
+            {
+                viewModel.SpellbookId = spellbookId;
+            }
 
             return View(viewModel);
         }
