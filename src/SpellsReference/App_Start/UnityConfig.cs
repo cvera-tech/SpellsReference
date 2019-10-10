@@ -1,6 +1,9 @@
 using System.Web.Mvc;
 using Unity;
-using Unity.Mvc5;
+using System.Web.Http;
+using SpellsReference.Data.Repositories;
+using SpellsReference.Data;
+using Unity.Lifetime;
 
 namespace SpellsReference
 {
@@ -9,13 +12,15 @@ namespace SpellsReference
         public static void RegisterComponents()
         {
 			var container = new UnityContainer();
+
+            // Add dependencies here
+            container.RegisterType<IContext, Context>(new HierarchicalLifetimeManager());
+            container.RegisterType<IAccountRepository, AccountRepository>();
+            container.RegisterType<ISpellRepository, SpellRepository>();
+            container.RegisterType<ISpellbookRepository, SpellbookRepository>();
             
-            // register all your components with the container here
-            // it is NOT necessary to register your controllers
-            
-            // e.g. container.RegisterType<ITestService, TestService>();
-            
-            DependencyResolver.SetResolver(new UnityDependencyResolver(container));
+            DependencyResolver.SetResolver(new Unity.Mvc5.UnityDependencyResolver(container));
+            GlobalConfiguration.Configuration.DependencyResolver = new Unity.WebApi.UnityDependencyResolver(container);
         }
     }
 }

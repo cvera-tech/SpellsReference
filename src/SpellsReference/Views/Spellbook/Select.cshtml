@@ -1,0 +1,67 @@
+﻿@model SpellsReference.Models.Spellbook
+
+@{
+    ViewBag.Title = "Spellbook Select";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="mt-2">
+    @Html.ActionLink("Delete", "Delete", "Spellbook", new { id = Model.Id }, new { @class = "btn btn-danger btn-lg float-right" })
+    <h2>@ViewBag.Title</h2>
+</div>
+
+<div class="form-group row">
+    <div class="col-sm-3">
+        @Html.LabelFor(sb => sb.Name)
+        @Html.TextBoxFor(sb => sb.Name, new { @class = "form-control", disabled = "disabled" })
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Add an Existing Spell", "AddSpell",
+    routeValues: new { id = Model.Id })
+</div>
+<table class="table table-sm">
+    <thead class="thead-dark">
+        <tr>
+            <th>Name</th>
+            <th>Level</th>
+            <th>School</th>
+            <th>Casting Time</th>
+            <th>Range</th>
+            <th>Verbal</th>
+            <th>Somatic</th>
+            <th>Materials</th>
+            <th>Duration</th>
+            <th>Ritual</th>
+            <th>Description</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var spell in Model.Spells)
+        {
+            <tr>
+                <td>@spell.Name</td>
+                <td>@spell.Level</td>
+                <td>@spell.School</td>
+                <td>@spell.CastingTime</td>
+                <td>@spell.Range</td>
+                <td>@spell.Verbal</td>
+                <td>@spell.Somatic</td>
+                <td>@spell.Materials</td>
+                <td>@spell.Duration</td>
+                <td>@spell.Ritual</td>
+                <td>@spell.Description</td>
+                <td>@Html.ActionLink("Select", "Select", "Spell", new { id = spell.Id }, new { @class = "btn btn-info btn-sm" })</td>
+                <td>
+                @using (Html.BeginForm("RemoveSpell", "Spellbook", routeValues: new { id = Model.Id, spellId = spell.Id }))
+                {
+                    <button id="DeleteSpellFromSpellbookButton" type="submit" class="btn btn-danger btn-sm">Remove</button>
+                }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
