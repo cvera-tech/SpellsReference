@@ -3,6 +3,7 @@ using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
 using SpellsReference.Models.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace SpellsReference.Controllers
@@ -24,9 +25,9 @@ namespace SpellsReference.Controllers
             return View(spellbooks);
         }
 
-        public ActionResult Select(int id)
+        public async Task<ActionResult> Select(int id)
         {
-            Spellbook spellbook = _spellbookRepo.Get(id);
+            Spellbook spellbook = await _spellbookRepo.Get(id);
 
             return View(spellbook);
         }
@@ -39,7 +40,7 @@ namespace SpellsReference.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SpellbookViewModel viewModel)
+        public async Task<ActionResult> Create(SpellbookViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -48,7 +49,7 @@ namespace SpellsReference.Controllers
                     Name = viewModel.Name
                 };
 
-                var success = _spellbookRepo.Add(spellbook);
+                var success = await _spellbookRepo.Add(spellbook);
                 if (success.HasValue)
                 {
                     return RedirectToAction("Index", "Spellbook");
@@ -61,9 +62,9 @@ namespace SpellsReference.Controllers
             return View(viewModel);
         }
 
-        public ActionResult AddSpell(int id)
+        public async Task<ActionResult> AddSpell(int id)
         {
-            var spellbook = _spellbookRepo.Get(id);
+            var spellbook = await _spellbookRepo.Get(id);
             var spells = _spellbookRepo.GetNonmemberSpells(id);
             var viewModel = new AddSpellToSpellbookViewModel()
             {
@@ -76,9 +77,9 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
-        public ActionResult AddSpell(int id, int spellId, AddSpellToSpellbookViewModel viewModel)
+        public async Task<ActionResult> AddSpell(int id, int spellId, AddSpellToSpellbookViewModel viewModel)
         {
-            if (_spellbookRepo.AddSpellToSpellbook(id, spellId))
+            if (await _spellbookRepo.AddSpellToSpellbook(id, spellId))
             {
                 return RedirectToAction("Select", "Spellbook", routeValues: new { id = id });
             }
@@ -86,9 +87,9 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
-        public ActionResult RemoveSpell(int id, int spellId, SpellbookViewModel viewModel)
+        public async Task<ActionResult> RemoveSpell(int id, int spellId, SpellbookViewModel viewModel)
         {
-            if (_spellbookRepo.RemoveSpellFromSpellbook(id, spellId))
+            if (await _spellbookRepo.RemoveSpellFromSpellbook(id, spellId))
             {
                 return RedirectToAction("Select", "Spellbook", routeValues: new { id = id });
             }
@@ -97,9 +98,9 @@ namespace SpellsReference.Controllers
         }
 
 
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            Spellbook spellbook = _spellbookRepo.Get(id);
+            Spellbook spellbook = await _spellbookRepo.Get(id);
 
             var viewModel = new SpellbookViewModel();
             viewModel.Id = spellbook.Id;

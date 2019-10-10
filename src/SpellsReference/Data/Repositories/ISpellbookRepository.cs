@@ -1,12 +1,13 @@
 ﻿using SpellsReference.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SpellsReference.Data.Repositories
 {
     public interface ISpellbookRepository : IRepository<Spellbook>
     {
         List<Spell> GetNonmemberSpells(int id);
-        bool AddSpellToSpellbook(int spellbookId, int spellId);
-        bool RemoveSpellFromSpellbook(int spellbookId, int spellId);
+        Task<bool> AddSpellToSpellbook(int spellbookId, int spellId);
+        Task<bool> RemoveSpellFromSpellbook(int spellbookId, int spellId);
     }
 }

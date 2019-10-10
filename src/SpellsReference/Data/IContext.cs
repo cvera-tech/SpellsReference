@@ -16,5 +16,6 @@ namespace SpellsReference.Data
         void UpdateEntity<TEntityType>(int id, params object[] parameters);
         void UpdateEntity<TEntityType>(TEntityType entity) where TEntityType : class;
         DbEntityEntry Entry(object entity);
+        
     }
 }

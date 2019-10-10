@@ -6,6 +6,7 @@ using System.Linq;
 namespace SpellsReference.Data.Repositories
 {
     using BCrypt.Net;
+    using System.Threading.Tasks;
 
     public class AccountRepository : IAccountRepository
     {
@@ -16,7 +17,7 @@ namespace SpellsReference.Data.Repositories
             _context = context;
         }
 
-        public int? Add(User entity)
+        public Task<int?> Add(User entity)
         {
             throw new NotImplementedException();
         }
@@ -58,7 +59,7 @@ namespace SpellsReference.Data.Repositories
             return user;
         }
 
-        public User Get(int id)
+        public Task<User> Get(int id)
         {
             throw new NotImplementedException();
         }

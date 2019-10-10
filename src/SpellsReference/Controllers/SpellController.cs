@@ -3,6 +3,7 @@ using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
 using SpellsReference.Models.ViewModels;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace SpellsReference.Controllers
@@ -28,9 +29,9 @@ namespace SpellsReference.Controllers
         // to a functionality from spellbook. The Spell Edit and Delete will be tied into this view. 
         // Also, maybe [Authorize], not sure.
         [AllowAnonymous]
-        public ActionResult Select(int id)
+        public async Task<ActionResult> Select(int id)
         {
-            Spell spell = _spellRepo.Get(id);
+            Spell spell = await _spellRepo.Get(id);
 
             // Maybe eventually set up Mapper DI.
             //var mapper = new Mapper(config);
@@ -46,6 +47,7 @@ namespace SpellsReference.Controllers
             viewModel.Verbal = spell.Verbal;
             viewModel.Somatic = spell.Somatic;
             viewModel.Materials = spell.Materials;
+            viewModel.Duration = spell.Duration;
             viewModel.Ritual = spell.Ritual;
             viewModel.Description = spell.Description; 
 
@@ -93,9 +95,9 @@ namespace SpellsReference.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            var spell = _spellRepo.Get(id);
+            var spell = await _spellRepo.Get(id);
             var viewModel = new SpellViewModel()
             {
                 Name = spell.Name,
@@ -145,9 +147,9 @@ namespace SpellsReference.Controllers
             }
         }
 
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            Spell spell = _spellRepo.Get(id);
+            Spell spell = await _spellRepo.Get(id);
 
             var viewModel = new SpellViewModel();
             viewModel.Id = spell.Id;

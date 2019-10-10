@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace SpellsReference.Data.Repositories
 {
@@ -14,7 +15,7 @@ namespace SpellsReference.Data.Repositories
         /// </summary>
         /// <param name="entity">The entity to add.</param>
         /// <returns>The entity's ID in the database if successful; null otherwise.</returns>
-        int? Add(TEntityType entity);
+        Task<int?> Add(TEntityType entity);
 
 
         /// <summary>
@@ -22,7 +23,7 @@ namespace SpellsReference.Data.Repositories
         /// </summary>
         /// <param name="id">The entity's ID in the database.</param>
         /// <returns>The entity record if successfull; null otherwise.</returns>
-        TEntityType Get(int id);
+        Task<TEntityType> Get(int id);
 
         /// <summary>
         /// Retrieves the list of records of the entity type from the database.
@@ -38,7 +39,7 @@ namespace SpellsReference.Data.Repositories
         bool Update(TEntityType entity);
 
         /// <summary>
-        /// Attempts to delete an entity in the database by it's Id.
+        /// Attempts to delete an entity in the database by it's Id..
         /// </summary>
         /// <param name="entity">The entity to delete.</param>
         /// <returns>True if the entity was successfully deleted; false otherwise.</returns>

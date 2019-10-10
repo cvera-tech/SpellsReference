@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using System.Threading.Tasks;
 
 namespace SpellsReference.Data.Repositories
 {
@@ -14,12 +15,12 @@ namespace SpellsReference.Data.Repositories
             _context = context;
         }
 
-        public int? Add(Spell entity)
+        public async Task<int?> Add(Spell entity)
         {
             try
             {
                 _context.Spells.Add(entity);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return entity.Id;
             }
             catch
@@ -28,9 +29,9 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public Spell Get(int id)
+        public Task<Spell> Get(int id)
         {
-            return _context.Spells.SingleOrDefault(s => s.Id == id);
+            return _context.Spells.FindAsync(id);
         }
 
         public List<Spell> List()

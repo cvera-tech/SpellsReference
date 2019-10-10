@@ -4,6 +4,7 @@ using SpellsReference.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.Threading.Tasks;
 
 namespace SpellsReference.Data.Repositories
 {
@@ -18,12 +19,12 @@ namespace SpellsReference.Data.Repositories
             _spellRepo = spellRepo;
         }
 
-        public int? Add(Spellbook entity)
+        public async Task<int?> Add(Spellbook entity)
         {
             try
             {
                 _context.Spellbooks.Add(entity);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return entity.Id;
             }
             catch
@@ -32,12 +33,12 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public bool AddSpellToSpellbook(int spellbookId, int spellId)
+        public async Task<bool> AddSpellToSpellbook(int spellbookId, int spellId)
         {
             try
             {
-                var spellbook = Get(spellbookId);
-                var spell = _spellRepo.Get(spellId);
+                var spellbook = await Get(spellbookId);
+                var spell = await _spellRepo.Get(spellId);
                 spellbook.Spells.Add(spell);
                 _context.UpdateEntity(spellbook);
                 _context.SaveChanges();
@@ -49,12 +50,12 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public bool RemoveSpellFromSpellbook(int spellbookId, int spellId)
+        public async Task<bool> RemoveSpellFromSpellbook(int spellbookId, int spellId)
         {
             try
             {
-                var spellbook = Get(spellbookId);
-                var spell = _spellRepo.Get(spellId);
+                var spellbook = await Get(spellbookId);
+                var spell = await _spellRepo.Get(spellId);
                 spellbook.Spells.Remove(spell);
                 _context.UpdateEntity(spellbook);
                 _context.SaveChanges();
@@ -66,9 +67,9 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public Spellbook Get(int id)
+        public Task<Spellbook> Get(int id)
         {
-            return _context.Spellbooks.Include(sb => sb.Spells).SingleOrDefault(sb => sb.Id == id);
+            return _context.Spellbooks.Include(sb => sb.Spells).FirstOrDefaultAsync(sb => sb.Id == id); //.Include(sb => sb.Spells);
         }
 
         public List<Spell> GetNonmemberSpells(int id)
