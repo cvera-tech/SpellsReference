@@ -16,6 +16,12 @@ namespace SpellsReference.Data.Repositories
         /// <returns>The entity's ID in the database if successful; null otherwise.</returns>
         int? Add(TEntityType entity);
 
+        /// <summary>
+        /// Attempts to delete an entity from the database.
+        /// </summary>
+        /// <param name="id">The entity's ID in the database.</param>
+        /// <returns>True if the entity was successfully deleted; false otherwise.</returns>
+        bool Delete(int id);
 
         /// <summary>
         /// Attempts to retrieve an entity from the database given its ID.

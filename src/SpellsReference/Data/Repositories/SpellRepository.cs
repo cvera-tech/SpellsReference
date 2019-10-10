@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Data.Entity;
+using System;
 
 namespace SpellsReference.Data.Repositories
 {
@@ -28,6 +29,14 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
+        public bool Delete(int id)
+        {
+            var goner = new Spell() { Id = id };
+            _context.Entry(goner).State = EntityState.Deleted;
+            _context.SaveChanges();
+            return true;
+        }
+
         public Spell Get(int id)
         {
             return _context.Spells.SingleOrDefault(s => s.Id == id);
@@ -36,6 +45,20 @@ namespace SpellsReference.Data.Repositories
         public List<Spell> List()
         {
             return _context.Spells.ToList();
+        }
+
+        public List<Spell> ListByLevel(int level)
+        {
+            return _context.Spells
+                .Where(s => s.Level == level)
+                .ToList();
+        }
+
+        public List<Spell> ListBySchool(SchoolOfMagic school)
+        {
+            return _context.Spells
+                .Where(s => s.School == school)
+                .ToList();
         }
 
         public bool Update(Spell entity)
@@ -50,14 +73,6 @@ namespace SpellsReference.Data.Repositories
             {
                 return false;
             }
-        }
-
-        public bool Delete(int id)
-        {
-            var goner = new Spell() { Id = id };
-            _context.Entry(goner).State = EntityState.Deleted;
-            _context.SaveChanges();
-            return true;
         }
     }
 }

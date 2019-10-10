@@ -51,6 +51,11 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
+        public bool Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public User Get(string username)
         {
             var user = context.Users
