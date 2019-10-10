@@ -1,4 +1,4 @@
-﻿@model List<SpellsReference.Models.Spell>
+﻿@model SpellsReference.Models.ViewModels.SpellListViewModel
 
 @{
     ViewBag.Title = "Spell Index Page";
@@ -8,6 +8,21 @@
 <h1>@ViewBag.Title</h1>
 
 @Html.ActionLink("Create Spell", "Create", "Spell", null, new { @class = "btn btn-outline-primary btn-lg mb-2" })
+
+@using (Html.BeginForm("Index", "Spell", FormMethod.Get))
+{
+    <div>
+        @Html.LabelFor(model => model.School)
+        @Html.EnumDropDownListFor(model => model.School, null, htmlAttributes: new { })
+    </div>
+    <div>
+        @Html.LabelFor(model => model.Level)
+        @Html.DropDownListFor(model => model.Level, Model.LevelSelectItems, optionLabel: "")
+    </div>
+    <div>
+        <input type="submit" value="Filter" class="btn btn-default" />
+    </div>
+}
 
 <table class="table table-sm">
     <thead class="thead-dark">
@@ -27,8 +42,8 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var spell in Model)
-        {
+        @foreach (var spell in Model.Spells)
+            {
             <tr>
                 <td>@spell.Name</td>
                 <td>@spell.Level</td>

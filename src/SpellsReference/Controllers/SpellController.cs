@@ -20,17 +20,27 @@ namespace SpellsReference.Controllers
         [AllowAnonymous]
         public ActionResult Index(string school, int? level)
         {
+            var viewModel = new SpellListViewModel();
             List<Spell> spells = new List<Spell>();
 
             if (!string.IsNullOrWhiteSpace(school))
             {
                 var schoolName = char.ToUpper(school[0]) + school.Substring(1).ToLower();
 
-                SchoolOfMagic enumSchool;
-                if (Enum.TryParse(schoolName, out enumSchool))
+                int enumIndex;
+                if (int.TryParse(school, out enumIndex))
                 {
+                    var enumSchool = (SchoolOfMagic)enumIndex;
                     spells = _spellRepo.ListBySchool(enumSchool);
+                    viewModel.School = enumSchool;
                 }
+
+                //SchoolOfMagic enumSchool;
+                //if (Enum.TryParse(schoolName, out enumSchool))
+                //{
+                //    spells = _spellRepo.ListBySchool(enumSchool);
+                //    viewModel.School = enumSchool;
+                //}
                 else
                 {
                     spells = _spellRepo.List();
@@ -39,13 +49,16 @@ namespace SpellsReference.Controllers
             else if (level.HasValue)
             {
                 spells = _spellRepo.ListByLevel(level.Value);
+                viewModel.Level = level.Value;
             }
             else
             {
                 spells = _spellRepo.List();
             }
 
-            return View(spells);
+            viewModel.Spells = spells;
+
+            return View(viewModel);
         }
 
         // Selects a single spell from a list of spells. This might later be moved 
