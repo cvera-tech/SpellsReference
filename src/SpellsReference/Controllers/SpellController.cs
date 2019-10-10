@@ -161,6 +161,7 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, SpellViewModel viewModel)
         {
             bool success = _spellRepo.Delete(id);

@@ -40,6 +40,7 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(SpellbookViewModel viewModel)
         {
             if (ModelState.IsValid)
@@ -99,6 +100,7 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, SpellViewModel viewModel)
         {
             bool success = _spellbookRepo.Delete(id);
