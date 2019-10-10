@@ -47,7 +47,23 @@ namespace SpellsReference.Data.Repositories
             {
                 return false;
             }
+        }
 
+        public bool RemoveSpellFromSpellbook(int spellbookId, int spellId)
+        {
+            try
+            {
+                var spellbook = Get(spellbookId);
+                var spell = _spellRepo.Get(spellId);
+                spellbook.Spells.Remove(spell);
+                _context.UpdateEntity(spellbook);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public Spellbook Get(int id)
