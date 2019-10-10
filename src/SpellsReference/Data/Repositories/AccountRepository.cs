@@ -9,11 +9,11 @@ namespace SpellsReference.Data.Repositories
 
     public class AccountRepository : IAccountRepository
     {
-        private IContext context;
+        private IContext _context;
 
         public AccountRepository(IContext context)
         {
-            this.context = context;
+            _context = context;
         }
 
         public int? Add(User entity)
@@ -28,8 +28,8 @@ namespace SpellsReference.Data.Repositories
 
             try
             {
-                context.Users.Add(entity);
-                context.SaveChanges();
+                _context.Users.Add(entity);
+                _context.SaveChanges();
                 return entity.Id;
             }
             catch
@@ -58,7 +58,7 @@ namespace SpellsReference.Data.Repositories
 
         public User Get(string username)
         {
-            var user = context.Users
+            var user = _context.Users
                 .SingleOrDefault(u => u.Email == username);
             return user;
         }

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using SpellsReference.Data;
 using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
 using SpellsReference.Models.ViewModels;
@@ -11,12 +10,10 @@ namespace SpellsReference.Controllers
 {
     public class SpellController : Controller
     {
-        private IContext _context;
         private ISpellRepository _spellRepo;
 
-        public SpellController(IContext context, ISpellRepository spellRepo)
+        public SpellController(ISpellRepository spellRepo)
         {
-            _context = context;
             _spellRepo = spellRepo;
         }
 
@@ -185,6 +182,7 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, SpellViewModel viewModel)
         {
             bool success = _spellRepo.Delete(id);

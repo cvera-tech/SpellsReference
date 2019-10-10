@@ -7,25 +7,9 @@ namespace SpellsReference.Models
     {
         public Spell() { }
 
-        public Spell(string name, int level, SchoolOfMagic school, string castingTime, string range, 
-            bool verbal, bool somatic, string materials, string duration, string description)
-        {
-            Name = name;
-            Level = level;
-            School = school;
-            CastingTime = castingTime;
-            Range = range;
-            Verbal = verbal;
-            Somatic = somatic;
-            Materials = materials;
-            Duration = duration;
-            Description = description;
-        }
-
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
-        [Required]
         public int Level { get; set; }
         [Required]
         public SchoolOfMagic School { get; set; }
