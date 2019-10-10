@@ -30,7 +30,7 @@ namespace SpellsReference.Data.Repositories
             try
             {
                 _context.Users.Add(entity);
-                _context.SaveChanges();
+                _context.SaveChangesAsync();
                 return entity.Id;
             }
             catch
@@ -64,17 +64,17 @@ namespace SpellsReference.Data.Repositories
             throw new NotImplementedException();
         }
 
-        public List<User> List()
+        public Task<List<User>> List()
         {
             throw new NotImplementedException();
         }
 
-        public bool Update(User entity)
+        public Task<bool> Update(User entity)
         {
             throw new NotImplementedException();
         }
 
-        public bool Delete(int id)
+        public Task<bool> Delete(int id)
         {
             throw new NotImplementedException();
         }

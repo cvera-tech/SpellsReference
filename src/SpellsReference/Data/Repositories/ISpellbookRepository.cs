@@ -6,7 +6,7 @@ namespace SpellsReference.Data.Repositories
 {
     public interface ISpellbookRepository : IRepository<Spellbook>
     {
-        List<Spell> GetNonmemberSpells(int id);
+        Task<List<Spell>> GetNonmemberSpells(int id);
         Task<bool> AddSpellToSpellbook(int spellbookId, int spellId);
         Task<bool> RemoveSpellFromSpellbook(int spellbookId, int spellId);
     }

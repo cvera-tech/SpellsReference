@@ -39,12 +39,12 @@ namespace SpellsReference.Data.Repositories
             return _context.Spells.ToListAsync();
         }
 
-        public bool Update(Spell entity)
+        public async Task<bool> Update(Spell entity)
         {
             try
             {
                 _context.UpdateEntity(entity);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch
@@ -53,11 +53,11 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             var goner = new Spell() { Id = id };
             _context.Entry(goner).State = EntityState.Deleted;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
     }

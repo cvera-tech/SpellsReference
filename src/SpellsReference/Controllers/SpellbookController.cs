@@ -18,9 +18,9 @@ namespace SpellsReference.Controllers
             _spellbookRepo = spellbookRepo;
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            List<Spellbook> spellbooks = _spellbookRepo.List();
+            List<Spellbook> spellbooks = await _spellbookRepo.List();
 
             return View(spellbooks);
         }
@@ -65,7 +65,7 @@ namespace SpellsReference.Controllers
         public async Task<ActionResult> AddSpell(int id)
         {
             var spellbook = await _spellbookRepo.Get(id);
-            var spells = _spellbookRepo.GetNonmemberSpells(id);
+            var spells = await _spellbookRepo.GetNonmemberSpells(id);
             var viewModel = new AddSpellToSpellbookViewModel()
             {
                 SpellbookId = spellbook.Id,
@@ -112,9 +112,9 @@ namespace SpellsReference.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, SpellViewModel viewModel)
+        public async Task<ActionResult> Delete(int id, SpellViewModel viewModel)
         {
-            bool success = _spellbookRepo.Delete(id);
+            bool success = await _spellbookRepo.Delete(id);
 
             if (success)
             {

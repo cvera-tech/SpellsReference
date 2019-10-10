@@ -3,6 +3,7 @@ using SpellsReference.Models;
 using SpellsReference.Data.Repositories;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using System.Threading.Tasks;
 
 namespace SpellsReference.Controllers
 {
@@ -16,9 +17,9 @@ namespace SpellsReference.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            List<Spell> spells = _spellRepo.List();
+            List<Spell> spells = await _spellRepo.List();
 
             return View(spells);
         }

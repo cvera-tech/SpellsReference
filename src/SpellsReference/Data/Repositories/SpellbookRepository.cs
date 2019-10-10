@@ -1,5 +1,4 @@
 ﻿using System.Data.Entity;
-using SpellsReference.Data;
 using SpellsReference.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -72,7 +71,7 @@ namespace SpellsReference.Data.Repositories
             return _context.Spellbooks.Include(sb => sb.Spells).FirstOrDefaultAsync(sb => sb.Id == id); //.Include(sb => sb.Spells);
         }
 
-        public List<Spell> GetNonmemberSpells(int id)
+        public Task<List<Spell>> GetNonmemberSpells(int id)
         {
             var spellbook = _context.Spellbooks
                 .Include(sb => sb.Spells)
@@ -80,26 +79,26 @@ namespace SpellsReference.Data.Repositories
             var memberSpellIds = spellbook.Spells.Select(s => s.Id);
             var nonmemberSpells = _context.Spells
                 .Where(s => !memberSpellIds.Contains(s.Id))
-                .ToList();
+                .ToListAsync();
 
             return nonmemberSpells;
         }
 
-        public List<Spellbook> List()
+        public Task<List<Spellbook>> List()
         {
-            return _context.Spellbooks.ToList();
+            return _context.Spellbooks.ToListAsync();
         }
 
-        public bool Update(Spellbook entity)
+        public Task<bool> Update(Spellbook entity)
         {
             throw new NotImplementedException();
         }
 
-        public bool Delete(int id)
+        public async Task<bool> Delete(int id)
         {
             var goner = new Spellbook() { Id = id };
             _context.Entry(goner).State = EntityState.Deleted;
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             return true;
         }
     }

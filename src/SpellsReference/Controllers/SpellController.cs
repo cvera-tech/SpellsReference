@@ -18,9 +18,9 @@ namespace SpellsReference.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            List<Spell> spells = _spellRepo.List();
+            List<Spell> spells = await _spellRepo.List();
 
             return View(spells);
         }
@@ -117,7 +117,7 @@ namespace SpellsReference.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, SpellViewModel viewModel)
+        public async Task<ActionResult> Edit(int id, SpellViewModel viewModel)
         {
             var spell = new Spell()
             {
@@ -135,7 +135,7 @@ namespace SpellsReference.Controllers
                 Description = viewModel.Description
             };
 
-            if (_spellRepo.Update(spell))
+            if (await _spellRepo.Update(spell))
             {
                 return RedirectToAction("Select", "Spell",
                     routeValues: new { id = spell.Id });
@@ -161,9 +161,9 @@ namespace SpellsReference.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, SpellViewModel viewModel)
+        public async Task<ActionResult> Delete(int id, SpellViewModel viewModel)
         {
-            bool success = _spellRepo.Delete(id);
+            bool success = await _spellRepo.Delete(id);
 
             if (success)
             {

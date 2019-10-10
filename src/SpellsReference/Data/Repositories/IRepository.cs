@@ -36,13 +36,13 @@ namespace SpellsReference.Data.Repositories
         /// </summary>
         /// <param name="entity">The entity to update.</param>
         /// <returns>True if the entity was successfully updated; false otherwise.</returns>
-        bool Update(TEntityType entity);
+        Task<bool> Update(TEntityType entity);
 
         /// <summary>
         /// Attempts to delete an entity in the database by it's Id..
         /// </summary>
         /// <param name="entity">The entity to delete.</param>
         /// <returns>True if the entity was successfully deleted; false otherwise.</returns>
-        bool Delete(int id);
+        Task<bool> Delete(int id);
     }
 }
