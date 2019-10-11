@@ -78,7 +78,8 @@ namespace SpellsReference.Data.Repositories
             var spells = _context.Spells
                 .Where(s =>
                     (!filter.Level.HasValue || filter.Level.Value == s.Level) &&
-                    (!filter.School.HasValue || filter.School.Value == s.School)
+                    (!filter.School.HasValue || filter.School.Value == s.School ) &&
+                    (filter.Name == null || s.Name.Contains(filter.Name))
                     )
                 .ToList();
             return spells;
@@ -88,20 +89,6 @@ namespace SpellsReference.Data.Repositories
         {
             return _context.Spells
                 .ToListAsync();
-        }
-
-        public List<Spell> ListByLevel(int level)
-        {
-            return _context.Spells
-                .Where(s => s.Level == level)
-                .ToList();
-        }
-
-        public List<Spell> ListBySchool(SchoolOfMagic school)
-        {
-            return _context.Spells
-                .Where(s => s.School == school)
-                .ToList();
         }
 
         public bool Update(Spell entity)

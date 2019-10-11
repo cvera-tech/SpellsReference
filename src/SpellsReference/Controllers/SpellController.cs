@@ -195,6 +195,7 @@ namespace SpellsReference.Controllers
         {
             var routeValues = new
             {
+                name = viewModel.Name,
                 level = viewModel.Level.ToString(),
                 school = viewModel.School.ToString()
             };
