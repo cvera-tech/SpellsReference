@@ -146,7 +146,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Components\App.js" />
     <Content Include="Components\index.js" />
+    <Content Include="Components\Spells.js" />
     <Content Include="Content\main.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\dist\bundle.js" />
