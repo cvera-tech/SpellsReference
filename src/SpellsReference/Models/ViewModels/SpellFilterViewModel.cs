@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace SpellsReference.Models.ViewModels
 {
     public class SpellFilterViewModel
     {
+        public string Name { get; set; }
         public int? Level { get; set; }
         public SchoolOfMagic? School { get; set; }
 
@@ -45,7 +45,7 @@ namespace SpellsReference.Models.ViewModels
         {
             get
             {
-                return Level.HasValue || School.HasValue;
+                return Level.HasValue || School.HasValue || Name != null;
             }
         }
     }
