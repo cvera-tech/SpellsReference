@@ -1,9 +1,10 @@
 ﻿using SpellsReference.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Data.Entity;
-using System;
 using SpellsReference.Models.ViewModels;
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace SpellsReference.Data.Repositories
 {
@@ -30,6 +31,11 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
+        public Task<int?> AddAsync(Spell entity)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool Delete(int id)
         {
             var goner = new Spell() { Id = id };
@@ -38,9 +44,19 @@ namespace SpellsReference.Data.Repositories
             return true;
         }
 
+        public Task<bool> DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Spell Get(int id)
         {
             return _context.Spells.SingleOrDefault(s => s.Id == id);
+        }
+
+        public Task<Spell> GetAsync(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Spell> List()
@@ -60,6 +76,12 @@ namespace SpellsReference.Data.Repositories
             return spells;
         }
 
+        public Task<List<Spell>> ListAsync()
+        {
+            return _context.Spells
+                .ToListAsync();
+        }
+
         public bool Update(Spell entity)
         {
             try
@@ -72,6 +94,11 @@ namespace SpellsReference.Data.Repositories
             {
                 return false;
             }
+        }
+
+        public Task<bool> UpdateAsync(Spell entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }
