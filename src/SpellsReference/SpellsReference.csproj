@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Components\App.js" />
+    <Content Include="Components\CreateSpell.js" />
     <Content Include="Components\index.js" />
     <Content Include="Components\Spells.js" />
     <Content Include="Content\main.css" />

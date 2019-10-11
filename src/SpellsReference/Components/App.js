@@ -7,12 +7,7 @@ import {
 } from "react-router-dom";
 
 import Spells from './Spells';
-
-function About() {
-    return (
-        <h3>About</h3>
-    );
-}
+import CreateSpell from './CreateSpell';
 
 function App() {
     return (
@@ -24,13 +19,13 @@ function App() {
                             <Link to="/">Spells</Link>
                         </li>
                         <li>
-                            <Link to="/About">About</Link>
+                            <Link to="/Spell/Create">Create Spell</Link>
                         </li>
                     </ul>
                 </nav>
                 <Switch>
-                    <Route path="/About">
-                        <About />
+                    <Route path="/Spell/Create">
+                        <CreateSpell />
                     </Route>
                     <Route path="/">
                         <Spells />

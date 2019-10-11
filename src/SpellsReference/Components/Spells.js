@@ -43,6 +43,7 @@ class Spells extends Component {
             <div className="mt-2">
                 <h1>Spell Index Page</h1>
                 <div>
+                <a className="btn btn-primary btn-lg mb-2" href="/Spell/Create">Create Spell</a>
                     <table className="table table-sm table-hover">
                         <thead className="thead thead-dark">
                             <tr>
