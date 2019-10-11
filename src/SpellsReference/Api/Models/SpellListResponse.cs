@@ -1,11 +1,15 @@
-﻿using System;
+﻿using SpellsReference.Models;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
 namespace SpellsReference.Api.Models
 {
     public class SpellListResponse
     {
+        public List<SpellInfo> Spells { get; set; }
+
+        public SpellListResponse()
+        {
+            Spells = new List<SpellInfo>();
+        }
     }
 }
