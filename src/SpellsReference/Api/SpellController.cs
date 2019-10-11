@@ -56,11 +56,42 @@ namespace SpellsReference.Api
             return response;
         }
 
-        public Task<SpellDetailsResponse> Get(int id)
+        /// <summary>
+        /// ROUTE
+        /// `api/spell/{id}`
+        /// 
+        /// RESPONSE BODY
+        /// {
+        ///     "spell": [
+        ///         {
+        ///             "id": `int`,
+        ///             "name": `string`,
+        ///             "level": `int`,
+        ///             "school": `string`,
+        ///             "castingTime": `string`,
+        ///             "range": `string`,
+        ///             "verbal": `bool`,
+        ///             "somatic": `bool`,
+        ///             "materials": `string`,
+        ///             "duration": `string`,
+        ///             "ritual": `bool`,
+        ///             "description": `string`
+        ///         }
+        ///     ]
+        /// }
+        /// </summary>
+        /// <param name="id">The ID of the spell.</param>
+        /// <returns>The response body.</returns>
+        public async Task<SpellDetailsResponse> Get(int id)
         {
-            return null;
+            var spell = await _spellRepo.GetAsync(id);
+            var response = new SpellDetailsResponse()
+            {
+                Spell = spell.GetInfo()
+            };
+            return response;
         }
-
+        
         public Task<SpellUpdateResponse> Patch(SpellUpdateRequest request)
         {
             return null;

@@ -56,7 +56,7 @@ namespace SpellsReference.Data.Repositories
 
         public Task<Spell> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.Spells.SingleOrDefaultAsync(s => s.Id == id);
         }
 
         public List<Spell> List()
