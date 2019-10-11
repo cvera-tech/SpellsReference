@@ -118,9 +118,18 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public Task<bool> UpdateAsync(Spell entity)
+        public async Task<bool> UpdateAsync(Spell entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.UpdateEntity(entity);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }
