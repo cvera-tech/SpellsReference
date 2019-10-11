@@ -146,9 +146,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Components\index.js" />
     <Content Include="Content\main.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\dist\bundle.js" />
     <Content Include="Web.config" />
+    <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\IApiRepository.cs" />
@@ -177,6 +180,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ReactController.cs" />
     <Compile Include="Controllers\SpellbookController.cs" />
     <Compile Include="Controllers\SpellController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -230,6 +234,10 @@
     <Content Include="Views\Spellbook\Delete.cshtml" />
     <Content Include="Views\Spell\Filter.cshtml" />
     <Content Include="Views\Spellbook\Edit.cshtml" />
+    <Content Include="package.json" />
+    <Content Include=".babelrc" />
+    <Content Include="package-lock.json" />
+    <Content Include="Views\React\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
