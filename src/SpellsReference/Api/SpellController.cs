@@ -22,6 +22,8 @@ namespace SpellsReference.Api
         }
 
         /// <summary>
+        /// Retrieves a list of all spells.
+        /// 
         /// ROUTE
         /// `api/spell`
         /// 
@@ -58,6 +60,8 @@ namespace SpellsReference.Api
         }
 
         /// <summary>
+        /// Retrieves a spell with a given id.
+        /// 
         /// ROUTE
         /// `api/spell/{id}`
         /// 
@@ -103,6 +107,51 @@ namespace SpellsReference.Api
         //    return null;
         //}
 
+        /// <summary>
+        /// Attempts to create a new spell.
+        /// 
+        /// ROUTE
+        /// `api/spell/`
+        /// 
+        /// REQUEST BODY
+        /// {
+        ///     "name": `string`,
+        ///     "level": `int`,
+        ///     "school": `string`,
+        ///     "castingTime": `string`,
+        ///     "range": `string`,
+        ///     "verbal": `bool`,
+        ///     "somatic": `bool`,
+        ///     "materials": `string`,
+        ///     "duration": `string`,
+        ///     "ritual": `bool`,
+        ///     "description": `string`
+        /// }
+        /// 
+        /// RESPONSE BODY
+        /// {
+        ///     "success": `bool`,
+        ///     "message": `string`,
+        ///     "spell": [
+        ///         {
+        ///             "id": `int`,
+        ///             "name": `string`,
+        ///             "level": `int`,
+        ///             "school": `string`,
+        ///             "castingTime": `string`,
+        ///             "range": `string`,
+        ///             "verbal": `bool`,
+        ///             "somatic": `bool`,
+        ///             "materials": `string`,
+        ///             "duration": `string`,
+        ///             "ritual": `bool`,
+        ///             "description": `string`
+        ///         }
+        ///     ]
+        /// }
+        /// </summary>
+        /// <param name="id">The ID of the spell.</param>
+        /// <returns>The response body.</returns>
         public async Task<SpellCreateResponse> Post(SpellCreateRequest request)
         {
             var response = new SpellCreateResponse() { Success = false };
@@ -129,11 +178,13 @@ namespace SpellsReference.Api
                     if (spellId.HasValue)
                     {
                         response.Success = true;
+                        response.Message = "Spell successfully created.";
                         response.Spell = spell.GetInfo();
+                        return response;
                     }
                 }
             }
-
+            response.Message = "Unable to create spell. Please check parameter values.";
             return response;
         }
     }
