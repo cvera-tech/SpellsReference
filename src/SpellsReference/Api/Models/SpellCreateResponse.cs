@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SpellsReference.Api.Models
+﻿namespace SpellsReference.Api.Models
 {
     public class SpellCreateResponse
     {
+        public bool Success { get; set; }
+        public SpellInfo Spell { get; set; }
     }
 }

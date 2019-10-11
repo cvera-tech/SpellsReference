@@ -31,9 +31,18 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public Task<int?> AddAsync(Spell entity)
+        public async Task<int?> AddAsync(Spell entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Spells.Add(entity);
+                await _context.SaveChangesAsync();
+                return entity.Id;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public bool Delete(int id)

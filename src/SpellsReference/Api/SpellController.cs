@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
-using System.Web.Http;
-using SpellsReference.Api.Models;
+﻿using SpellsReference.Api.Models;
 using SpellsReference.Data.Repositories;
-using System.Linq;
+using SpellsReference.Models;
+using System;
+using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace SpellsReference.Api
 {
@@ -91,20 +92,49 @@ namespace SpellsReference.Api
             };
             return response;
         }
-        
+
         public Task<SpellUpdateResponse> Patch(SpellUpdateRequest request)
         {
             return null;
         }
 
-        public Task<SpellListResponse> Post(SpellListRequest request)
-        {
-            return null;
-        }
+        //public Task<SpellListResponse> Post(SpellListRequest request)
+        //{
+        //    return null;
+        //}
 
-        public Task<SpellCreateResponse> Post(SpellCreateRequest request)
+        public async Task<SpellCreateResponse> Post(SpellCreateRequest request)
         {
-            return null;
+            var response = new SpellCreateResponse() { Success = false };
+            if (ModelState.IsValid)
+            {
+                SchoolOfMagic school;
+                if (Enum.TryParse(request.School, out school))
+                {
+                    var spell = new Spell()
+                    {
+                        Name = request.Name,
+                        Level = request.Level.Value,
+                        School = school,
+                        CastingTime = request.CastingTime,
+                        Range = request.Range,
+                        Verbal = request.Verbal.Value,
+                        Somatic = request.Somatic.Value,
+                        Materials = request.Materials,
+                        Duration = request.Duration,
+                        Ritual = request.Ritual.Value,
+                        Description = request.Description
+                    };
+                    int? spellId = await _spellRepo.AddAsync(spell);
+                    if (spellId.HasValue)
+                    {
+                        response.Success = true;
+                        response.Spell = spell.GetInfo();
+                    }
+                }
+            }
+
+            return response;
         }
     }
 }
