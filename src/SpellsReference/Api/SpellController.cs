@@ -1,19 +1,31 @@
 ﻿using System.Threading.Tasks;
 using System.Web.Http;
 using SpellsReference.Api.Models;
+using SpellsReference.Data.Repositories;
+using System.Linq;
 
 namespace SpellsReference.Api
 {
-    public class SpellApiController : ApiController
+    public class SpellController : ApiController
     {
+        private ISpellRepository _spellRepo;
+
+        public SpellController(ISpellRepository spellRepo)
+        {
+            _spellRepo = spellRepo;
+        }
+
         public Task<SpellDeleteResponse> Delete(SpellDeleteRequest request)
         {
             return null;
         }
 
-        public Task<SpellListResponse> Get()
+        public async Task<SpellListResponse> Get()
         {
-            return null;
+            var spells = await _spellRepo.ListAsync();
+            var response = new SpellListResponse();
+            spells.ForEach(s => response.Spells.Add(s.GetInfo()));
+            return response;
         }
 
         public Task<SpellDetailsResponse> Get(int id)
