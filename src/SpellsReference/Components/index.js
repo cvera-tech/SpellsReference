@@ -1,6 +1,10 @@
 ﻿import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
+function BooleanToString(boolean){
+    return boolean.toString().charAt(0).toUpperCase() + boolean.toString().slice(1);
+}
+
 function Spell(props) {
     return (
         <tr>
@@ -9,11 +13,11 @@ function Spell(props) {
             <td>{props.spell.school}</td>
             <td>{props.spell.castingTime}</td>
             <td>{props.spell.range}</td>
-            <td>{props.spell.verbal.toString().charAt(0).toUpperCase() + props.spell.verbal.toString().slice(1)}</td>
-            <td>{props.spell.somatic.toString().charAt(0).toUpperCase() + props.spell.somatic.toString().slice(1)}</td>
+            <td>{BooleanToString(props.spell.verbal)}</td>
+            <td>{BooleanToString(props.spell.somatic)}</td>
             <td>{props.spell.materials}</td>
             <td>{props.spell.duration}</td>
-            <td>{props.spell.ritual.toString().charAt(0).toUpperCase() + props.spell.ritual.toString().slice(1)}</td>
+            <td>{BooleanToString(props.spell.ritual)}</td>
             <td>{props.spell.description}</td>
         </tr>
     );
