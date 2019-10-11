@@ -8,7 +8,6 @@ namespace SpellsReference.Models.ViewModels
 {
     public class SpellListViewModel
     {
-        public bool Filtered { get; set; }
         public List<Spell> Spells { get; set; }
     }
 }
