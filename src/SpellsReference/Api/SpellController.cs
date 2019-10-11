@@ -20,6 +20,34 @@ namespace SpellsReference.Api
             return null;
         }
 
+        /// <summary>
+        /// ROUTE
+        /// `api/spell`
+        /// 
+        /// RESPONSE BODY
+        /// {
+        ///     "spells": [
+        ///         {
+        ///             "id": `int`,
+        ///             "name": `string`,
+        ///             "level": `int`,
+        ///             "school": `string`,
+        ///             "castingTime": `string`,
+        ///             "range": `string`,
+        ///             "verbal": `bool`,
+        ///             "somatic": `bool`,
+        ///             "materials": `string`,
+        ///             "duration": `string`,
+        ///             "ritual": `bool`,
+        ///             "description": `string`
+        ///         },
+        ///         .
+        ///         .
+        ///         .
+        ///     ]
+        /// }
+        /// </summary>
+        /// <returns>The response body.</returns>
         public async Task<SpellListResponse> Get()
         {
             var spells = await _spellRepo.ListAsync();
