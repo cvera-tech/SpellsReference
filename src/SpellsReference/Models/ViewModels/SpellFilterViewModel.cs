@@ -9,6 +9,7 @@ namespace SpellsReference.Models.ViewModels
         public string Name { get; set; }
         public int? Level { get; set; }
         public SchoolOfMagic? School { get; set; }
+        public string CastingTime { get; set; }
 
         public List<SelectListItem> SchoolSelectItems
         {

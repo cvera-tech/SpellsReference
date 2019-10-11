@@ -60,20 +60,6 @@ namespace SpellsReference.Data.Repositories
             return spells;
         }
 
-        //public List<Spell> ListByLevel(int level)
-        //{
-        //    return _context.Spells
-        //        .Where(s => s.Level == level)
-        //        .ToList();
-        //}
-
-        //public List<Spell> ListBySchool(SchoolOfMagic school)
-        //{
-        //    return _context.Spells
-        //        .Where(s => s.School == school)
-        //        .ToList();
-        //}
-
         public bool Update(Spell entity)
         {
             try
