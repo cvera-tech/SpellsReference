@@ -156,6 +156,9 @@
   <ItemGroup>
     <Compile Include="Api\IApiRepository.cs" />
     <Compile Include="Api\Models\ModelExtensions.cs" />
+    <Compile Include="Api\Models\SpellbookAddSpellRequest.cs" />
+    <Compile Include="Api\Models\SpellbookAddSpellResponse.cs" />
+    <Compile Include="Api\Models\SpellbookController.cs" />
     <Compile Include="Api\Models\SpellbookCreateRequest.cs" />
     <Compile Include="Api\Models\SpellbookCreateResponse.cs" />
     <Compile Include="Api\Models\SpellbookDeleteRequest.cs" />
@@ -163,6 +166,8 @@
     <Compile Include="Api\Models\SpellbookDetailsResponse.cs" />
     <Compile Include="Api\Models\SpellbookListRequest.cs" />
     <Compile Include="Api\Models\SpellbookListResponse.cs" />
+    <Compile Include="Api\Models\SpellbookRemoveSpellRequest.cs" />
+    <Compile Include="Api\Models\SpellbookRemoveSpellResponse.cs" />
     <Compile Include="Api\Models\SpellbookUpdateRequest.cs" />
     <Compile Include="Api\Models\SpellbookUpdateResponse.cs" />
     <Compile Include="Api\Models\SpellCreateRequest.cs" />
