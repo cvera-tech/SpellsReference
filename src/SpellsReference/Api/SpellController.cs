@@ -1,7 +1,6 @@
 ﻿using SpellsReference.Api.Models;
 using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
-using SpellsReference.Models.ViewModels;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,9 +17,49 @@ namespace SpellsReference.Api
             _spellRepo = spellRepo;
         }
 
-        public Task<SpellDeleteResponse> Delete(SpellDeleteRequest request)
+        /// <summary>
+        /// Attempts to delete a spell with a given id.
+        /// 
+        /// ROUTE
+        /// `api/spell/{id}`
+        /// 
+        /// RESPONSE BODY
+        /// {
+        ///     "success": `bool`,
+        ///     "spell": {
+        ///         "id": `int`,
+        ///         "name": `string`,
+        ///         "level": `int`,
+        ///         "school": `string`,
+        ///         "castingTime": `string`,
+        ///         "range": `string`,
+        ///         "verbal": `bool`,
+        ///         "somatic": `bool`,
+        ///         "materials": `string`,
+        ///         "duration": `string`,
+        ///         "ritual": `bool`,
+        ///         "description": `string`
+        ///     }
+        /// }
+        /// </summary>
+        /// <param name="id">The ID of the spell.</param>
+        /// <returns>The response body.</returns>
+        public async Task<SpellDeleteResponse> Delete(int id)
         {
-            return null;
+            // Query to get spell information. Maybe this isn't 
+            // needed and we can just return a status code.
+            var spell = await _spellRepo.GetAsync(id);
+            var response = new SpellDeleteResponse()
+            {
+                Success = false
+            };
+
+            if (await _spellRepo.DeleteAsync(id))
+            {
+                response.Success = true;
+                response.Spell = spell.GetInfo();
+            }
+            return response;
         }
 
         /// <summary>
