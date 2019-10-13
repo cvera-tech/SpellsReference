@@ -1,4 +1,5 @@
-﻿using SpellsReference.Models;
+﻿using SpellsReference.Api.Models;
+using SpellsReference.Models;
 using SpellsReference.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -89,6 +90,18 @@ namespace SpellsReference.Data.Repositories
         {
             return _context.Spells
                 .ToListAsync();
+        }
+
+        public Task<List<Spell>> ListAsync(SpellListFilter filter)
+        {
+            var spells = _context.Spells
+                .Where(s =>
+                    (!filter.Level.HasValue || filter.Level.Value == s.Level) &&
+                    (!filter.School.HasValue || filter.School.Value == s.School) &&
+                    (filter.Name == null || s.Name.Contains(filter.Name))
+                    )
+                .ToListAsync();
+            return spells;
         }
 
         public bool Update(Spell entity)

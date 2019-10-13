@@ -1,7 +1,9 @@
 ﻿using SpellsReference.Api.Models;
 using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
+using SpellsReference.Models.ViewModels;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -19,44 +21,6 @@ namespace SpellsReference.Api
         public Task<SpellDeleteResponse> Delete(SpellDeleteRequest request)
         {
             return null;
-        }
-
-        /// <summary>
-        /// Retrieves a list of all spells.
-        /// 
-        /// ROUTE
-        /// `api/spell`
-        /// 
-        /// RESPONSE BODY
-        /// {
-        ///     "spells": [
-        ///         {
-        ///             "id": `int`,
-        ///             "name": `string`,
-        ///             "level": `int`,
-        ///             "school": `string`,
-        ///             "castingTime": `string`,
-        ///             "range": `string`,
-        ///             "verbal": `bool`,
-        ///             "somatic": `bool`,
-        ///             "materials": `string`,
-        ///             "duration": `string`,
-        ///             "ritual": `bool`,
-        ///             "description": `string`
-        ///         },
-        ///         .
-        ///         .
-        ///         .
-        ///     ]
-        /// }
-        /// </summary>
-        /// <returns>The response body.</returns>
-        public async Task<SpellListResponse> Get()
-        {
-            var spells = await _spellRepo.ListAsync();
-            var response = new SpellListResponse();
-            spells.ForEach(s => response.Spells.Add(s.GetInfo()));
-            return response;
         }
 
         /// <summary>
@@ -96,90 +60,45 @@ namespace SpellsReference.Api
         }
 
         /// <summary>
-        /// Attempts to update a spell.
+        /// Retrieves a list of spells. Results can be filtered by passing in
+        /// parameters through the query string.
         /// 
         /// ROUTE
-        /// `api/spell/{id}`
-        /// 
-        /// REQUEST BODY
-        /// {
-        ///     "name": `string`,
-        ///     "level": `int`,
-        ///     "school": `string`,
-        ///     "castingTime": `string`,
-        ///     "range": `string`,
-        ///     "verbal": `bool`,
-        ///     "somatic": `bool`,
-        ///     "materials": `string`,
-        ///     "duration": `string`,
-        ///     "ritual": `bool`,
-        ///     "description": `string`
-        /// }
+        /// `api/spell`
         /// 
         /// RESPONSE BODY
         /// {
-        ///     "success": `bool`,
-        ///     "message": `string`,
-        ///     "spell": {
-        ///         "id": `int`,
-        ///         "name": `string`,
-        ///         "level": `int`,
-        ///         "school": `string`,
-        ///         "castingTime": `string`,
-        ///         "range": `string`,
-        ///         "verbal": `bool`,
-        ///         "somatic": `bool`,
-        ///         "materials": `string`,
-        ///         "duration": `string`,
-        ///         "ritual": `bool`,
-        ///         "description": `string`
-        ///     }
+        ///     "spells": [
+        ///         {
+        ///             "id": `int`,
+        ///             "name": `string`,
+        ///             "level": `int`,
+        ///             "school": `string`,
+        ///             "castingTime": `string`,
+        ///             "range": `string`,
+        ///             "verbal": `bool`,
+        ///             "somatic": `bool`,
+        ///             "materials": `string`,
+        ///             "duration": `string`,
+        ///             "ritual": `bool`,
+        ///             "description": `string`
+        ///         },
+        ///         .
+        ///         .
+        ///         .
+        ///     ]
         /// }
         /// </summary>
-        /// <param name="id">The ID of the spell.</param>
         /// <returns>The response body.</returns>
-        public async Task<SpellUpdateResponse> Put(int id, SpellUpdateRequest request)
+        public async Task<SpellListResponse> Get([FromUri] SpellListFilter filter)
         {
-            var response = new SpellUpdateResponse()
+            var spells = await _spellRepo.ListAsync(filter);
+            var response = new SpellListResponse()
             {
-                Success = false
+                Spells = spells.Select(s => s.GetInfo()).ToList()
             };
-
-            if (ModelState.IsValid)
-            {
-                SchoolOfMagic school;
-                if (Enum.TryParse(request.School, out school))
-                {
-                    var spell = new Spell()
-                    {
-                        Id = id,
-                        Name = request.Name,
-                        Level = request.Level.Value,
-                        School = school,
-                        CastingTime = request.CastingTime,
-                        Range = request.Range,
-                        Verbal = request.Verbal.Value,
-                        Somatic = request.Somatic.Value,
-                        Materials = request.Materials,
-                        Duration = request.Duration,
-                        Ritual = request.Ritual.Value,
-                        Description = request.Description
-                    };
-
-                    if (await _spellRepo.UpdateAsync(spell))
-                    {
-                        response.Success = true;
-                        response.Spell = spell.GetInfo();
-                    }
-                }
-            }
             return response;
         }
-
-        //public Task<SpellListResponse> Post(SpellListRequest request)
-        //{
-        //    return null;
-        //}
 
         /// <summary>
         /// Attempts to create a new spell.
@@ -257,6 +176,88 @@ namespace SpellsReference.Api
                 }
             }
             response.Message = "Unable to create spell. Please check parameter values.";
+            return response;
+        }
+
+        /// <summary>
+        /// Attempts to update a spell. This is a PUT because a PATCH is too much
+        /// work for such a small model. 
+        /// 
+        /// ROUTE
+        /// `api/spell/{id}`
+        /// 
+        /// REQUEST BODY
+        /// {
+        ///     "name": `string`,
+        ///     "level": `int`,
+        ///     "school": `string`,
+        ///     "castingTime": `string`,
+        ///     "range": `string`,
+        ///     "verbal": `bool`,
+        ///     "somatic": `bool`,
+        ///     "materials": `string`,
+        ///     "duration": `string`,
+        ///     "ritual": `bool`,
+        ///     "description": `string`
+        /// }
+        /// 
+        /// RESPONSE BODY
+        /// {
+        ///     "success": `bool`,
+        ///     "message": `string`,
+        ///     "spell": {
+        ///         "id": `int`,
+        ///         "name": `string`,
+        ///         "level": `int`,
+        ///         "school": `string`,
+        ///         "castingTime": `string`,
+        ///         "range": `string`,
+        ///         "verbal": `bool`,
+        ///         "somatic": `bool`,
+        ///         "materials": `string`,
+        ///         "duration": `string`,
+        ///         "ritual": `bool`,
+        ///         "description": `string`
+        ///     }
+        /// }
+        /// </summary>
+        /// <param name="id">The ID of the spell.</param>
+        /// <returns>The response body.</returns>
+        public async Task<SpellUpdateResponse> Put(int id, SpellUpdateRequest request)
+        {
+            var response = new SpellUpdateResponse()
+            {
+                Success = false
+            };
+
+            if (ModelState.IsValid)
+            {
+                SchoolOfMagic school;
+                if (Enum.TryParse(request.School, out school))
+                {
+                    var spell = new Spell()
+                    {
+                        Id = id,
+                        Name = request.Name,
+                        Level = request.Level.Value,
+                        School = school,
+                        CastingTime = request.CastingTime,
+                        Range = request.Range,
+                        Verbal = request.Verbal.Value,
+                        Somatic = request.Somatic.Value,
+                        Materials = request.Materials,
+                        Duration = request.Duration,
+                        Ritual = request.Ritual.Value,
+                        Description = request.Description
+                    };
+
+                    if (await _spellRepo.UpdateAsync(spell))
+                    {
+                        response.Success = true;
+                        response.Spell = spell.GetInfo();
+                    }
+                }
+            }
             return response;
         }
     }
