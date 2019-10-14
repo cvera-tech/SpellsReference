@@ -84,44 +84,6 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public bool RemoveSpellFromSpellbook(int spellbookId, int spellId)
-        {
-            try
-            {
-                var spellbook = Get(spellbookId);
-                var spell = _spellRepo.Get(spellId);
-                spellbook.Spells.Remove(spell);
-                _context.UpdateEntity(spellbook);
-                _context.SaveChanges();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
-        public async Task<bool> RemoveSpellAsync(int spellbookId, int spellId)
-        {
-            try
-            {
-                var spellbook = await GetAsync(spellbookId);
-                var spell = await _spellRepo.GetAsync(spellId);
-                if (!spellbook.Spells.Contains(spell))
-                {
-                    return false;
-                }
-                spellbook.Spells.Remove(spell);
-                _context.UpdateEntity(spellbook);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
-
         public bool Delete(int id)
         {
             var goner = new Spellbook() { Id = id };
@@ -134,8 +96,8 @@ namespace SpellsReference.Data.Repositories
         {
             try
             {
-                var spellbook = new Spellbook() { Id = id };
-                _context.Spellbooks.Attach(spellbook);
+                // This can be done better
+                var spellbook = await _context.Spellbooks.FindAsync(id);
                 _context.Spellbooks.Remove(spellbook);
                 await _context.SaveChangesAsync();
                 return true;
@@ -181,6 +143,44 @@ namespace SpellsReference.Data.Repositories
                 .Include(sb => sb.Spells)
                 .ToListAsync();
             return spellbooks;
+        }
+
+        public bool RemoveSpellFromSpellbook(int spellbookId, int spellId)
+        {
+            try
+            {
+                var spellbook = Get(spellbookId);
+                var spell = _spellRepo.Get(spellId);
+                spellbook.Spells.Remove(spell);
+                _context.UpdateEntity(spellbook);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveSpellAsync(int spellbookId, int spellId)
+        {
+            try
+            {
+                var spellbook = await GetAsync(spellbookId);
+                var spell = await _spellRepo.GetAsync(spellId);
+                if (!spellbook.Spells.Contains(spell))
+                {
+                    return false;
+                }
+                spellbook.Spells.Remove(spell);
+                _context.UpdateEntity(spellbook);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public bool Update(Spellbook entity)

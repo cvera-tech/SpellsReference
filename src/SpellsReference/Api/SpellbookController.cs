@@ -22,9 +22,16 @@ namespace SpellsReference.Api
         }
 
         [Route("{id}")]
-        public Task<SpellbookDeleteResponse> Delete(int id)
+        public async Task<SpellbookDeleteResponse> Delete(int id)
         {
-            return null;
+            var response = new SpellbookDeleteResponse() { Success = false };
+            var spellbook = await _spellbookRepo.GetAsync(id);
+            var spellbookInfo = spellbook.GetShortInfo();
+            if (await _spellbookRepo.DeleteAsync(id))
+            {
+                response.Spellbook = spellbookInfo;
+            }
+            return response;
         }
 
         [Route("")]
