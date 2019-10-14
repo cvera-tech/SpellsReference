@@ -7,5 +7,6 @@ namespace SpellsReference.Api.Models
 {
     public class SpellbookDetailsResponse
     {
+        public SpellbookInfo Spellbook { get; set; }
     }
 }

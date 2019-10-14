@@ -1,8 +1,5 @@
 ﻿using SpellsReference.Models;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace SpellsReference.Api.Models
 {
@@ -24,6 +21,29 @@ namespace SpellsReference.Api.Models
                 Duration = spell.Duration,
                 Ritual = spell.Ritual,
                 Description = spell.Description
+            };
+            return info;
+        }
+
+        public static SpellbookInfo GetInfo(this Spellbook spellbook)
+        {
+            var info = new SpellbookInfo()
+            {
+                Id = spellbook.Id,
+                Name = spellbook.Name,
+                NumberOfSpells = spellbook.Spells.Count(),
+                Spells = spellbook.Spells.Select(s => s.GetInfo()).ToList()
+            };
+            return info;
+        }
+
+        public static ShortSpellbookInfo GetShortInfo(this Spellbook spellbook)
+        {
+            var info = new ShortSpellbookInfo()
+            {
+                Id = spellbook.Id,
+                Name = spellbook.Name,
+                NumberOfSpells = spellbook.Spells.Count()
             };
             return info;
         }

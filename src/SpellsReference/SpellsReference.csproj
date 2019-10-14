@@ -160,14 +160,17 @@
   <ItemGroup>
     <Compile Include="Api\IApiRepository.cs" />
     <Compile Include="Api\Models\ModelExtensions.cs" />
+    <Compile Include="Api\Models\ShortSpellbookInfo.cs" />
     <Compile Include="Api\Models\SpellbookAddSpellRequest.cs" />
     <Compile Include="Api\Models\SpellbookAddSpellResponse.cs" />
-    <Compile Include="Api\Models\SpellbookController.cs" />
+    <Compile Include="Api\Models\SpellbookInfo.cs" />
+    <Compile Include="Api\SpellbookController.cs" />
     <Compile Include="Api\Models\SpellbookCreateRequest.cs" />
     <Compile Include="Api\Models\SpellbookCreateResponse.cs" />
     <Compile Include="Api\Models\SpellbookDeleteRequest.cs" />
     <Compile Include="Api\Models\SpellbookDeleteResponse.cs" />
     <Compile Include="Api\Models\SpellbookDetailsResponse.cs" />
+    <Compile Include="Api\Models\ISpellbookInfo.cs" />
     <Compile Include="Api\Models\SpellbookListRequest.cs" />
     <Compile Include="Api\Models\SpellbookListResponse.cs" />
     <Compile Include="Api\Models\SpellbookRemoveSpellRequest.cs" />
@@ -185,7 +188,6 @@
     <Compile Include="Api\Models\SpellUpdateRequest.cs" />
     <Compile Include="Api\Models\SpellUpdateResponse.cs" />
     <Compile Include="Api\SpellController.cs" />
-    <Compile Include="Api\SpellbookApiController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
