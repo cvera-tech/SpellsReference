@@ -92,9 +92,14 @@ namespace SpellsReference.Api
 
         [HttpPost]
         [Route("{id}/add")]
-        public Task<SpellbookAddSpellResponse> AddSpell(int id, SpellbookAddSpellRequest request)
+        public async Task<SpellbookAddSpellResponse> AddSpell(int id, SpellbookAddSpellRequest request)
         {
-            return null;
+            var response = new SpellbookAddSpellResponse() { Success = false };
+            if (ModelState.IsValid && await _spellbookRepo.AddSpellAsync(id, request.SpellId.Value))
+            {
+                response.Success = true;
+            }
+            return response;
         }
 
         [HttpPost]

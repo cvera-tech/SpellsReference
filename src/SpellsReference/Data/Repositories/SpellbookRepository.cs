@@ -64,6 +64,23 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
+        public async Task<bool> AddSpellAsync(int spellbookId, int spellId)
+        {
+            try
+            {
+                var spellbook = await GetAsync(spellbookId);
+                var spell = await _spellRepo.GetAsync(spellId);
+                spellbook.Spells.Add(spell);
+                _context.UpdateEntity(spellbook);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public bool RemoveSpellFromSpellbook(int spellbookId, int spellId)
         {
             try
@@ -79,6 +96,11 @@ namespace SpellsReference.Data.Repositories
             {
                 return false;
             }
+        }
+
+        public Task<bool> RemoveSpellAsync(int spellbookId, int spellId)
+        {
+            return null;
         }
 
         public bool Delete(int id)
