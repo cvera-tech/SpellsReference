@@ -48,9 +48,23 @@ namespace SpellsReference.Api
         }
 
         [Route("")]
-        public Task<SpellbookCreateResponse> Post(SpellbookCreateRequest request)
+        public async Task<SpellbookCreateResponse> Post(SpellbookCreateRequest request)
         {
-            return null;
+            var response = new SpellbookCreateResponse() { Success = false };
+            if (ModelState.IsValid)
+            {
+                var spellbook = new Spellbook()
+                {
+                    Name = request.Name
+                };
+                int? spellbookId = await _spellbookRepo.AddAsync(spellbook);
+                if (spellbookId.HasValue)
+                {
+                    response.Success = true;
+                    response.Spellbook = spellbook.GetShortInfo();
+                }
+            }
+            return response;
         }
 
         [Route("{id}")]
