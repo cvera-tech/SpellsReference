@@ -1,9 +1,9 @@
-﻿using System.Data.Entity;
-using SpellsReference.Data;
-using SpellsReference.Models;
+﻿using SpellsReference.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace SpellsReference.Data.Repositories
 {
@@ -32,6 +32,20 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
+        public async Task<int?> AddAsync(Spellbook entity)
+        {
+            try
+            {
+                _context.Spellbooks.Add(entity);
+                await _context.SaveChangesAsync();
+                return entity.Id;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
         public bool AddSpellToSpellbook(int spellbookId, int spellId)
         {
             try
@@ -49,15 +63,19 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public bool RemoveSpellFromSpellbook(int spellbookId, int spellId)
+        public async Task<bool> AddSpellAsync(int spellbookId, int spellId)
         {
             try
             {
-                var spellbook = Get(spellbookId);
-                var spell = _spellRepo.Get(spellId);
-                spellbook.Spells.Remove(spell);
+                var spellbook = await GetAsync(spellbookId);
+                var spell = await _spellRepo.GetAsync(spellId);
+                if (spellbook.Spells.Contains(spell))
+                {
+                    return false;
+                }
+                spellbook.Spells.Add(spell);
                 _context.UpdateEntity(spellbook);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
                 return true;
             }
             catch
@@ -66,9 +84,44 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
+        public bool Delete(int id)
+        {
+            var goner = new Spellbook() { Id = id };
+            _context.Entry(goner).State = EntityState.Deleted;
+            _context.SaveChanges();
+            return true;
+        }
+
+        public async Task<bool> DeleteAsync(int id)
+        {
+            try
+            {
+                var spellbook = await _context.Spellbooks.FindAsync(id);
+                _context.Spellbooks.Remove(spellbook);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _context.Spellbooks
+                .SingleOrDefaultAsync(sb => sb.Id == id) != null;
+        }
+
         public Spellbook Get(int id)
         {
             return _context.Spellbooks.Include(sb => sb.Spells).SingleOrDefault(sb => sb.Id == id);
+        }
+
+        public async Task<Spellbook> GetAsync(int id)
+        {
+            return await _context.Spellbooks.Include(sb => sb.Spells).SingleOrDefaultAsync(sb => sb.Id == id);
         }
 
         public List<Spell> GetNonmemberSpells(int id)
@@ -89,6 +142,52 @@ namespace SpellsReference.Data.Repositories
             return _context.Spellbooks.ToList();
         }
 
+        public async Task<List<Spellbook>> ListAsync()
+        {
+            var spellbooks = await _context.Spellbooks
+                .Include(sb => sb.Spells)
+                .ToListAsync();
+            return spellbooks;
+        }
+
+        public bool RemoveSpellFromSpellbook(int spellbookId, int spellId)
+        {
+            try
+            {
+                var spellbook = Get(spellbookId);
+                var spell = _spellRepo.Get(spellId);
+                spellbook.Spells.Remove(spell);
+                _context.UpdateEntity(spellbook);
+                _context.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> RemoveSpellAsync(int spellbookId, int spellId)
+        {
+            try
+            {
+                var spellbook = await GetAsync(spellbookId);
+                var spell = await _spellRepo.GetAsync(spellId);
+                if (!spellbook.Spells.Contains(spell))
+                {
+                    return false;
+                }
+                spellbook.Spells.Remove(spell);
+                _context.UpdateEntity(spellbook);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public bool Update(Spellbook entity)
         {
             try
@@ -103,12 +202,25 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public bool Delete(int id)
+        public async Task<bool> UpdateAsync(Spellbook entity)
         {
-            var goner = new Spellbook() { Id = id };
-            _context.Entry(goner).State = EntityState.Deleted;
-            _context.SaveChanges();
-            return true;
+            try
+            {
+                // Need the old spellbook record to get its spell list
+                var spellbook = await _context.Spellbooks
+                    .Include(sb => sb.Spells)
+                    .SingleOrDefaultAsync(sb => sb.Id == entity.Id);
+
+                // Update the spellbook
+                spellbook.Name = entity.Name;
+                
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

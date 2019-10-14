@@ -1,11 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Collections.Generic;
 
 namespace SpellsReference.Api.Models
 {
     public class SpellbookListResponse
     {
+        public List<ISpellbookInfo> Spellbooks { get; set; }
+
+        public SpellbookListResponse()
+        {
+            Spellbooks = new List<ISpellbookInfo>();
+        }
     }
 }
