@@ -27,5 +27,28 @@ namespace SpellsReference.Api.Models
             };
             return info;
         }
+
+        public static SpellbookInfo GetInfo(this Spellbook spellbook)
+        {
+            var info = new SpellbookInfo()
+            {
+                Id = spellbook.Id,
+                Name = spellbook.Name,
+                NumberOfSpells = spellbook.Spells.Count(),
+                Spells = spellbook.Spells.Select(s => s.GetInfo()).ToList()
+            };
+            return info;
+        }
+
+        public static ShortSpellbookInfo GetShortInfo(this Spellbook spellbook)
+        {
+            var info = new ShortSpellbookInfo()
+            {
+                Id = spellbook.Id,
+                Name = spellbook.Name,
+                NumberOfSpells = spellbook.Spells.Count()
+            };
+            return info;
+        }
     }
 }
