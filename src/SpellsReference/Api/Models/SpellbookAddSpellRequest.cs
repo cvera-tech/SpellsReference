@@ -5,7 +5,7 @@ using System.Web;
 
 namespace SpellsReference.Api.Models
 {
-    public class SpellListRequest
+    public class SpellbookAddSpellRequest
     {
     }
 }

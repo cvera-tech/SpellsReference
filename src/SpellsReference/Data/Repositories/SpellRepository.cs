@@ -1,4 +1,5 @@
-﻿using SpellsReference.Models;
+﻿using SpellsReference.Api.Models;
+using SpellsReference.Models;
 using SpellsReference.Models.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -31,9 +32,18 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public Task<int?> AddAsync(Spell entity)
+        public async Task<int?> AddAsync(Spell entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Spells.Add(entity);
+                await _context.SaveChangesAsync();
+                return entity.Id;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public bool Delete(int id)
@@ -43,10 +53,23 @@ namespace SpellsReference.Data.Repositories
             _context.SaveChanges();
             return true;
         }
-
-        public Task<bool> DeleteAsync(int id)
+        
+        public async Task<bool> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // We can't use the same technique to delete the Spell by its ID
+                // as the Delete method because the API SpellController loads
+                // the Spell into the context before calling this method.
+                var spell = await _context.Spells.FindAsync(id);
+                _context.Spells.Remove(spell);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public Spell Get(int id)
@@ -56,7 +79,7 @@ namespace SpellsReference.Data.Repositories
 
         public Task<Spell> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            return _context.Spells.SingleOrDefaultAsync(s => s.Id == id);
         }
 
         public List<Spell> List()
@@ -69,7 +92,7 @@ namespace SpellsReference.Data.Repositories
             var spells = _context.Spells
                 .Where(s =>
                     (!filter.Level.HasValue || filter.Level.Value == s.Level) &&
-                    (!filter.School.HasValue || filter.School.Value == s.School ) &&
+                    (!filter.School.HasValue || filter.School.Value == s.School) &&
                     (filter.Name == null || s.Name.Contains(filter.Name))
                     )
                 .ToList();
@@ -80,6 +103,18 @@ namespace SpellsReference.Data.Repositories
         {
             return _context.Spells
                 .ToListAsync();
+        }
+
+        public Task<List<Spell>> ListAsync(SpellListFilter filter)
+        {
+            var spells = _context.Spells
+                .Where(s =>
+                    (!filter.Level.HasValue || filter.Level.Value == s.Level) &&
+                    (!filter.School.HasValue || filter.School.Value == s.School) &&
+                    (filter.Name == null || s.Name.Contains(filter.Name))
+                    )
+                .ToListAsync();
+            return spells;
         }
 
         public bool Update(Spell entity)
@@ -96,9 +131,18 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public Task<bool> UpdateAsync(Spell entity)
+        public async Task<bool> UpdateAsync(Spell entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.UpdateEntity(entity);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

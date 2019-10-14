@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace SpellsReference.Api.Models
+﻿namespace SpellsReference.Api.Models
 {
     public class SpellDeleteResponse
     {
+        public bool Success { get; set; }
+        public SpellInfo Spell { get; set; }
     }
 }
