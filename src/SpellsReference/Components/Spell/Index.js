@@ -1,4 +1,10 @@
 ﻿import React, { Component } from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+  } from "react-router-dom";
 
 function Spell(props) {
     return (
@@ -18,7 +24,7 @@ function Spell(props) {
     );
 }
 
-class Spells extends Component {
+class Index extends Component {
 
     constructor(props) {
         super(props);
@@ -43,7 +49,8 @@ class Spells extends Component {
             <div className="mt-2">
                 <h1>Spell Index Page</h1>
                 <div>
-                <a className="btn btn-primary btn-lg mb-2" href="/Spell/Create">Create Spell</a>
+                <Link to="/Spell/Create" className="btn btn-primary btn-lg mb-2">Create Spell</Link>
+                <Link to="/Spell/Filter" className="btn btn-outline-secondary btn-lg mb-2 ml-2">Filter</Link>
                     <table className="table table-sm table-hover">
                         <thead className="thead thead-dark">
                             <tr>
@@ -72,4 +79,4 @@ class Spells extends Component {
     }
 }
 
-export default Spells;
+export default Index;

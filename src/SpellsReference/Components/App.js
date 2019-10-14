@@ -6,30 +6,28 @@ import {
   Link
 } from "react-router-dom";
 
-import Spells from './Spells';
-import CreateSpell from './CreateSpell';
+import Index from './Spell/Index';
+import Create from './Spell/Create';
+import Filter from './Spell/Filter';
 
 function App() {
     return (
         <Router>
             <div>
                 <nav>
-                    <ul>
-                        <li>
-                            <Link to="/">Spells</Link>
-                        </li>
-                        <li>
-                            <Link to="/Spell/Create">Create Spell</Link>
-                        </li>
-                    </ul>
+                    <Link to="/React/Index">Cheat Home</Link>
                 </nav>
                 <Switch>
+                    <Route path="/Spell/Filter">
+                        <Filter />
+                    </Route>
                     <Route path="/Spell/Create">
-                        <CreateSpell />
+                        <Create />
                     </Route>
-                    <Route path="/">
-                        <Spells />
+                    <Route path="/React/Index">
+                        <Index />
                     </Route>
+
                 </Switch>
             </div>
         </Router>
