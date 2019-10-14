@@ -160,7 +160,14 @@ namespace SpellsReference.Data.Repositories
         {
             try
             {
-                _context.UpdateEntity(entity);
+                // Need the old spellbook record to get its spell list
+                var spellbook = await _context.Spellbooks
+                    .Include(sb => sb.Spells)
+                    .SingleOrDefaultAsync(sb => sb.Id == entity.Id);
+
+                // Update the spellbook
+                spellbook.Name = entity.Name;
+                
                 await _context.SaveChangesAsync();
                 return true;
             }

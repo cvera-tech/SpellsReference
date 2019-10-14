@@ -68,9 +68,26 @@ namespace SpellsReference.Api
         }
 
         [Route("{id}")]
-        public Task<SpellbookUpdateResponse> Put(int id, SpellbookUpdateRequest request)
+        public async Task<SpellbookUpdateResponse> Put(int id, SpellbookUpdateRequest request)
         {
-            return null;
+            var response = new SpellbookUpdateResponse() { Success = false };
+            if (ModelState.IsValid)
+            {
+                var spellbook = new Spellbook()
+                {
+                    Id = id,
+                    Name = request.Name
+                };
+                if (await _spellbookRepo.UpdateAsync(spellbook))
+                {
+                    response.Success = true;
+
+                    // This is ridiculous. Instead of returning JSON, 
+                    // we should be returning HTTP status codes. 
+                    response.Spellbook = (await _spellbookRepo.GetAsync(id)).GetShortInfo();
+                }
+            }
+            return response;
         }
 
         [HttpPost]
