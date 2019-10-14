@@ -60,15 +60,16 @@ namespace SpellsReference.Controllers
             return View(viewModel);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int? spellbookId)
         {
             var viewModel = new SpellViewModel();
+            viewModel.SpellbookId = spellbookId;
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SpellViewModel viewModel)
+        public ActionResult Create(int? spellbookId, SpellViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -90,6 +91,10 @@ namespace SpellsReference.Controllers
                 var success = _spellRepo.Add(spell);
                 if (success.HasValue)
                 {
+                    if (spellbookId != null)
+                    {
+                        return RedirectToAction("AddSpell", "Spellbook", new { id = spellbookId });
+                    }
                     return RedirectToAction("Index", "Spell");
                 }
                 else

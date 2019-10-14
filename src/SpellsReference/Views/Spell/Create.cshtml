@@ -7,13 +7,11 @@
 
 <h2>@ViewBag.Title</h2>
 
-@using (Html.BeginForm("Create", "Spell", FormMethod.Post, new { id = "CreateSpell" }))
+@using (Html.BeginForm("Create", "Spell", new { spellbookId = Model.SpellbookId }))
 {
     @Html.AntiForgeryToken()
 
     @Html.ValidationSummary()
-
-
 
     <div class="form-group row">
         <div class="col-sm-3">
@@ -77,6 +75,8 @@
             @Html.TextBoxFor(s => s.Materials, new { @class = "form-control" })
         </div>
     </div>
+
+
 
     <div>
         <button id="CreateSpellButton" type="submit" class="btn btn-success btn-lg">Submit</button>

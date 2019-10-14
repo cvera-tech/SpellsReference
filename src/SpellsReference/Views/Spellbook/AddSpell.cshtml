@@ -11,6 +11,10 @@
     @Html.DisplayTextFor(model => model.SpellbookName)
 </div>
 
+<div>
+    @Html.ActionLink("Don't see it here? Create your own spell!", "Create", "Spell", new { spellbookId = Model.SpellbookId }, null)
+</div>
+
 <table class="table table-sm">
     <thead class="thead-dark">
         <tr>
@@ -26,7 +30,6 @@
             <th>Ritual</th>
             <th>Description</th>
             <th>&nbsp;</th>
-
         </tr>
     </thead>
     <tbody>

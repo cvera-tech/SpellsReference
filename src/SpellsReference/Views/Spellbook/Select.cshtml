@@ -19,8 +19,9 @@
 </div>
 
 <div>
-    @Html.ActionLink("Add an Existing Spell", "AddSpell",
-    routeValues: new { id = Model.Id })
+    @Html.ActionLink("Add Spell", "AddSpell", 
+    new { id = Model.Id },
+    new { @class = "btn btn-primary mb-3" })
 </div>
 <table class="table table-sm">
     <thead class="thead-dark">
