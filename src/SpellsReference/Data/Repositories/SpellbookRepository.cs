@@ -96,8 +96,8 @@ namespace SpellsReference.Data.Repositories
         {
             try
             {
-                // This can be done better
-                var spellbook = await _context.Spellbooks.FindAsync(id);
+                var spellbook = new Spellbook() { Id = id };
+                _context.Spellbooks.Attach(spellbook);
                 _context.Spellbooks.Remove(spellbook);
                 await _context.SaveChangesAsync();
                 return true;

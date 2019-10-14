@@ -3,6 +3,7 @@ using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -23,37 +24,147 @@ namespace SpellsReference.Api
             _spellbookRepo = spellbookRepo;
         }
 
+        /// <summary>
+        /// Attempts to delete the spellbook with the given ID from the database.
+        /// 
+        /// ROUTE
+        /// "api/spellbook/{id}"
+        /// 
+        /// REQUEST
+        ///     METHOD: DELETE
+        ///     
+        /// RESPONSE
+        /// If success:
+        ///     Status Code: 204 (NO CONTENT)
+        ///     
+        /// If unable to delete spellbook from database:
+        ///     Status Code: 500 (INTERNAL SERVER ERROR)
+        ///     
+        /// </summary>
+        /// <param name="id">The spellbook's ID.</param>
+        /// <returns>The appropriate HttpActionResult.</returns>
         [Route("{id}")]
-        public async Task<SpellbookDeleteResponse> Delete(int id)
+        public async Task<IHttpActionResult> Delete(int id)
         {
-            var response = new SpellbookDeleteResponse() { Success = false };
-            var spellbook = await _spellbookRepo.GetAsync(id);
-            var spellbookInfo = spellbook.GetShortInfo();
+            // Perhaps we can check for the existence of the spellbook first.
+            // That way, we can return a BadRequest before attempting to delete.
             if (await _spellbookRepo.DeleteAsync(id))
             {
-                response.Spellbook = spellbookInfo;
+                return StatusCode(HttpStatusCode.NoContent);
             }
-            return response;
+            else
+            {
+                return InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// Retrieves the list of spellbooks from the database.
+        /// 
+        /// ROUTE
+        /// "api/spellbook"
+        /// 
+        /// REQUEST
+        ///     METHOD: GET
+        ///     
+        /// RESPONSE
+        /// If success:
+        ///     Status Code: 200 (OK)
+        ///     BODY:
+        ///         [
+        ///             {
+        ///                 "id": `int`,
+        ///                 "name": `string`,
+        ///                 "numberOfSpells": `int`
+        ///             }, 
+        ///             .
+        ///             .
+        ///             .
+        ///         ]
+        /// 
+        /// If exception is thrown:
+        ///     Status Code: 500 (INTERNAL SERVER ERROR)
+        ///     
+        /// </summary>
+        /// <returns>The appropriate HttpActionResult.</returns>
         [Route("")]
-        public async Task<SpellbookListResponse> Get()
+        public async Task<IHttpActionResult> Get()
         {
-            var spellbooks = await _spellbookRepo.ListAsync();
-            var response = new SpellbookListResponse();
-            spellbooks.ForEach(sb => response.Spellbooks.Add(sb.GetShortInfo()));
-            return response;
+            try
+            {
+                var spellbooks = await _spellbookRepo.ListAsync();
+                var response = spellbooks.Select(sb => sb.GetShortInfo());
+                return Ok(response);
+            }
+            catch
+            {
+                return InternalServerError();
+            }
         }
 
+        /// <summary>
+        /// Attempts to retrieve a spellbook from the database.
+        /// 
+        /// ROUTE
+        /// "api/spellbook/{id}"
+        /// 
+        /// REQUEST 
+        ///     METHOD: GET
+        /// 
+        /// RESPONSE
+        /// If success:
+        ///     Status Code: 200 (SUCCESS)
+        ///     BODY:
+        ///         {
+        ///             "id": `int`,
+        ///             "name": `string`,
+        ///             "numberOfSpells": `int`
+        ///             "spells": [
+        ///                 {
+        ///                     "id": `int`,
+        ///                     "name": `string`,
+        ///                     "level": `int`,
+        ///                     "school": `string`,
+        ///                     "castingTime": `string`,
+        ///                     "range": `string`,
+        ///                     "verbal": `bool`,
+        ///                     "somatic": `bool`,
+        ///                     "materials": `string`,
+        ///                     "duration": `string`,
+        ///                     "ritual": `bool`,
+        ///                     "description": `string`
+        ///                 }, 
+        ///                 .
+        ///                 .
+        ///                 .
+        ///             ]
+        ///         }
+        ///         
+        /// If spellbook does not exist:
+        ///     Status Code: 400 (BAD REQUEST)
+        ///     BODY:
+        ///         {
+        ///             "message": `string`,
+        ///             "modelState": {
+        ///                 "request.Name": [`string`, . . . ]
+        ///             }
+        ///         }
+        /// 
+        /// </summary>
+        /// <param name="id">The spellbook's ID.</param>
+        /// <returns>The appropriate HttpActionResult.</returns>
         [Route("{id}")]
-        public async Task<SpellbookDetailsResponse> Get(int id)
+        public async Task<IHttpActionResult> Get(int id)
         {
             var spellbook = await _spellbookRepo.GetAsync(id);
-            var response = new SpellbookDetailsResponse()
+            if (spellbook != null)
             {
-                Spellbook = spellbook.GetInfo()
-            };
-            return response;
+                return Ok(spellbook.GetInfo());
+            }
+            else
+            {
+                return BadRequest("Invalid spellbook ID.");
+            }
         }
 
         /// <summary>
@@ -92,7 +203,7 @@ namespace SpellsReference.Api
         ///         }
         /// </summary>
         /// <param name="request">The request body.</param>
-        /// <returns>The appropriate HTTPActionResult.</returns>
+        /// <returns>The appropriate HttpActionResult.</returns>
         [Route("")]
         public async Task<IHttpActionResult> Post(SpellbookCreateRequest request)
         {
@@ -142,7 +253,7 @@ namespace SpellsReference.Api
         ///         }
         /// </summary>
         /// <param name="request">The request body.</param>
-        /// <returns>The appropriate HTTPActionResult.</returns>
+        /// <returns>The appropriate HttpActionResult.</returns>
         [Route("{id}")]
         public async Task<IHttpActionResult> Put(int id, SpellbookUpdateRequest request)
         {
@@ -192,7 +303,7 @@ namespace SpellsReference.Api
         /// </summary>
         /// <param name="id">The spellbook's ID.</param>
         /// <param name="request">The request body.</param>
-        /// <returns>The appropriate HTTPActionResult.</returns>
+        /// <returns>The appropriate HttpActionResult.</returns>
         [HttpPost]
         [Route("{id}/add")]
         public async Task<IHttpActionResult> AddSpell(int id, SpellbookAddSpellRequest request)
@@ -238,12 +349,13 @@ namespace SpellsReference.Api
         /// </summary>
         /// <param name="id">The spellbook's ID.</param>
         /// <param name="request">The request body.</param>
-        /// <returns>The appropriate HTTPActionResult.</returns>
+        /// <returns>The appropriate HttpActionResult.</returns>
         [HttpPost]
         [Route("{id}/remove")]
         public async Task<IHttpActionResult> RemoveSpell(int id, SpellbookRemoveSpellRequest request)
         {
-            if (ModelState.IsValid){
+            if (ModelState.IsValid)
+            {
                 if (await _spellbookRepo.RemoveSpellAsync(id, request.SpellId.Value))
                 {
                     return StatusCode(HttpStatusCode.NoContent);
