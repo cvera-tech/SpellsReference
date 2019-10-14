@@ -83,6 +83,7 @@ namespace SpellsReference.Api
         ///     
         /// If model state is invalid:
         ///     Status Code: 400 (BAD REQUEST)
+        ///     BODY:
         ///         {
         ///             "message": `string`,
         ///             "modelState": {
@@ -162,14 +163,14 @@ namespace SpellsReference.Api
         }
 
         /// <summary>
-        /// Attempts to update a spellbook with the given ID.
+        /// Attempts to add a spell to the spellbook with the given ID.
         /// 
         /// ROUTE
-        /// "api/spellbook/{id}"
+        /// "api/spellbook/{id}/add"
         /// 
         /// REQUEST BODY:
         /// {
-        ///     "name": `string`
+        ///     "spellId": `int`
         /// }
         /// 
         /// RESPONSE:
@@ -177,7 +178,7 @@ namespace SpellsReference.Api
         ///     Status Code: 201 (CREATED)
         ///     Location: URI to the spellbook details
         ///     
-        /// If unable to add to database:
+        /// If unable to add spell to spellbook:
         ///     Status Code: 500 (INTERNAL SERVER ERROR)
         ///     
         /// If model state is invalid:
@@ -189,6 +190,7 @@ namespace SpellsReference.Api
         ///             }
         ///         }
         /// </summary>
+        /// <param name="id">The spellbook's ID.</param>
         /// <param name="request">The request body.</param>
         /// <returns>The appropriate HTTPActionResult.</returns>
         [HttpPost]
@@ -207,16 +209,48 @@ namespace SpellsReference.Api
             return BadRequest(ModelState);
         }
 
+        /// <summary>
+        /// Attempts to remove a spell from the spellbook with the given ID.
+        /// 
+        /// ROUTE
+        /// "api/spellbook/{id}/remove"
+        /// 
+        /// REQUEST BODY:
+        /// {
+        ///     "spellId": `int`
+        /// }
+        /// 
+        /// RESPONSE:
+        /// If success:
+        ///     Status Code: 204 (NO CONTENT)
+        ///     
+        /// If unable to remove spell from spellbook:
+        ///     Status Code: 500 (INTERNAL SERVER ERROR)
+        ///     
+        /// If model state is invalid:
+        ///     Status Code: 400 (BAD REQUEST)
+        ///         {
+        ///             "message": `string`,
+        ///             "modelState": {
+        ///                 "request.Name": [`string`, . . . ]
+        ///             }
+        ///         }
+        /// </summary>
+        /// <param name="id">The spellbook's ID.</param>
+        /// <param name="request">The request body.</param>
+        /// <returns>The appropriate HTTPActionResult.</returns>
         [HttpPost]
         [Route("{id}/remove")]
-        public async Task<SpellbookRemoveSpellResponse> RemoveSpell(int id, SpellbookRemoveSpellRequest request)
+        public async Task<IHttpActionResult> RemoveSpell(int id, SpellbookRemoveSpellRequest request)
         {
-            var response = new SpellbookRemoveSpellResponse() { Success = false };
-            if (ModelState.IsValid && await _spellbookRepo.RemoveSpellAsync(id, request.SpellId.Value))
-            {
-                response.Success = true;
+            if (ModelState.IsValid){
+                if (await _spellbookRepo.RemoveSpellAsync(id, request.SpellId.Value))
+                {
+                    return StatusCode(HttpStatusCode.NoContent);
+                }
+                return InternalServerError();
             }
-            return response;
+            return BadRequest(ModelState);
         }
     }
 }
