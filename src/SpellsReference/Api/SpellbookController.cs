@@ -104,9 +104,14 @@ namespace SpellsReference.Api
 
         [HttpPost]
         [Route("{id}/remove")]
-        public Task<SpellbookRemoveSpellResponse> RemoveSpell(int id, SpellbookRemoveSpellRequest request)
+        public async Task<SpellbookRemoveSpellResponse> RemoveSpell(int id, SpellbookRemoveSpellRequest request)
         {
-            return null;
+            var response = new SpellbookRemoveSpellResponse() { Success = false };
+            if (ModelState.IsValid && await _spellbookRepo.RemoveSpellAsync(id, request.SpellId.Value))
+            {
+                response.Success = true;
+            }
+            return response;
         }
     }
 }

@@ -1,9 +1,8 @@
-﻿using System.Data.Entity;
-using SpellsReference.Data;
-using SpellsReference.Models;
+﻿using SpellsReference.Models;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
-using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace SpellsReference.Data.Repositories
@@ -70,6 +69,10 @@ namespace SpellsReference.Data.Repositories
             {
                 var spellbook = await GetAsync(spellbookId);
                 var spell = await _spellRepo.GetAsync(spellId);
+                if (spellbook.Spells.Contains(spell))
+                {
+                    return false;
+                }
                 spellbook.Spells.Add(spell);
                 _context.UpdateEntity(spellbook);
                 await _context.SaveChangesAsync();
@@ -98,9 +101,25 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
-        public Task<bool> RemoveSpellAsync(int spellbookId, int spellId)
+        public async Task<bool> RemoveSpellAsync(int spellbookId, int spellId)
         {
-            return null;
+            try
+            {
+                var spellbook = await GetAsync(spellbookId);
+                var spell = await _spellRepo.GetAsync(spellId);
+                if (!spellbook.Spells.Contains(spell))
+                {
+                    return false;
+                }
+                spellbook.Spells.Remove(spell);
+                _context.UpdateEntity(spellbook);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public bool Delete(int id)
