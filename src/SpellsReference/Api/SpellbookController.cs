@@ -4,6 +4,7 @@ using SpellsReference.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -106,17 +107,43 @@ namespace SpellsReference.Api
                     var info = spellbook.GetShortInfo();
                     return Created(url, info);
                 }
-
-                // Something went wrong with adding the spellbook to the database
                 return InternalServerError();
             }
             return BadRequest(ModelState);
         }
 
+        /// <summary>
+        /// Attempts to update a spellbook with the given ID.
+        /// 
+        /// ROUTE
+        /// "api/spellbook/{id}"
+        /// 
+        /// REQUEST BODY:
+        /// {
+        ///     "name": `string`
+        /// }
+        /// 
+        /// RESPONSE:
+        /// If success:
+        ///     Status Code 204 (NO CONTENT)
+        ///     
+        /// If unable to add to database:
+        ///     Status Code 500 (INTERNAL SERVER ERROR)
+        ///     
+        /// If model state is invalid:
+        ///     Status Code 400 (BAD REQUEST)
+        ///         {
+        ///             "message": `string`,
+        ///             "modelState": {
+        ///                 "request.Name": [`string`, . . . ]
+        ///             }
+        ///         }
+        /// </summary>
+        /// <param name="request">The request body.</param>
+        /// <returns>The appropriate HTTPActionResult.</returns>
         [Route("{id}")]
-        public async Task<SpellbookUpdateResponse> Put(int id, SpellbookUpdateRequest request)
+        public async Task<IHttpActionResult> Put(int id, SpellbookUpdateRequest request)
         {
-            var response = new SpellbookUpdateResponse() { Success = false };
             if (ModelState.IsValid)
             {
                 var spellbook = new Spellbook()
@@ -126,14 +153,11 @@ namespace SpellsReference.Api
                 };
                 if (await _spellbookRepo.UpdateAsync(spellbook))
                 {
-                    response.Success = true;
-
-                    // This is ridiculous. Instead of returning JSON, 
-                    // we should be returning HTTP status codes. 
-                    response.Spellbook = (await _spellbookRepo.GetAsync(id)).GetShortInfo();
+                    return StatusCode(HttpStatusCode.NoContent);
                 }
+                return InternalServerError();
             }
-            return response;
+            return BadRequest(ModelState);
         }
 
         [HttpPost]
