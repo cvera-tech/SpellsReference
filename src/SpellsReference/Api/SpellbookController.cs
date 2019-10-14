@@ -69,7 +69,8 @@ namespace SpellsReference.Api
         /// 
         /// RESPONSE:
         /// If success:
-        ///     Status Code 201 (CREATED)
+        ///     Status Code: 201 (CREATED)
+        ///     Location: URI to the spellbook details
         ///     BODY:
         ///         {
         ///             "id": `int`,
@@ -78,10 +79,10 @@ namespace SpellsReference.Api
         ///         }
         ///     
         /// If unable to add to database:
-        ///     Status Code 500 (INTERNAL SERVER ERROR)
+        ///     Status Code: 500 (INTERNAL SERVER ERROR)
         ///     
         /// If model state is invalid:
-        ///     Status Code 400 (BAD REQUEST)
+        ///     Status Code: 400 (BAD REQUEST)
         ///         {
         ///             "message": `string`,
         ///             "modelState": {
@@ -125,13 +126,13 @@ namespace SpellsReference.Api
         /// 
         /// RESPONSE:
         /// If success:
-        ///     Status Code 204 (NO CONTENT)
+        ///     Status Code: 204 (NO CONTENT)
         ///     
         /// If unable to add to database:
-        ///     Status Code 500 (INTERNAL SERVER ERROR)
+        ///     Status Code: 500 (INTERNAL SERVER ERROR)
         ///     
         /// If model state is invalid:
-        ///     Status Code 400 (BAD REQUEST)
+        ///     Status Code: 400 (BAD REQUEST)
         ///         {
         ///             "message": `string`,
         ///             "modelState": {
@@ -160,16 +161,50 @@ namespace SpellsReference.Api
             return BadRequest(ModelState);
         }
 
+        /// <summary>
+        /// Attempts to update a spellbook with the given ID.
+        /// 
+        /// ROUTE
+        /// "api/spellbook/{id}"
+        /// 
+        /// REQUEST BODY:
+        /// {
+        ///     "name": `string`
+        /// }
+        /// 
+        /// RESPONSE:
+        /// If success:
+        ///     Status Code: 201 (CREATED)
+        ///     Location: URI to the spellbook details
+        ///     
+        /// If unable to add to database:
+        ///     Status Code: 500 (INTERNAL SERVER ERROR)
+        ///     
+        /// If model state is invalid:
+        ///     Status Code: 400 (BAD REQUEST)
+        ///         {
+        ///             "message": `string`,
+        ///             "modelState": {
+        ///                 "request.Name": [`string`, . . . ]
+        ///             }
+        ///         }
+        /// </summary>
+        /// <param name="request">The request body.</param>
+        /// <returns>The appropriate HTTPActionResult.</returns>
         [HttpPost]
         [Route("{id}/add")]
-        public async Task<SpellbookAddSpellResponse> AddSpell(int id, SpellbookAddSpellRequest request)
+        public async Task<IHttpActionResult> AddSpell(int id, SpellbookAddSpellRequest request)
         {
-            var response = new SpellbookAddSpellResponse() { Success = false };
-            if (ModelState.IsValid && await _spellbookRepo.AddSpellAsync(id, request.SpellId.Value))
+            if (ModelState.IsValid)
             {
-                response.Success = true;
+                if (await _spellbookRepo.AddSpellAsync(id, request.SpellId.Value))
+                {
+                    var url = Url.Link("DefaultApi", new { controller = "Spellbook", id = id });
+                    return Created(url, new { });
+                }
+                return InternalServerError();
             }
-            return response;
+            return BadRequest(ModelState);
         }
 
         [HttpPost]
