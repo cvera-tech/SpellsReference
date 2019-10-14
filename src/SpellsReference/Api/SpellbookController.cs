@@ -1,6 +1,7 @@
 ﻿using SpellsReference.Api.Models;
 using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -54,10 +55,44 @@ namespace SpellsReference.Api
             return response;
         }
 
+        /// <summary>
+        /// Attempts to create a new spellbook.
+        /// 
+        /// ROUTE
+        /// "api/spellbook"
+        /// 
+        /// REQUEST BODY:
+        /// {
+        ///     "name": `string`
+        /// }
+        /// 
+        /// RESPONSE:
+        /// If success:
+        ///     Status Code 201 (CREATED)
+        ///     BODY:
+        ///         {
+        ///             "id": `int`,
+        ///             "name": `string`,
+        ///             "numberOfSpells": `int`
+        ///         }
+        ///     
+        /// If unable to add to database:
+        ///     Status Code 500 (INTERNAL SERVER ERROR)
+        ///     
+        /// If model state is invalid:
+        ///     Status Code 400 (BAD REQUEST)
+        ///         {
+        ///             "message": `string`,
+        ///             "modelState": {
+        ///                 "request.Name": [`string`, . . . ]
+        ///             }
+        ///         }
+        /// </summary>
+        /// <param name="request">The request body.</param>
+        /// <returns>The appropriate HTTPActionResult.</returns>
         [Route("")]
-        public async Task<SpellbookCreateResponse> Post(SpellbookCreateRequest request)
+        public async Task<IHttpActionResult> Post(SpellbookCreateRequest request)
         {
-            var response = new SpellbookCreateResponse() { Success = false };
             if (ModelState.IsValid)
             {
                 var spellbook = new Spellbook()
@@ -67,11 +102,15 @@ namespace SpellsReference.Api
                 int? spellbookId = await _spellbookRepo.AddAsync(spellbook);
                 if (spellbookId.HasValue)
                 {
-                    response.Success = true;
-                    response.Spellbook = spellbook.GetShortInfo();
+                    var url = Url.Link("DefaultApi", new { controller = "Spellbook", id = spellbookId.Value });
+                    var info = spellbook.GetShortInfo();
+                    return Created(url, info);
                 }
+
+                // Something went wrong with adding the spellbook to the database
+                return InternalServerError();
             }
-            return response;
+            return BadRequest(ModelState);
         }
 
         [Route("{id}")]
