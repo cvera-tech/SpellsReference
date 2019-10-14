@@ -37,7 +37,14 @@ namespace SpellsReference.Api
         /// If success:
         ///     Status Code: 204 (NO CONTENT)
         ///     
-        /// If unable to delete spellbook from database:
+        /// If the spellbook doesn't exist in the database:
+        ///     Status Code: 400 (BAD REQUEST)
+        ///     BODY:
+        ///         {
+        ///             "message": `string`
+        ///         }
+        ///         
+        /// If unable to delete the spellbook from database:
         ///     Status Code: 500 (INTERNAL SERVER ERROR)
         ///     
         /// </summary>
@@ -46,8 +53,11 @@ namespace SpellsReference.Api
         [Route("{id}")]
         public async Task<IHttpActionResult> Delete(int id)
         {
-            // Perhaps we can check for the existence of the spellbook first.
-            // That way, we can return a BadRequest before attempting to delete.
+            if (!await _spellbookRepo.ExistsAsync(id))
+            {
+                return BadRequest("Invalid spellbook ID.");
+            }
+
             if (await _spellbookRepo.DeleteAsync(id))
             {
                 return StatusCode(HttpStatusCode.NoContent);

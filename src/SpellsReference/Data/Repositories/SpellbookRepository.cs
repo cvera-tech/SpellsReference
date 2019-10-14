@@ -96,8 +96,7 @@ namespace SpellsReference.Data.Repositories
         {
             try
             {
-                var spellbook = new Spellbook() { Id = id };
-                _context.Spellbooks.Attach(spellbook);
+                var spellbook = await _context.Spellbooks.FindAsync(id);
                 _context.Spellbooks.Remove(spellbook);
                 await _context.SaveChangesAsync();
                 return true;
@@ -107,6 +106,12 @@ namespace SpellsReference.Data.Repositories
                 return false;
             }
 
+        }
+
+        public async Task<bool> ExistsAsync(int id)
+        {
+            return await _context.Spellbooks
+                .SingleOrDefaultAsync(sb => sb.Id == id) != null;
         }
 
         public Spellbook Get(int id)

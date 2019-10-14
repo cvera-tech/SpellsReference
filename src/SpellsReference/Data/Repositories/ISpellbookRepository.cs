@@ -12,6 +12,7 @@ namespace SpellsReference.Data.Repositories
         bool RemoveSpellFromSpellbook(int spellbookId, int spellId);
 
         Task<bool> AddSpellAsync(int spellbookId, int spellId);
+        Task<bool> ExistsAsync(int id);
         Task<bool> RemoveSpellAsync(int spellbookId, int spellId);
     }
 }
