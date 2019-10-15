@@ -85,7 +85,7 @@ namespace SpellsReference.Api
         ///             {
         ///                 "id": `int`,
         ///                 "name": `string`,
-        ///                 "numberOfSpells": `int`
+        ///                 "numberOfSpells": `int` 
         ///             }, 
         ///             .
         ///             .
