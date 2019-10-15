@@ -1,5 +1,5 @@
 ﻿import React, { Component } from 'react';
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 class Spellbook extends Component {
     render() {
@@ -19,16 +19,6 @@ class SpellbookList extends Component {
         this.state = {
             spellbooks: []
         };
-    }
-
-    renderSpellbooks() {
-        const rows = [];
-        for (spellbook of this.state.spellbooks) {
-            rows.push(
-                <Spellbook spellbook={spellbook} key={spellbook.id} />
-            );
-        }
-        return rows;
     }
 
     componentDidMount() {

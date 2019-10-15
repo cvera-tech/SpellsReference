@@ -5,6 +5,25 @@ import {
     Link,
     useParams
 } from 'react-router-dom';
+import SpellList from '../Spell/List';
+
+function Spell(props) {
+    return (
+        <tr>
+            <td>{props.spell.name}</td>
+            <td>{props.spell.level}</td>
+            <td>{props.spell.school}</td>
+            <td>{props.spell.castingTime}</td>
+            <td>{props.spell.range}</td>
+            <td>{props.spell.verbal ? 'True' : 'False'}</td>
+            <td>{props.spell.somatic ? 'True' : 'False'}</td>
+            <td>{props.spell.materials}</td>
+            <td>{props.spell.duration}</td>
+            <td>{props.spell.ritual ? 'True' : 'False'}</td>
+            <td>{props.spell.description}</td>
+        </tr>
+    );
+}
 
 class SpellbookDetails extends Component {
     constructor(props) {
@@ -20,28 +39,28 @@ class SpellbookDetails extends Component {
     componentDidMount() {
         fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}`)
             .then(response => {
-                if (response.ok) {
+                if (response.ok) {  // response code 200 if fetch was successful
                     return response.json();
                 }
                 else {
                     this.setState({
                         success: false
                     });
-                    throw "What";
+                    throw response; // Why is this allowed
                 }
             })
             .then(obj => this.setState({
                 success: true,
                 spellbook: obj
             }))
-            .catch(msg => console.log(msg));
+            .catch(() => { });   // Do nothing
     }
 
     render() {
         if (this.state.success === true) {
             return (
                 <div>
-                    <h1>Hello, this is a Spellbook's details.</h1>
+                    <h1>Spellbook Details</h1>
                     <table>
                         <tbody>
                             <tr>
@@ -58,12 +77,13 @@ class SpellbookDetails extends Component {
                             </tr>
                         </tbody>
                     </table>
+                    <SpellList spells={this.state.spellbook.spells} />
                 </div>
             );
         }
         else {
             return (
-                <h1>Something wicked this way comes.</h1>
+                <h1>Spellbook Details</h1>
             );
         }
     }
