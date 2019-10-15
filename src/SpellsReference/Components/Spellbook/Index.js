@@ -14,7 +14,7 @@ class SpellbookIndex extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            spellbooks = []
+            spellbooks: []
         };
     }
 
