@@ -28,7 +28,7 @@ function App() {
                     <Route path="/Spell/Create">
                         <Create />
                     </Route>
-                    <Route path="/">
+                    <Route exact path="/">
                         <Index />
                     </Route>
                     <Route path="/Spellbook">

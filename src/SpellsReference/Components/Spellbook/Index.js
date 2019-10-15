@@ -26,9 +26,12 @@ class SpellbookIndex extends Component {
                     <Route path={`/Spellbook/Create`}>
                         <SpellbookCreate />
                     </Route>
-                    <Route path={`/Spellbook/Details/:spellbookId`}>
+                    <Route path="/Spellbook/Details/:spellbookId" component={SpellbookDetails} />
+                    {/* 
+                    <Route path="/Spellbook/Details/:spellbookId" >
                         <SpellbookDetails />
                     </Route>
+                     */}
                     <Route exact path={`/Spellbook`}>
                         <SpellbookList />
                     </Route>
