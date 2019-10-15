@@ -21,7 +21,7 @@ namespace SpellsReference
 
             routes.MapRoute(
                 name: "Default",
-                url: "",
+                url: "{*reaaaaaact}",
                 defaults: new { controller = "React", action = "Index" }
             );
         }
