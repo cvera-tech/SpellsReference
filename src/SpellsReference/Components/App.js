@@ -9,6 +9,7 @@ import {
 import Index from './Spell/Index';
 import Create from './Spell/Create';
 import Filter from './Spell/Filter';
+import Select from './Spell/Select';
 
 import SpellbookIndex from './Spellbook/Index';
 
@@ -22,19 +23,20 @@ function App() {
                     <p>THIS IS A REACT PAGE</p>
                 </nav>
                 <Switch>
+                    <Route path="/Spell/Select/:id" component={Select}>
+                    </Route>
                     <Route path="/Spell/Filter">
                         <Filter />
                     </Route>
                     <Route path="/Spell/Create">
                         <Create />
                     </Route>
-                    <Route exact path="/">
-                        <Index />
-                    </Route>
                     <Route path="/Spellbook">
                         <SpellbookIndex />
                     </Route>
-
+                    <Route exact path="/">
+                        <Index />
+                    </Route>
                 </Switch>
             </div>
         </Router>
