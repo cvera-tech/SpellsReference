@@ -1,11 +1,11 @@
 ﻿import React, { Component } from 'react';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect
-  } from "react-router-dom";
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link,
+    Redirect
+} from "react-router-dom";
 
 function Spell(props) {
     return (
@@ -46,9 +46,7 @@ class Index extends Component {
                 });
             });
 
-        const table = document.getElementById('spellTable');
-
-        table.addEventListener('click', (event) => {
+        document.getElementById('spellTable').addEventListener('click', (event) => {
             const td = event.target;
             const tr = event.target.parentNode;
             const redirectLink = tr.getAttribute('data');
@@ -57,9 +55,6 @@ class Index extends Component {
                 spellSelected: true,
                 spellRedirect: redirectLink
             });
-
-            this.render();
-            
         });
     }
 
@@ -73,8 +68,8 @@ class Index extends Component {
             <div className="mt-2">
                 <h1>Spell Index Page</h1>
                 <div>
-                <Link to="/Spell/Create" className="btn btn-primary btn-lg mb-2">Create Spell</Link>
-                <Link to="/Spell/Filter" className="btn btn-outline-secondary btn-lg mb-2 ml-2">Filter</Link>
+                    <Link to="/Spell/Create" className="btn btn-primary btn-lg mb-2">Create Spell</Link>
+                    <Link to="/Spell/Filter" className="btn btn-outline-secondary btn-lg mb-2 ml-2">Filter</Link>
                     <table id="spellTable" className="table table-sm table-hover">
                         <thead className="thead thead-dark">
                             <tr>
