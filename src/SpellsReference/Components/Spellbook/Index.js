@@ -13,6 +13,27 @@ import SpellbookDetails from './Details';
 class SpellbookIndex extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            spellbooks = []
+        };
+    }
+
+    componentDidMount() {
+        fetch('http://localhost:61211/api/spellbook')
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                }
+                else {
+                    throw "Unable to fetch spellbooks";
+                }
+            })
+            .then(obj => {
+                this.setState({
+                    spellbooks: obj
+                })
+            })
+            .catch(() => {});   // Do nothing
     }
 
     render() {
@@ -33,7 +54,7 @@ class SpellbookIndex extends Component {
                     </Route>
                      */}
                     <Route exact path={`/Spellbook`}>
-                        <SpellbookList />
+                        <SpellbookList spellbooks={this.state.spellbooks} />
                     </Route>
             </div>
         );

@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom";
 
-function Spell(props) {
-    return (
-        <tr>
-            <td>{props.spell.name}</td>
-            <td>{props.spell.level}</td>
-            <td>{props.spell.school}</td>
-            <td>{props.spell.castingTime}</td>
-            <td>{props.spell.range}</td>
-            <td>{props.spell.verbal ? 'True' : 'False'}</td>
-            <td>{props.spell.somatic ? 'True' : 'False'}</td>
-            <td>{props.spell.materials}</td>
-            <td>{props.spell.duration}</td>
-            <td>{props.spell.ritual ? 'True' : 'False'}</td>
-            <td>{props.spell.description}</td>
-        </tr>
-    );
+class Spell extends Component {
+    render() {
+        return (
+            <tr>
+                <td>{this.props.spell.name}</td>
+                <td>{this.props.spell.level}</td>
+                <td>{this.props.spell.school}</td>
+                <td>{this.props.spell.castingTime}</td>
+                <td>{this.props.spell.range}</td>
+                <td>{this.props.spell.verbal ? 'True' : 'False'}</td>
+                <td>{this.props.spell.somatic ? 'True' : 'False'}</td>
+                <td>{this.props.spell.materials}</td>
+                <td>{this.props.spell.duration}</td>
+                <td>{this.props.spell.ritual ? 'True' : 'False'}</td>
+                <td>{this.props.spell.description}</td>
+            </tr>
+        );
+    }
 }
 
 class SpellList extends Component {
@@ -40,9 +42,11 @@ class SpellList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.spells.map(spell => (
-                            <Spell spell={spell} key={spell.id} />
-                        ))}
+                        {
+                            this.props.spells.map(spell => (
+                                <Spell spell={spell} key={spell.id} />
+                            ))
+                        }
                     </tbody>
                 </table>
             </div>

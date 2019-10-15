@@ -14,21 +14,6 @@ class Spellbook extends Component {
 }
 
 class SpellbookList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            spellbooks: []
-        };
-    }
-
-    componentDidMount() {
-        fetch('http://localhost:61211/api/spellbook')
-            .then(response => response.json())
-            .then(obj => this.setState({
-                spellbooks: obj
-            }));
-    }
-
     render() {
         return (
             <div>
@@ -42,9 +27,11 @@ class SpellbookList extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {this.state.spellbooks.map(spellbook => (
-                            <Spellbook spellbook = {spellbook} key = {spellbook.id} />
-                        ))}
+                        {
+                            this.props.spellbooks.map(spellbook => (
+                                <Spellbook spellbook={spellbook} key={spellbook.id} />
+                            ))
+                        }
                     </tbody>
                 </table>
             </div>
