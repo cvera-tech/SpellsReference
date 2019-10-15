@@ -17,8 +17,9 @@ function App() {
         <Router>
             <div>
                 <nav>
-                    <Link to="/React/Index">Cheat Home</Link>
+                    <Link to="/">Cheat Home</Link>
                     <Link to="/Spellbook">Spellbooks!</Link>
+                    <p>THIS IS A REACT PAGE</p>
                 </nav>
                 <Switch>
                     <Route path="/Spell/Filter">
@@ -27,7 +28,7 @@ function App() {
                     <Route path="/Spell/Create">
                         <Create />
                     </Route>
-                    <Route path="/React/Index">
+                    <Route path="/">
                         <Index />
                     </Route>
                     <Route path="/Spellbook">

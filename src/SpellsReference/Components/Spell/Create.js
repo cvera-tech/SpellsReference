@@ -22,7 +22,8 @@ class Create extends Component {
       duration: null,
       ritual: null,
       description: null,
-      materials: null
+      materials: null,
+      toList: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -34,7 +35,7 @@ class Create extends Component {
     const data = {
       name: event.target.name.value,
       level: parseInt(event.target.level.value),
-      schoolOfMagic: parseInt(event.target.schoolOfMagic.value),
+      school: event.target.schoolOfMagic.value,
       castingTime: event.target.castingTime.value,
       range: event.target.range.value,
       verbal: event.target.verbal.checked,
@@ -50,11 +51,24 @@ class Create extends Component {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(data)
-    });
-    return <Redirect to='/Spell/Index' />
+    })
+      .then(response => {
+        debugger;
+        this.setState({ toList: true });
+      })
+      .catch(error => {
+        debugger;
+      });
   }
 
+
   render() {
+    if (this.state.toList === true) {
+      return (
+        <Redirect to="/" />
+      );
+    }
+
     return (
       <div className="mt-2">
         <h2>Add Spell</h2>
@@ -70,15 +84,15 @@ class Create extends Component {
             </div>
             <div className="col-sm-2">
               <label htmlFor="schoolOfMagic">School</label>
-              <select id="schoolOfMagic" className="form-control" defaultValue="abjuration">
-                <option value="0">Abjuration</option>
-                <option value="1">Conjuration</option>
-                <option value="2">Divination</option>
-                <option value="3">Enchantment</option>
-                <option value="4">Evocation</option>
-                <option value="5">Illusion</option>
-                <option value="6">Necromancy</option>
-                <option value="7">Transmutation</option>
+              <select id="schoolOfMagic" className="form-control" defaultValue="0">
+                <option>Abjuration</option>
+                <option>Conjuration</option>
+                <option>Divination</option>
+                <option>Enchantment</option>
+                <option>Evocation</option>
+                <option>Illusion</option>
+                <option>Necromancy</option>
+                <option>Transmutation</option>
               </select>
             </div>
             <div className="col-sm-3">
@@ -122,7 +136,7 @@ class Create extends Component {
           </div>
           <div>
             <button className="btn btn-success btn-lg" type="submit">Submit</button>
-            <Link to="/React/Index" className="btn btn-outline-danger btn-lg ml-2">Cancel</Link>
+            <Link to="/" className="btn btn-outline-danger btn-lg ml-2">Cancel</Link>
           </div>
         </form>
       </div>

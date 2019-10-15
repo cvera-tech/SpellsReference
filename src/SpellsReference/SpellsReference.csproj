@@ -152,6 +152,7 @@
     <Content Include="Components\Spellbook\List.js" />
     <Content Include="Components\Spell\Create.js" />
     <Content Include="Components\index.js" />
+    <Content Include="Components\Spell\Create.js" />
     <Content Include="Components\Spell\Filter.js" />
     <Content Include="Components\Spell\Index.js" />
     <Content Include="Content\main.css" />
