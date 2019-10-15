@@ -64,8 +64,7 @@ class Create extends Component {
   handleChange(event) {
   
   }
-
-
+  
   render() {
     if (this.state.toList === true) {
       return (

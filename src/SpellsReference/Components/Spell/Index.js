@@ -20,6 +20,7 @@ function Spell(props) {
             <td>{props.spell.duration}</td>
             <td>{props.spell.ritual ? 'True' : 'False'}</td>
             <td>{props.spell.description}</td>
+            <td><Link to={`/Spell/Select/${props.spell.id}`} className="btn btn-info btn-sm">Select</Link></td>
         </tr>
     );
 }
@@ -65,6 +66,7 @@ class Index extends Component {
                                 <th>Duration</th>
                                 <th>Ritual</th>
                                 <th>Description</th>
+                                <th>&nbsp;</th>
                             </tr>
                         </thead>
                         <tbody>

@@ -151,6 +151,7 @@
     <Content Include="Components\Spell\Create.js" />
     <Content Include="Components\Spell\Filter.js" />
     <Content Include="Components\Spell\Index.js" />
+    <Content Include="Components\Spell\Select.js" />
     <Content Include="Content\main.css" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\dist\bundle.js" />

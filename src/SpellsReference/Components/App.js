@@ -9,6 +9,7 @@ import {
 import Index from './Spell/Index';
 import Create from './Spell/Create';
 import Filter from './Spell/Filter';
+import Select from './Spell/Select';
 
 function App() {
     return (
@@ -19,6 +20,8 @@ function App() {
                     <p>THIS IS A REACT PAGE</p>
                 </nav>
                 <Switch>
+                    <Route path="/Spell/Select/:id" component={Select}>
+                    </Route>
                     <Route path="/Spell/Filter">
                         <Filter />
                     </Route>
@@ -28,7 +31,6 @@ function App() {
                     <Route path="/">
                         <Index />
                     </Route>
-
                 </Switch>
             </div>
         </Router>
