@@ -20,6 +20,7 @@ class Select extends Component {
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.activateForm = this.activateForm.bind(this);
   }
 
   componentDidMount() {
@@ -33,7 +34,25 @@ class Select extends Component {
           success: true
         });
       })
-      .catch(console.log("Catch"))
+  }
+
+  activateForm(event) {
+    document.getElementById('name').disabled = false;
+    document.getElementById('level').disabled = false;
+    document.getElementById('schoolOfMagic').disabled = false;
+    document.getElementById('castingTime').disabled = false;
+    document.getElementById('range').disabled = false;
+    document.getElementById('verbal').disabled = false;
+    document.getElementById('somatic').disabled = false;
+    document.getElementById('duration').disabled = false;
+    document.getElementById('ritual').disabled = false;
+    document.getElementById('description').disabled = false;
+    document.getElementById('materials').disabled = false;
+
+    document.getElementById('submitButton').hidden = false;
+    document.getElementById('editButton').hidden = true;
+
+
   }
 
   handleSubmit(event) {
@@ -51,12 +70,11 @@ class Select extends Component {
       );
     }
 
-    console.log(this.state.spell);
     if(this.state.success === true) {
       return (
         <div className="mt-2">
           <h2>Select Spell</h2>
-          <form onSubmit={this.handleSubmit} onChange={this.handleChange}>
+          <form id="spellForm" onSubmit={this.handleSubmit} onChange={this.handleChange}>
             <div className="form-group row">
               <div className="col-sm-3">
                 <label htmlFor="name">Name</label>
@@ -64,11 +82,11 @@ class Select extends Component {
               </div>
               <div className="col-sm-1">
                 <label htmlFor="level">Level</label>
-                <input id="level" className="form-control" name="level" defaultValue="0" type="number" />
+                <input id="level" className="form-control" name="level" defaultValue={this.state.spell.level} type="number" disabled />
               </div>
               <div className="col-sm-2">
                 <label htmlFor="schoolOfMagic">School</label>
-                <select id="schoolOfMagic" className="form-control" defaultValue="0">
+                <select id="schoolOfMagic" className="form-control" defaultValue={this.state.spell.school} disabled>
                   <option>Abjuration</option>
                   <option>Conjuration</option>
                   <option>Divination</option>
@@ -81,45 +99,46 @@ class Select extends Component {
               </div>
               <div className="col-sm-3">
                 <label htmlFor="castingTime">Cast Time</label>
-                <input id="castingTime" className="form-control" name="castingTime" type="text" />
+                <input id="castingTime" className="form-control" name="castingTime" defaultValue={this.state.spell.castingTime} type="text" disabled />
               </div>
               <div className="col-sm-3">
                 <label htmlFor="range">Range</label>
-                <input id="range" className="form-control" name="range" type="text" />
+                <input id="range" className="form-control" name="range" defaultValue={this.state.spell.range} type="text" disabled />
               </div>
             </div>
             <div className="form-group row">
               <div className="col-xs-1 ml-2">
                 <label htmlFor="verbal">Verbal</label>
-                <input id="verbal" className="form-control" name="verbal" type="checkbox" />
+                <input id="verbal" className="form-control" name="verbal" defaultChecked={this.state.spell.verbal} type="checkbox" disabled />
               </div>
               <div className="col-xs-1 ml-2">
                 <label htmlFor="somatic">Somatic</label>
-                <input id="somatic" className="form-control" name="somatic" type="checkbox" />
+                <input id="somatic" className="form-control" name="somatic" defaultChecked={this.state.spell.somatic} type="checkbox" disabled />
               </div>
               <div className="col-sm-3">
                 <label htmlFor="duration">Duration</label>
-                <input id="duration" className="form-control" name="duration" type="text" />
+                <input id="duration" className="form-control" name="duration" defaultValue={this.state.spell.duration} type="text" disabled />
               </div>
               <div className="col-xs-1 ml-2">
                 <label htmlFor="ritual">Ritual</label>
-                <input id="ritual" className="form-control" name="ritual" type="checkbox" />
+                <input id="ritual" className="form-control" name="ritual" defaultChecked={this.state.spell.ritual} type="checkbox" disabled />
               </div>
             </div>
             <div className="form-group row">
               <div className="col-sm-6">
                 <label htmlFor="description">Description</label>
-                <textarea id="description" className="form-control" name="description" type="text" />
+                <textarea id="description" className="form-control" name="description" defaultValue={this.state.spell.description} type="text" disabled />
               </div>
             </div>
             <div className="form-group row">
               <div className="col-sm-4">
                 <label htmlFor="materials">Materials</label>
-                <input id="materials" className="form-control" name="materials" type="text" />
+                <input id="materials" className="form-control" name="materials" defaultValue={this.state.spell.materials} type="text" disabled />
               </div>
             </div>
             <div>
-              <button id="editButton" className="btn btn-success btn-lg" type="submit">Edit</button>
+              <button id="editButton" onClick={this.activateForm} className="btn btn-warning btn-lg">Edit</button>
+              <button id="submitButton" className="btn btn-success btn-lg" type="submit" hidden>Submit</button>  
               <Link to="/" className="btn btn-outline-danger btn-lg ml-2">Cancel</Link>
             </div>
           </form>
