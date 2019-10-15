@@ -61,6 +61,10 @@ class Create extends Component {
       });
   }
 
+  handleChange(event) {
+  
+  }
+
 
   render() {
     if (this.state.toList === true) {
@@ -72,7 +76,7 @@ class Create extends Component {
     return (
       <div className="mt-2">
         <h2>Add Spell</h2>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} onChange={this.handleChange}>
           <div className="form-group row">
             <div className="col-sm-3">
               <label htmlFor="name">Name</label>
@@ -135,7 +139,7 @@ class Create extends Component {
             </div>
           </div>
           <div>
-            <button className="btn btn-success btn-lg" type="submit">Submit</button>
+            <button id="submitButton" className="btn btn-success btn-lg" type="submit">Submit</button>
             <Link to="/" className="btn btn-outline-danger btn-lg ml-2">Cancel</Link>
           </div>
         </form>
