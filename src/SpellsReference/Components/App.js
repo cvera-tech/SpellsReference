@@ -11,12 +11,15 @@ import Create from './Spell/Create';
 import Filter from './Spell/Filter';
 import Select from './Spell/Select';
 
+import SpellbookIndex from './Spellbook/Index';
+
 function App() {
     return (
         <Router>
             <div>
                 <nav>
                     <Link to="/">Cheat Home</Link>
+                    <Link to="/Spellbook">Spellbooks!</Link>
                     <p>THIS IS A REACT PAGE</p>
                 </nav>
                 <Switch>
@@ -28,7 +31,10 @@ function App() {
                     <Route path="/Spell/Create">
                         <Create />
                     </Route>
-                    <Route path="/">
+                    <Route path="/Spellbook">
+                        <SpellbookIndex />
+                    </Route>
+                    <Route exact path="/">
                         <Index />
                     </Route>
                 </Switch>
