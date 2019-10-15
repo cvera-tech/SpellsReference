@@ -1,4 +1,5 @@
 ﻿import React, { Component } from 'react';
+import { Link} from "react-router-dom";
 
 class Spellbook extends Component {
     render() {
@@ -6,7 +7,7 @@ class Spellbook extends Component {
             <tr>
                 <td>{this.props.spellbook.name}</td>
                 <td>{this.props.spellbook.numberOfSpells}</td>
-                <td>Button!</td>
+                <td><Link to={`/Spellbook/Details/${this.props.spellbook.id}`}>Details</Link></td>
             </tr>
         );
     }

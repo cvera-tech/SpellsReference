@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import SpellbookList from './List';
 import SpellbookCreate from './Create';
+import SpellbookDetails from './Details';
 
 class SpellbookIndex extends Component {
     constructor(props) {
@@ -24,6 +25,9 @@ class SpellbookIndex extends Component {
                 </ul>
                     <Route path={`/Spellbook/Create`}>
                         <SpellbookCreate />
+                    </Route>
+                    <Route path={`/Spellbook/Details/:spellbookId`}>
+                        <SpellbookDetails />
                     </Route>
                     <Route exact path={`/Spellbook`}>
                         <SpellbookList />
