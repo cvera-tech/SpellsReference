@@ -2,12 +2,6 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 class Spell extends Component {
-    constructor(props) {
-        super(props);
-    }
-    componentDidMount() {
-        console.log('spell mounted');
-    }
     render() {
         return (
             <tr data-name={this.props.spell.name} data-id={this.props.spell.id}>
@@ -28,21 +22,18 @@ class Spell extends Component {
 }
 
 class SpellList extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            spellSelected: false
-        }
-    }
-
     componentDidMount() {
         document.getElementById('spellRows').addEventListener('click', (event) => {
+            // Grab the data from the table rows
             const tr = event.target.parentNode;
             const spellName = tr.getAttribute('data-name');
             const spellId = tr.getAttribute('data-id');
+
+            // Invoke the callback function to confirm adding the spell
             this.props.clickCallback({ spellName: spellName, spellId: spellId });
         });
     }
+
     render() {
         return (
             <div>
@@ -90,6 +81,7 @@ class AddSpell extends Component {
     }
 
     componentDidMount() {
+        // Fetch the spellbook's details to get the name. This can be done better.
         fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}`)
             .then(response => {
                 if (response.ok) {
@@ -99,10 +91,11 @@ class AddSpell extends Component {
                 }
             })
             .then(obj => {
-                this.setState((prevState) => { return { spellbookName: obj.name } });
+                this.setState(() => { return { spellbookName: obj.name } });
             })
             .catch(() => { });
-
+        
+        // Fetch the list of spells that are not part of the spellbook.
         fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}/nonmemberspells`)
             .then(response => {
                 if (response.ok) {
@@ -111,14 +104,13 @@ class AddSpell extends Component {
                     throw response;
                 }
             })
-            .then(obj => this.setState((prevState) => { return { spells: obj } }))
+            .then(obj => this.setState(() => { return { spells: obj } }))
             .catch(() => { });
     }
 
     handleSpellClick(options) {
         const confirm = window.confirm(`Add ${options.spellName} to ${this.state.spellbookName}?`);
         if (confirm === true) {
-            debugger;
             const requestBody = {
                 spellId: parseInt(options.spellId)
             };
@@ -131,6 +123,7 @@ class AddSpell extends Component {
                 })
                 .then(response => {
                     if (response.ok) {
+                        this.props.callback();  // Update spellbook list
                         this.setState((prevState) => {
                             return {
                                 spellAdded: true

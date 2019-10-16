@@ -1,29 +1,9 @@
 import React, { Component } from 'react';
 import {
-    BrowserRouter as Router,
-    Route,
     Link,
-    useParams
+    Redirect
 } from 'react-router-dom';
-import SpellList from '../Spell/List';
-
-function Spell(props) {
-    return (
-        <tr>
-            <td>{props.spell.name}</td>
-            <td>{props.spell.level}</td>
-            <td>{props.spell.school}</td>
-            <td>{props.spell.castingTime}</td>
-            <td>{props.spell.range}</td>
-            <td>{props.spell.verbal ? 'True' : 'False'}</td>
-            <td>{props.spell.somatic ? 'True' : 'False'}</td>
-            <td>{props.spell.materials}</td>
-            <td>{props.spell.duration}</td>
-            <td>{props.spell.ritual ? 'True' : 'False'}</td>
-            <td>{props.spell.description}</td>
-        </tr>
-    );
-}
+import { SpellList } from '../Spell/List';
 
 class SpellbookDetails extends Component {
     constructor(props) {
@@ -39,21 +19,21 @@ class SpellbookDetails extends Component {
     componentDidMount() {
         fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}`)
             .then(response => {
-                if (response.ok) {  // response code 200 if fetch was successful
+                if (response.ok) {
                     return response.json();
                 }
                 else {
                     this.setState({
                         success: false
                     });
-                    throw response; // Why is this allowed
+                    throw response;
                 }
             })
             .then(obj => this.setState({
                 success: true,
                 spellbook: obj
             }))
-            .catch(() => { });   // Do nothing
+            .catch(() => { });
     }
 
     render() {
@@ -81,6 +61,11 @@ class SpellbookDetails extends Component {
                     <SpellList spells={this.state.spellbook.spells} />
                 </div>
             );
+        } else if (this.state.success === false) {
+            alert("Invalid spellbook ID.");
+            return (
+                <Redirect to="/Spellbook" />
+            )
         }
         else {
             return (

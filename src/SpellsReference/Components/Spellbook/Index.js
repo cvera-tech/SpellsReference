@@ -1,10 +1,7 @@
 import React, { Component } from 'react';
 import {
-    BrowserRouter as Router,
-    Switch,
     Route,
-    Link,
-    useRouteMatch
+    Link
 } from "react-router-dom";
 import SpellbookList from './List';
 import SpellbookCreate from './Create';
@@ -52,7 +49,10 @@ class SpellbookIndex extends Component {
                 <Route path="/Spellbook/Create">
                     <SpellbookCreate submitCallback={this.fetchData} />
                 </Route>
-                <Route path="/Spellbook/Details/:spellbookId/AddSpell" component={AddSpell} />
+                <Route path="/Spellbook/Details/:spellbookId/AddSpell" 
+                    render={(props) =>
+                        <AddSpell {...props} callback={this.fetchData} />
+                    } />
                 <Route exact path="/Spellbook/Details/:spellbookId" component={SpellbookDetails} />
                 <Route exact path="/Spellbook">
                     <SpellbookList spellbooks={this.state.spellbooks} />

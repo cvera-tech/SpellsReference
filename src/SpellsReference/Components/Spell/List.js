@@ -1,10 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 
 class Spell extends Component {
-    componentDidMount() {
-        document.getElementById('spellRow')
-    }
     render() {
         return (
             <tr id="spellRow">
@@ -24,7 +20,7 @@ class Spell extends Component {
     }
 }
 
-class SpellList extends Component {
+export class SpellList extends Component {
     render() {
         return (
             <div>
@@ -47,7 +43,7 @@ class SpellList extends Component {
                     <tbody>
                         {
                             this.props.spells.map(spell => (
-                                <Spell spell={spell} key={spell.id} clickCallback={this.props.clickCallback} />
+                                <Spell spell={spell} key={spell.id} />
                             ))
                         }
                     </tbody>
@@ -56,5 +52,3 @@ class SpellList extends Component {
         );
     }
 }
-
-export default SpellList;

@@ -44,7 +44,6 @@ class SpellbookCreate extends Component {
                 }
             })
             .then(() => this.setState({ success: true }))
-            // .catch(() => {window.open('', '_self', ''); window.close();});
             .catch(() => this.setState({ success: false }));
         event.preventDefault();
     }
