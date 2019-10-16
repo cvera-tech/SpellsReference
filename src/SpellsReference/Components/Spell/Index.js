@@ -35,6 +35,8 @@ class Index extends Component {
             spellSelected: false,
             spellRedirect: null
         };
+
+        this.mySort = this.mySort.bind(this);
     }
 
     componentDidMount() {
@@ -46,7 +48,7 @@ class Index extends Component {
                 });
             });
 
-        document.getElementById('spellTable').addEventListener('click', (event) => {
+        document.getElementById('tbody').addEventListener('click', (event) => {
             const td = event.target;
             const tr = event.target.parentNode;
             const redirectLink = tr.getAttribute('data');
@@ -56,6 +58,31 @@ class Index extends Component {
                 spellRedirect: redirectLink
             });
         });
+
+        document.getElementById('thead').addEventListener('click', (event) => {
+            const th = event.target;
+            const sortCol = th.innerHTML;
+            debugger;
+            if (sortCol === "Name") {
+
+                this.setState((state) => {
+                    return {
+                        spells: this.mySort(state.spells)
+                    };
+                });
+                console.log(this.state.spells);
+            }
+        });
+    }
+
+    mySort(list) {
+        return list.sort(function (a, b) {
+            const x = a.name.toLowerCase();
+            const y = b.name.toLowerCase();
+            if (x < y) { return -1; }
+            if (x > y) { return 1; }
+            return 0;
+        })
     }
 
     render() {
@@ -71,9 +98,9 @@ class Index extends Component {
                     <Link to="/Spell/Create" className="btn btn-primary btn-lg mb-2">Create Spell</Link>
                     <Link to="/Spell/Filter" className="btn btn-outline-secondary btn-lg mb-2 ml-2">Filter</Link>
                     <table id="spellTable" className="table table-sm table-hover">
-                        <thead className="thead thead-dark">
+                        <thead id="thead" className="thead thead-dark">
                             <tr>
-                                <th>Name</th>
+                                <th data="nameCol">Name</th>
                                 <th>Level</th>
                                 <th>School</th>
                                 <th>Cast Time</th>
@@ -86,7 +113,7 @@ class Index extends Component {
                                 <th>Description</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="tbody">
                             {this.state.spells.map(spell => (
                                 <Spell spell={spell} key={spell.id} />
                             ))}
