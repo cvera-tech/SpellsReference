@@ -61,23 +61,26 @@ class Select extends Component {
     }
 
     toggleFormLock() {
-        const submit = document.getElementById('submitButton');
-        const edit = document.getElementById('editButton');
+        const submitButton = document.getElementById('submitButton');
+        const editButton = document.getElementById('editButton');
+        const deleteButton = document.getElementById('deleteButton');
         const inputs = document.getElementsByClassName('inputField');
 
-        if (submit.hidden === true) {
+        if (submitButton.hidden === true) {
             for (let input of inputs) {
                 input.disabled = false;
             }
-            submit.hidden = false;
-            edit.hidden = true;
+            submitButton.hidden = false;
+            editButton.hidden = true;
+            deleteButton.hidden = true;
         }
         else {
             for (let input of inputs) {
                 input.disabled = true;
             }
-            submit.hidden = true;
-            edit.hidden = false;
+            submitButton.hidden = true;
+            editButton.hidden = false;
+            deleteButton.hidden = false;
         }
     }
 
@@ -122,6 +125,26 @@ class Select extends Component {
 
     handleDelete(event) {
         event.preventDefault();
+
+        var deleteReponse = prompt('Please type the name of the spell to confirm delete.','');
+        if (deleteReponse.toLowerCase() === this.state.name.toLowerCase()) {
+            fetch(`http://localhost:61211/api/spell/${this.state.id}`, {
+                method: 'DELETE'
+            })
+            .then(this.setState ( { toList: true }));
+            // .then(response => response.json())
+            // .then(response => {
+            //     if(response.ok){
+            //         this.setState({
+            //             toList: true
+            //         });
+            //         this.render();
+            //     }
+            // });
+        }
+         else {
+            alert('Incorrect spell name.');
+        }
     }
 
     render() {

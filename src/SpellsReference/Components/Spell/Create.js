@@ -29,9 +29,12 @@ class Create extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount() {
+    
+  }
+
   handleSubmit(event) {
     event.preventDefault();
-    debugger;
     const data = {
       name: event.target.name.value,
       level: parseInt(event.target.level.value),
@@ -53,11 +56,9 @@ class Create extends Component {
       body: JSON.stringify(data)
     })
       .then(response => {
-        debugger;
         this.setState({ toList: true });
       })
       .catch(error => {
-        debugger;
       });
   }
 
