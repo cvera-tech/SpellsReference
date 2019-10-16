@@ -12,7 +12,8 @@ class SpellbookIndex extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            spellbooks: []
+            spellbooks: [],
+            selectedSpellbookName: ''
         };
     }
 
@@ -34,6 +35,12 @@ class SpellbookIndex extends Component {
             .catch(() => { });   // Do nothing
     };
 
+    setSelectedSpellbook = (spellbookName) => {
+        this.setState(() => {
+            return { selectedSpellbookName: spellbookName };
+        });
+    };
+
     componentDidMount() {
         this.fetchData();
     }
@@ -51,9 +58,12 @@ class SpellbookIndex extends Component {
                 </Route>
                 <Route path="/Spellbook/Details/:spellbookId/AddSpell" 
                     render={(props) =>
-                        <AddSpell {...props} callback={this.fetchData} />
+                        <AddSpell {...props} callback={this.fetchData} spellbookName={this.state.selectedSpellbookName} />
                     } />
-                <Route exact path="/Spellbook/Details/:spellbookId" component={SpellbookDetails} />
+                <Route exact path="/Spellbook/Details/:spellbookId" 
+                    render={(props) => 
+                        <SpellbookDetails {...props} callback={this.setSelectedSpellbook} />
+                    } />
                 <Route exact path="/Spellbook">
                     <SpellbookList spellbooks={this.state.spellbooks} />
                 </Route>

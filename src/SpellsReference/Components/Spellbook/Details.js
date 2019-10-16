@@ -29,10 +29,13 @@ class SpellbookDetails extends Component {
                     throw response;
                 }
             })
-            .then(obj => this.setState({
-                success: true,
-                spellbook: obj
-            }))
+            .then(obj => {
+                this.props.callback(obj.name);  // Pass spellbook name to Index component
+                this.setState({
+                    success: true,
+                    spellbook: obj
+                })
+            })
             .catch(() => { });
     }
 

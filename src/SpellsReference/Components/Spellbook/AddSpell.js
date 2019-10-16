@@ -71,7 +71,7 @@ class AddSpell extends Component {
         super(props);
 
         this.state = {
-            spellbookName: null,
+            spellbookName: props.spellbookName,
             spellbookId: props.match.params.spellbookId,
             spellAdded: false,
             spells: []
@@ -82,18 +82,18 @@ class AddSpell extends Component {
 
     componentDidMount() {
         // Fetch the spellbook's details to get the name. This can be done better.
-        fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}`)
-            .then(response => {
-                if (response.ok) {
-                    return response.json();
-                } else {
-                    throw response;
-                }
-            })
-            .then(obj => {
-                this.setState(() => { return { spellbookName: obj.name } });
-            })
-            .catch(() => { });
+        // fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}`)
+        //     .then(response => {
+        //         if (response.ok) {
+        //             return response.json();
+        //         } else {
+        //             throw response;
+        //         }
+        //     })
+        //     .then(obj => {
+        //         this.setState(() => { return { spellbookName: obj.name } });
+        //     })
+        //     .catch(() => { });
         
         // Fetch the list of spells that are not part of the spellbook.
         fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}/nonmemberspells`)
