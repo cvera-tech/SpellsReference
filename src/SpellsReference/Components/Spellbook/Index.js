@@ -14,18 +14,18 @@ class SpellbookIndex extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            spellbooks = []
+            spellbooks: []
         };
     }
 
-    componentDidMount() {
+    fetchData = () => {
         fetch('http://localhost:61211/api/spellbook')
             .then(response => {
                 if (response.ok) {
                     return response.json();
                 }
                 else {
-                    throw "Unable to fetch spellbooks";
+                    throw response;
                 }
             })
             .then(obj => {
@@ -33,7 +33,11 @@ class SpellbookIndex extends Component {
                     spellbooks: obj
                 })
             })
-            .catch(() => {});   // Do nothing
+            .catch(() => { });   // Do nothing
+    };
+
+    componentDidMount() {
+        this.fetchData();
     }
 
     render() {
@@ -44,18 +48,18 @@ class SpellbookIndex extends Component {
                     <li><Link to={`/Spellbook`}>Spellbook Index</Link></li>
                     <li><Link to={`/Spellbook/Create`}>Create a Spellbook!</Link></li>
                 </ul>
-                    <Route path={`/Spellbook/Create`}>
-                        <SpellbookCreate />
-                    </Route>
-                    <Route path="/Spellbook/Details/:spellbookId" component={SpellbookDetails} />
-                    {/* 
+                <Route path={`/Spellbook/Create`}>
+                    <SpellbookCreate submitCallback={this.fetchData} />
+                </Route>
+                <Route path="/Spellbook/Details/:spellbookId" component={SpellbookDetails} />
+                {/* 
                     <Route path="/Spellbook/Details/:spellbookId" >
                         <SpellbookDetails />
                     </Route>
                      */}
-                    <Route exact path={`/Spellbook`}>
-                        <SpellbookList spellbooks={this.state.spellbooks} />
-                    </Route>
+                <Route exact path={`/Spellbook`}>
+                    <SpellbookList spellbooks={this.state.spellbooks} />
+                </Route>
             </div>
         );
     }
