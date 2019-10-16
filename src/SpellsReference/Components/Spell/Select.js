@@ -32,6 +32,7 @@ class Select extends Component {
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.handleDelete = this.handleDelete.bind(this);
         this.toggleFormLock = this.toggleFormLock.bind(this);
     }
 
@@ -119,6 +120,10 @@ class Select extends Component {
         this.setState(editedField);
     }
 
+    handleDelete(event) {
+        event.preventDefault();
+    }
+
     render() {
         if (this.state.toList === true) {
             return (
@@ -129,18 +134,22 @@ class Select extends Component {
         if (this.state.success === true) {
             return (
                 <div className="mt-2">
+                    <form id="deleteSpell" onSubmit={this.handleDelete}>
+                        <button id="deleteButton" className="btn btn-danger btn-lg float-right" type="submit">Delete</button>
+                    </form>
+                    <br />
                     <h2>Select Spell</h2>
-                    <form id="spellForm" onSubmit={this.handleSubmit} onChange={this.handleChange}>
+                    <form id="editSpell" onSubmit={this.handleSubmit} onChange={this.handleChange}>
                         <div className="form-group row">
                             <div className="col-sm-3">
                                 <label htmlFor="name">Name</label>
                                 <input id="name" className="form-control inputField" name="name" defaultValue={this.state.name} type="text" disabled />
                             </div>
-                            <div className="col-sm-1">
+                            <div className="col-sm-3">
                                 <label htmlFor="level">Level</label>
                                 <input id="level" className="form-control inputField" name="level" defaultValue={this.state.level} type="number" disabled />
                             </div>
-                            <div className="col-sm-2">
+                            <div className="col-sm-3">
                                 <label htmlFor="school">School</label>
                                 <select id="school" className="form-control inputField" defaultValue={this.state.school} disabled>
                                     <option>Abjuration</option>
@@ -157,12 +166,12 @@ class Select extends Component {
                                 <label htmlFor="castingTime">Cast Time</label>
                                 <input id="castingTime" className="form-control inputField" name="castingTime" defaultValue={this.state.castingTime} type="text" disabled />
                             </div>
+                        </div>
+                        <div className="form-group row">
                             <div className="col-sm-3">
                                 <label htmlFor="range">Range</label>
                                 <input id="range" className="form-control inputField" name="range" defaultValue={this.state.range} type="text" disabled />
                             </div>
-                        </div>
-                        <div className="form-group row">
                             <div className="col-xs-1 ml-2">
                                 <label htmlFor="verbal">Verbal</label>
                                 <input id="verbal" className="form-control inputField" name="verbal" defaultChecked={this.state.verbal} type="checkbox" disabled />
