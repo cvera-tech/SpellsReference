@@ -61,7 +61,7 @@ class SpellbookDetails extends Component {
             return (
                 <div>
                     <h1>Spellbook Details</h1>
-                    <Link to={`/spellbook/details/${this.state.spellbookId}/nonmemberspells`}>Add Spell</Link>
+                    <Link to={`/Spellbook/Details/${this.state.spellbookId}/AddSpell`}>Add Spell</Link>
                     <table>
                         <tbody>
                             <tr>
