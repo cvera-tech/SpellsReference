@@ -70,6 +70,7 @@ class Select extends Component {
             }
             submit.hidden = false;
             edit.hidden = true;
+            cancelAnimationFrame.
         }
         else {
             for (let input of inputs) {
