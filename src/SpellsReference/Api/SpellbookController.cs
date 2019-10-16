@@ -226,7 +226,8 @@ namespace SpellsReference.Api
                 int? spellbookId = await _spellbookRepo.AddAsync(spellbook);
                 if (spellbookId.HasValue)
                 {
-                    var url = Url.Link("DefaultApi", new { controller = "Spellbook", id = spellbookId.Value });
+                    // var url = Url.Link("DefaultApi", new { controller = "Spellbook", id = spellbookId.Value });
+                    var url = $"/spellbook/details/{spellbookId}";
                     var info = spellbook.GetShortInfo();
                     return Created(url, info);
                 }
