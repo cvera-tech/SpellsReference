@@ -148,6 +148,7 @@
   <ItemGroup>
     <Content Include="Components\App.js" />
     <Content Include="Components\Spellbook\Create.js" />
+    <Content Include="Components\Spellbook\Details.js" />
     <Content Include="Components\Spellbook\Index.js" />
     <Content Include="Components\Spellbook\List.js" />
     <Content Include="Components\Spell\Create.js" />
@@ -155,6 +156,7 @@
     <Content Include="Components\Spell\Create.js" />
     <Content Include="Components\Spell\Filter.js" />
     <Content Include="Components\Spell\Index.js" />
+    <Content Include="Components\Spell\List.js" />
     <Content Include="Components\Spell\Select.js" />
     <Content Include="Content\main.css" />
     <Content Include="Global.asax" />

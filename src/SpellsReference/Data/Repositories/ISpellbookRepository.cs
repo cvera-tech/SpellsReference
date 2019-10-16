@@ -13,6 +13,7 @@ namespace SpellsReference.Data.Repositories
 
         Task<bool> AddSpellAsync(int spellbookId, int spellId);
         Task<bool> ExistsAsync(int id);
+        Task<List<Spell>> GetNonmemberSpellsAsync(int spellbookId);
         Task<bool> RemoveSpellAsync(int spellbookId, int spellId);
     }
 }

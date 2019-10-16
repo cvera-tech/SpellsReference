@@ -178,6 +178,65 @@ namespace SpellsReference.Api
         }
 
         /// <summary>
+        /// Attempts to retrieve the spells that don't belong to the spellbook
+        /// with the given id.
+        /// 
+        /// ROUTE
+        /// "api/spellbook/{id}/nonmemberspells"
+        /// 
+        /// REQUEST
+        ///     METHOD: GET
+        ///     
+        /// RESPONSE
+        /// If success:
+        ///     Status Code: 200 (OK)
+        ///     BODY:
+        ///         [
+        ///             {
+        ///                 "id": `int`,
+        ///                 "name": `string`,
+        ///                 "level": `int`,
+        ///                 "school": `string`,
+        ///                 "castingTime": `string`,
+        ///                 "range": `string`,
+        ///                 "verbal": `bool`,
+        ///                 "somatic": `bool`,
+        ///                 "materials": `string`,
+        ///                 "duration": `string`,
+        ///                 "ritual": `bool`,
+        ///                 "description": `string`
+        ///             },
+        ///             .
+        ///             .
+        ///             .
+        ///         ]
+        /// 
+        /// If spellbook does not exist:
+        ///     Status Code: 400 (BAD REQUEST)
+        ///     BODY:
+        ///         {
+        ///             "message": `string`
+        ///         }
+        /// </summary>
+        /// <param name="id">The spellbook's ID.</param>
+        /// <returns>The appropriate HttpActionResult.</returns>
+        [Route("{id}/nonmemberSpells")]
+        public async Task<IHttpActionResult> GetNonmemberSpells(int id)
+        {
+            var spells = await _spellbookRepo.GetNonmemberSpellsAsync(id);
+            
+            if (spells == null)
+            {
+                return BadRequest("Invalid spellbook ID.");
+            }
+            else
+            {
+                var response = spells.Select(s => s.GetInfo()).ToList();
+                return Ok(response);
+            }
+        }
+
+        /// <summary>
         /// Attempts to create a new spellbook.
         /// 
         /// ROUTE
