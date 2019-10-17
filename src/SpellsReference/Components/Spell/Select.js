@@ -131,16 +131,14 @@ class Select extends Component {
             fetch(`http://localhost:61211/api/spell/${this.state.id}`, {
                 method: 'DELETE'
             })
-            .then(this.setState ( { toList: true }));
-            // .then(response => response.json())
-            // .then(response => {
-            //     if(response.ok){
-            //         this.setState({
-            //             toList: true
-            //         });
-            //         this.render();
-            //     }
-            // });
+            .then(response => response.json())
+            .then(data => {
+                if(data.success){
+                    this.setState({
+                        toList: true
+                    });
+                }
+            });
         }
          else {
             alert('Incorrect spell name.');

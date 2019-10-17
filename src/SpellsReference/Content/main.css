@@ -2,6 +2,13 @@
 	color: #111 !important;
 }
 
-.red-border {
-    border: 1px solid red;
+.background {
+    /*background-image: url(http://cdn.wallpapername.com/1680x1050/20121102/magic%20spellbook%201680x1050%20wallpaper_www.wallpapername.com_30.jpg);
+    background-size: 100%;*/
 }
+
+.full-page {
+    /*height: 70vh;
+    background-color: ghostwhite;
+    background-*/
+} 

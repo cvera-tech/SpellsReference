@@ -16,12 +16,6 @@ import SpellbookIndex from './Spellbook/Index';
 function App() {
     return (
         <Router>
-            <div>
-                <nav>
-                    <Link to="/">Cheat Home</Link>
-                    <Link to="/Spellbook">Spellbooks!</Link>
-                    <p>THIS IS A REACT PAGE</p>
-                </nav>
                 <Switch>
                     <Route path="/Spell/Select/:id" component={Select}>
                     </Route>
@@ -38,7 +32,6 @@ function App() {
                         <Index />
                     </Route>
                 </Switch>
-            </div>
         </Router>
     );
 }

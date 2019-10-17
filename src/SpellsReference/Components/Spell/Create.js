@@ -30,7 +30,6 @@ class Create extends Component {
   }
 
   componentDidMount() {
-    
   }
 
   handleSubmit(event) {
@@ -55,10 +54,11 @@ class Create extends Component {
       },
       body: JSON.stringify(data)
     })
-      .then(response => {
-        this.setState({ toList: true });
-      })
-      .catch(error => {
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          this.setState({ toList: true });
+        }
       });
   }
 
