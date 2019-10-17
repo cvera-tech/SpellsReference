@@ -158,6 +158,11 @@ namespace SpellsReference.Data.Repositories
             }
         }
 
+        public async Task<Spellbook> GetSimpleAsync(int spellbookId)
+        {
+            return await _context.Spellbooks.SingleOrDefaultAsync(sb => sb.Id == spellbookId);
+        }
+
         public List<Spellbook> List()
         {
             return _context.Spellbooks.ToList();
