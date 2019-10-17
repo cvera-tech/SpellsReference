@@ -53,6 +53,10 @@ namespace SpellsReference.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            if (Request.IsAuthenticated)
+            {
+                return Redirect("/");
+            }
             var viewModel = new RegisterViewModel();
             return View(viewModel);
         }
@@ -75,7 +79,7 @@ namespace SpellsReference.Controllers
                 if (success.HasValue)
                 {
                     FormsAuthentication.SetAuthCookie(user.Email, false);
-                    return RedirectToAction("Index", "Home");
+                    return Redirect("/");
                 }
                 else
                 {
