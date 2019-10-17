@@ -79,15 +79,15 @@ class Create extends Component {
           <div className="form-group row">
             <div className="col-sm-3">
               <label htmlFor="name">Name</label>
-              <input id="name" className="form-control" name="name" type="text" />
+              <input id="name" className="form-control" name="name" type="text" required />
             </div>
             <div className="col-sm-1">
               <label htmlFor="level">Level</label>
-              <input id="level" className="form-control" name="level" defaultValue="0" type="number" />
+              <input id="level" className="form-control" name="level" defaultValue="0" type="number" required />
             </div>
             <div className="col-sm-2">
               <label htmlFor="schoolOfMagic">School</label>
-              <select id="schoolOfMagic" className="form-control" defaultValue="0">
+              <select id="schoolOfMagic" className="form-control" defaultValue="0" required>
                 <option></option>
                 <option>Abjuration</option>
                 <option>Conjuration</option>
@@ -101,11 +101,11 @@ class Create extends Component {
             </div>
             <div className="col-sm-3">
               <label htmlFor="castingTime">Cast Time</label>
-              <input id="castingTime" className="form-control" name="castingTime" type="text" />
+              <input id="castingTime" className="form-control" name="castingTime" type="text" required />
             </div>
             <div className="col-sm-3">
               <label htmlFor="range">Range</label>
-              <input id="range" className="form-control" name="range" type="text" />
+              <input id="range" className="form-control" name="range" type="text" required/>
             </div>
           </div>
           <div className="form-group row">
@@ -119,7 +119,7 @@ class Create extends Component {
             </div>
             <div className="col-sm-3">
               <label htmlFor="duration">Duration</label>
-              <input id="duration" className="form-control" name="duration" type="text" />
+              <input id="duration" className="form-control" name="duration" type="text" required />
             </div>
             <div className="col-xs-1 ml-2">
               <label htmlFor="ritual">Ritual</label>
@@ -129,13 +129,13 @@ class Create extends Component {
           <div className="form-group row">
             <div className="col-sm-6">
               <label htmlFor="description">Description</label>
-              <textarea id="description" className="form-control" name="description" type="text" />
+              <textarea id="description" className="form-control" name="description" type="text" required />
             </div>
           </div>
           <div className="form-group row">
             <div className="col-sm-4">
               <label htmlFor="materials">Materials</label>
-              <input id="materials" className="form-control" name="materials" type="text" />
+              <input id="materials" className="form-control" name="materials" type="text" required />
             </div>
           </div>
           <div>
