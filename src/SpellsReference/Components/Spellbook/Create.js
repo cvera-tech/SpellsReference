@@ -58,11 +58,13 @@ class SpellbookCreate extends Component {
                     <h1>Create a Spellbook</h1>
                     <p>Unable to create spellbook.</p>
                     <form onSubmit={this.handleSubmit}>
-                        <fieldset>
-                            <label htmlFor='nameField'>Name</label>
-                            <input type='text' id='nameField' onChange={this.handleChange} value={this.state.name} />
+                        <fieldset className="form-group row">
+                            <div className="col-sm-4">
+                            <label htmlFor='nameField' className="form-text">Name</label>
+                            <input type='text' id='nameField' onChange={this.handleChange} value={this.state.name} className="form-control"/>
+                            </div>
                         </fieldset>
-                        <input type='submit' value='Creatify the Spellbook!' />
+                        <input type='submit' value='Creatify the Spellbook!' className="btn btn-success"/>
                     </form>
                 </div>
             );
