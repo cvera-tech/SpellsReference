@@ -1,4 +1,4 @@
-﻿import React, { Component } from 'react';
+import React, { Component } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -33,11 +33,13 @@ class Index extends Component {
             spells: [],
             filteredSpells: [],
             previousSort: null,
+            previousSortType: null,
             spellSelected: false,
             spellRedirect: null
-
         };
 
+        this.toggleFilterOn = this.toggleFilterOn.bind(this);
+        this.toggleFilterOff = this.toggleFilterOff.bind(this);
         this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleHeaderClick = this.handleHeaderClick.bind(this);
         this.handleBodyClick = this.handleBodyClick.bind(this);
@@ -58,9 +60,7 @@ class Index extends Component {
                 return text;
             }
         };
-        debugger;
         const columnText = getColumnText(th.innerText);
-
         if (this.state.previousSort === sortByColumn && !(this.state.previousSortState === null)) {
             if (this.state.previousSortState === 'descending') {
                 th.innerText = columnText + ' ▲';
@@ -68,7 +68,8 @@ class Index extends Component {
                     return {
                         filteredSpells: this.mySort(state.filteredSpells, sortByColumn, columnType, 'ascending'),
                         previousSortState: "ascending",
-                        previousSort: sortByColumn
+                        previousSort: sortByColumn,
+                        previousSortType: columnType
                     };
                 });
             }
@@ -78,7 +79,8 @@ class Index extends Component {
                     return {
                         filteredSpells: this.mySort(state.filteredSpells, sortByColumn, columnType, 'none'),
                         previousSortState: null,
-                        previousSort: sortByColumn
+                        previousSort: sortByColumn,
+                        previousSortType: columnType
                     };
                 });
             }
@@ -101,7 +103,8 @@ class Index extends Component {
                 return {
                     filteredSpells: this.mySort(state.filteredSpells, sortByColumn, columnType, 'descending'),
                     previousSortState: "descending",
-                    previousSort: sortByColumn
+                    previousSort: sortByColumn,
+                    previousSortType: columnType
                 };
             });
         }
@@ -138,8 +141,8 @@ class Index extends Component {
         else if (direction === 'ascending') {
             if (columnType === 'string') {
                 return list.sort(function (a, b) {
-                    const x = a.name.toLowerCase();
-                    const y = b.name.toLowerCase();
+                    const x = a[columnName].toLowerCase();
+                    const y = b[columnName].toLowerCase();
                     if (x > y) { return -1; }
                     if (x < y) { return 1; }
                     return 0;
@@ -158,11 +161,24 @@ class Index extends Component {
         }
     }
 
+    toggleFilterOn = () => {
+        document.getElementById('stringFilter').hidden = false;
+        document.getElementById('showFilter').hidden = true;
+        document.getElementById('cancelFilter').hidden = false;
+    }
+
+    toggleFilterOff = () => {
+        document.getElementById('stringFilter').value = '';
+        this.handleFilterChange({ target: { value: '' }});
+        document.getElementById('stringFilter').hidden = true;
+        document.getElementById('showFilter').hidden = false;
+        document.getElementById('cancelFilter').hidden = true;
+    }
+
     handleFilterChange = (event) => {
         const stringFilter = event.target.value;
 
         let uniqueStringFilteredSpells = [];
-        
         if (stringFilter !== '') {
             let allStringFilteredSpells = [];
 
@@ -213,13 +229,16 @@ class Index extends Component {
             <div className="full-page mt-2">
                 <h1>Spell Index Page</h1>
                 <div>
-                    <div>
-                        <Link to="/Spell/Create" className="btn btn-primary btn-lg mb-2">Create Spell</Link>
-                        <Link to="/Spell/Filter" className="btn btn-outline-secondary btn-lg mb-2 ml-2">Filter</Link>
-                    </div>
-                    <div className="form-group row" onChange={this.handleFilterChange}>
+                    <div className="form-group row">
+                        <div className="col-xs-4 ml-3">
+                            <Link to="/Spell/Create" className="btn btn-primary">Create Spell</Link>
+                        </div>
                         <div className="col-sm-3">
-                            <input id="stringFilter" className="form-control" placeholder="Keywords. . ." type="text"></input>
+                            <button id="showFilter" className="btn btn-outline-secondary" onClick={this.toggleFilterOn}>Filter</button>
+                            <input id="stringFilter" className="form-control" placeholder="Keywords. . ." onChange={this.handleFilterChange} type="text" hidden></input>
+                        </div>
+                        <div className="col-xs-2">
+                            <button id="cancelFilter" className="btn btn-light" onClick={this.toggleFilterOff} hidden>Cancel</button>    
                         </div>
                     </div>
                     <table id="spellTable" className="table table-sm table-hover">
