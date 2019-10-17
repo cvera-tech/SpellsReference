@@ -9,7 +9,7 @@ class SpellbookCreate extends Component {
         this.state = {
             name: '',
             redirectLink: null,
-            success: false,
+            success: null,
         };
     }
 
@@ -32,6 +32,7 @@ class SpellbookCreate extends Component {
             body: JSON.stringify(requestBody)
         })
             .then(response => {
+                debugger;
                 if (response.ok) {
                     const redirectLink = response.headers.get('location');
                     this.props.submitCallback();
@@ -39,17 +40,11 @@ class SpellbookCreate extends Component {
                         redirectLink: redirectLink
                     });
                 } else {
-                    this.setState({
-                        success: false
-                    });
+                    throw response;
                 }
             })
-            .then(() => {
-                // This fixes the race condition with submitCallback
-                this.setState({
-                    success: true
-                })
-            })
+            .then(() => this.setState({ success: true }))
+            .catch(() => this.setState({ success: false }));
         event.preventDefault();
     }
 
