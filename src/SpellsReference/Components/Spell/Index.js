@@ -7,19 +7,19 @@ import {
     Redirect
 } from "react-router-dom";
 
-function Spell(props) {
+function Spell({ spell }) {
     return (
-        <tr data={`/Spell/Select/${props.spell.id}`}>
-            <td>{props.spell.name}</td>
-            <td>{props.spell.level}</td>
-            <td>{props.spell.school}</td>
-            <td>{props.spell.castingTime}</td>
-            <td>{props.spell.range}</td>
-            <td>{props.spell.verbal ? 'True' : 'False'}</td>
-            <td>{props.spell.somatic ? 'True' : 'False'}</td>
-            <td>{props.spell.materials}</td>
-            <td>{props.spell.duration}</td>
-            <td>{props.spell.ritual ? 'True' : 'False'}</td>
+        <tr data={`/Spell/Select/${spell.id}`}>
+            <td>{spell.name}</td>
+            <td>{spell.level}</td>
+            <td>{spell.school}</td>
+            <td>{spell.castingTime}</td>
+            <td>{spell.range}</td>
+            <td>{spell.verbal ? 'True' : 'False'}</td>
+            <td>{spell.somatic ? 'True' : 'False'}</td>
+            <td>{spell.materials}</td>
+            <td>{spell.duration}</td>
+            <td>{spell.ritual ? 'True' : 'False'}</td>
         </tr>
     );
 }
@@ -37,88 +37,81 @@ class Index extends Component {
         };
 
         this.mySort = this.mySort.bind(this);
+        this.handleBodyClick = this.handleBodyClick.bind(this);
+        this.handleHeaderClick = this.handleHeaderClick.bind(this);
     }
 
-    componentDidMount() {
-        fetch('http://localhost:61211/api/spell')
-            .then(response => response.json())
-            .then(data => {
-                this.setState({
-                    spells: data.spells
-                });
-            });
-
-        document.getElementById('tbody').addEventListener('click', (event) => {
-            const td = event.target;
-            const tr = event.target.parentNode;
-            const redirectLink = tr.getAttribute('data');
-
-            this.setState({
-                spellSelected: true,
-                spellRedirect: redirectLink
-            });
-        });
+    handleHeaderClick = (event) => {
+        const th = event.target;
+        const sortByColumn = th.getAttribute('data-columnname');
+        const columnType = th.getAttribute('data-columntype');
 
         const getColumnText = (text) => {
             const containsUpArrow = text.includes('▲');
             const containsDownArrow = text.includes('▼');
             if (containsUpArrow || containsDownArrow) {
-                return text.substring(0, text.length-2)
+                return text.substring(0, text.length - 2)
             } else {
                 return text;
             }
         };
 
-        document.getElementById('thead').addEventListener('click', (event) => {
-            const th = event.target;
-            const sortByColumn = th.getAttribute('data-columnname');
-            const columnType = th.getAttribute('data-columntype');
+        const columnText = getColumnText(th.innerText);
 
-            const columnText = getColumnText(th.innerText);
-
-            if (this.state.previousSort === sortByColumn && !(this.state.previousSortState === null)) {
-                if (this.state.previousSortState === 'descending') {
-                    th.innerText = columnText + ' ▲';
-                    this.setState((state) => {
-                        return {
-                            spells: this.mySort(state.spells, sortByColumn, columnType, 'ascending'),
-                            previousSortState: "ascending",
-                            previousSort: sortByColumn
-                        };
-                    });
-                }
-                else {
-                    th.innerText = columnText;
-                    this.setState((state) => {
-                        return {
-                            spells: this.mySort(state.spells, sortByColumn, columnType, 'none'),
-                            previousSortState: null,
-                            previousSort: sortByColumn
-                        };
-                    });
-                }
-            }
-            else {
-                document.getElementById('name').innerText = 'Name';
-                document.getElementById('level').innerText = 'Level';
-                document.getElementById('school').innerText = 'School';
-                document.getElementById('castingTime').innerText = 'Cast Time';
-                document.getElementById('range').innerText = 'Range';
-                document.getElementById('verbal').innerText = 'Verbal';
-                document.getElementById('somatic').innerText = 'Somatic';
-                document.getElementById('duration').innerText = 'Duration';
-                document.getElementById('materials').innerText = 'Materials';
-                document.getElementById('ritual').innerText = 'Ritual';
-
-                th.innerText = columnText + ' ▼';
+        if (this.state.previousSort === sortByColumn && !(this.state.previousSortState === null)) {
+            if (this.state.previousSortState === 'descending') {
+                th.innerText = columnText + ' ▲';
                 this.setState((state) => {
                     return {
-                        spells: this.mySort(state.spells, sortByColumn, columnType, 'descending'),
-                        previousSortState: "descending",
+                        spells: this.mySort(state.spells, sortByColumn, columnType, 'ascending'),
+                        previousSortState: "ascending",
                         previousSort: sortByColumn
                     };
                 });
             }
+            else {
+                th.innerText = columnText;
+                this.setState((state) => {
+                    return {
+                        spells: this.mySort(state.spells, sortByColumn, columnType, 'none'),
+                        previousSortState: null,
+                        previousSort: sortByColumn
+                    };
+                });
+            }
+
+        }
+        else {
+            document.getElementById('name').innerText = 'Name';
+            document.getElementById('level').innerText = 'Level';
+            document.getElementById('school').innerText = 'School';
+            document.getElementById('castingTime').innerText = 'Cast Time';
+            document.getElementById('range').innerText = 'Range';
+            document.getElementById('verbal').innerText = 'Verbal';
+            document.getElementById('somatic').innerText = 'Somatic';
+            document.getElementById('duration').innerText = 'Duration';
+            document.getElementById('materials').innerText = 'Materials';
+            document.getElementById('ritual').innerText = 'Ritual';
+
+            th.innerText = columnText + ' ▼';
+            this.setState((state) => {
+                return {
+                    spells: this.mySort(state.spells, sortByColumn, columnType, 'descending'),
+                    previousSortState: "descending",
+                    previousSort: sortByColumn
+                };
+            });
+        }
+    }
+
+    handleBodyClick = (event) => {
+        const td = event.target;
+        const tr = event.target.parentNode;
+        const redirectLink = tr.getAttribute('data');
+
+        this.setState({
+            spellSelected: true,
+            spellRedirect: redirectLink
         });
     }
 
@@ -148,7 +141,7 @@ class Index extends Component {
                     if (x < y) { return 1; }
                     return 0;
                 });
-            } 
+            }
             else {
                 return list.sort(function (a, b) {
                     return b[columnName] - a[columnName];
@@ -162,6 +155,16 @@ class Index extends Component {
         }
     }
 
+    componentDidMount() {
+        fetch('http://localhost:61211/api/spell')
+            .then(response => response.json())
+            .then(data => {
+                this.setState({
+                    spells: data.spells
+                });
+            });
+    }
+
     render() {
         if (this.state.spellSelected === true) {
             return (
@@ -169,13 +172,20 @@ class Index extends Component {
             );
         }
         return (
-            <div className="full-page">
+            <div className="full-page mt-2">
                 <h1>Spell Index Page</h1>
                 <div>
-                    <Link to="/Spell/Create" className="btn btn-primary btn-lg mb-2">Create Spell</Link>
-                    <Link to="/Spell/Filter" className="btn btn-outline-secondary btn-lg mb-2 ml-2">Filter</Link>
+                    <div>
+                        <Link to="/Spell/Create" className="btn btn-primary btn-lg mb-2">Create Spell</Link>
+                        <Link to="/Spell/Filter" className="btn btn-outline-secondary btn-lg mb-2 ml-2">Filter</Link>
+                    </div>
+                    <div className="form-group row">
+                        <div className="col-sm-3">
+                            <input id="stringFilter" className="form-control" placeholder="Keywords. . ." type="text"></input>
+                        </div>
+                    </div>
                     <table id="spellTable" className="table table-sm table-hover">
-                        <thead id="thead" className="thead thead-dark">
+                        <thead id="thead" className="thead thead-dark" onClick={this.handleHeaderClick}>
                             <tr>
                                 <th id="name" data-columnname="name" data-columntype="string">Name</th>
                                 <th id="level" data-columnname="level" data-columntype="int">Level</th>
@@ -189,7 +199,7 @@ class Index extends Component {
                                 <th id="ritual" data-columnname="ritual" data-columntype="bool">Ritual</th>
                             </tr>
                         </thead>
-                        <tbody id="tbody">
+                        <tbody id="tbody" onClick={this.handleBodyClick}>
                             {this.state.spells.map(spell => (
                                 <Spell spell={spell} key={spell.id} />
                             ))}

@@ -154,7 +154,7 @@ class Select extends Component {
 
         if (this.state.success === true) {
             return (
-                <div className="mt-2">
+                <div className="mt-4">
                     <form id="deleteSpell" onSubmit={this.handleDelete}>
                         <button id="deleteButton" className="btn btn-danger btn-lg float-right" type="submit">Delete</button>
                     </form>
