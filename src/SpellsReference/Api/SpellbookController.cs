@@ -154,10 +154,7 @@ namespace SpellsReference.Api
         ///     Status Code: 400 (BAD REQUEST)
         ///     BODY:
         ///         {
-        ///             "message": `string`,
-        ///             "modelState": {
-        ///                 "request.Name": [`string`, . . . ]
-        ///             }
+        ///             "message": `string`
         ///         }
         /// 
         /// </summary>
@@ -170,6 +167,47 @@ namespace SpellsReference.Api
             if (spellbook != null)
             {
                 return Ok(spellbook.GetInfo());
+            }
+            else
+            {
+                return BadRequest("Invalid spellbook ID.");
+            }
+        }
+
+        /// <summary>
+        /// Attempts to retrieve a spellbook's name from the database.
+        /// 
+        /// ROUTE
+        /// "api/spellbook/{id}/name"
+        /// 
+        /// REQUEST 
+        ///     METHOD: GET
+        /// 
+        /// RESPONSE
+        /// If success:
+        ///     Status Code: 200 (SUCCESS)
+        ///     BODY:
+        ///         {
+        ///             "name": `string`
+        ///         }
+        ///         
+        /// If spellbook does not exist:
+        ///     Status Code: 400 (BAD REQUEST)
+        ///     BODY:
+        ///         {
+        ///             "message": `string`
+        ///         }
+        /// 
+        /// </summary>
+        /// <param name="id">The spellbook's ID.</param>
+        /// <returns>The appropriate HttpActionResult.</returns>
+        [Route("{id}/name")]
+        public async Task<IHttpActionResult> GetName(int id)
+        {
+            var spellbook = await _spellbookRepo.GetAsync(id);
+            if (spellbook != null)
+            {
+                return Ok(new { Name = spellbook.Name });
             }
             else
             {
