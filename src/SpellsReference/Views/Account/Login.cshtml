@@ -8,7 +8,7 @@
 <div class="col-lg-4">
     <h2>Login</h2>
 
-    @using (Html.BeginForm("Login", "Account", FormMethod.Post, htmlAttributes: new { }))
+    @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
 
