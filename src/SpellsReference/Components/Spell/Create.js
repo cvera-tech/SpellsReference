@@ -63,7 +63,6 @@ class Create extends Component {
   }
 
   handleChange(event) {
-
   }
 
   render() {
@@ -89,6 +88,7 @@ class Create extends Component {
             <div className="col-sm-2">
               <label htmlFor="schoolOfMagic">School</label>
               <select id="schoolOfMagic" className="form-control" defaultValue="0">
+                <option></option>
                 <option>Abjuration</option>
                 <option>Conjuration</option>
                 <option>Divination</option>
