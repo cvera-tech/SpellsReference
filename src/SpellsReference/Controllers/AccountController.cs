@@ -32,7 +32,8 @@ namespace SpellsReference.Controllers
                 if (_accountRepo.Authenticate(viewModel.EmailAddress, viewModel.Password))
                 {
                     FormsAuthentication.SetAuthCookie(viewModel.EmailAddress, false);
-                    return RedirectToAction("Index", "Home");
+                    //return RedirectToAction("Index", "React");
+                    return Redirect("/");
                 }
                 else
                 {
@@ -46,7 +47,7 @@ namespace SpellsReference.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "React");
         }
 
         [AllowAnonymous]
