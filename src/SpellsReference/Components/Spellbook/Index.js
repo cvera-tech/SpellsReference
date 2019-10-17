@@ -51,12 +51,12 @@ class SpellbookIndex extends Component {
     render() {
         let output = (
             <div>
-                <h1>Hello, this is the Spellbook Index.</h1>
+                <h1>Spellbooks</h1>
 
-                <ul>
-                    <li><Link to="/Spellbook">Spellbook Index</Link></li>
-                    <li><Link to="/Spellbook/Create">Create a Spellbook!</Link></li>
-                </ul>
+                <div>
+                    <Link to="/Spellbook" className="btn btn-outline-primary">Spellbook Index</Link>
+                    <Link to="/Spellbook/Create" className="btn btn-primary ml-2">Create a Spellbook!</Link>
+                </div>
                 <ErrorMessages messages={this.state.error} />
                 <div>
                     <Route path="/Spellbook/Create">

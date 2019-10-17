@@ -13,7 +13,6 @@ function Spell({ spell }) {
             <td>{spell.materials}</td>
             <td>{spell.duration}</td>
             <td>{spell.ritual ? 'True' : 'False'}</td>
-            <td>{spell.description}</td>
         </tr>
     );
 }
@@ -31,8 +30,8 @@ function SpellList(props) {
 
     return (
         <div>
-            <table>
-                <thead>
+            <table className="table table-sm table-hover">
+                <thead className="thead thead-dark">
                     <tr>
                         <th>Name</th>
                         <th>Level</th>
@@ -44,7 +43,6 @@ function SpellList(props) {
                         <th>Materials</th>
                         <th>Duration</th>
                         <th>Ritual</th>
-                        <th>Description</th>
                     </tr>
                 </thead>
                 <tbody onClick={handleSpellClick}>
