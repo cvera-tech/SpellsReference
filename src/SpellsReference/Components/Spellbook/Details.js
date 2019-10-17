@@ -30,7 +30,7 @@ class SpellbookDetails extends Component {
                 }
             })
             .then(obj => {
-                this.props.callback(obj.name);  // Pass spellbook name to Index component
+                this.props.spellbookNameCallback(obj.name);  // Pass spellbook name to Index component
                 this.setState({
                     success: true,
                     spellbook: obj

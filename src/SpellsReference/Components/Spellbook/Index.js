@@ -7,7 +7,6 @@ import SpellbookList from './List';
 import SpellbookCreate from './Create';
 import SpellbookDetails from './Details';
 import AddSpell from './AddSpell';
-import { fetchSpellbookList } from './Data';
 import ErrorMessages from '../ErrorMessages';
 
 class SpellbookIndex extends Component {
@@ -45,7 +44,6 @@ class SpellbookIndex extends Component {
     };
 
     componentDidMount() {
-        // this.fetchData();
         this.fetchSpellbooks();
     }
 
@@ -60,16 +58,19 @@ class SpellbookIndex extends Component {
                 </ul>
                 <ErrorMessages messages={this.state.error} />
                 <div>
-                    {/* <Route path="/Spellbook/Create">
-                        <SpellbookCreate submitCallback={this.updateSpellbookList} />
+                    <Route path="/Spellbook/Create">
+                        <SpellbookCreate submitCallback={this.fetchSpellbooks} />
                     </Route>
                     <Route path="/Spellbook/Details/:spellbookId/AddSpell"
                         render={(props) =>
-                            <AddSpell {...props} submitCallback={this.fetchData} spellbookName={this.selectedSpellbookName} />
-                        } /> */}
+                            <AddSpell {...props}
+                                submitCallback={this.fetchSpellbooks}
+                                spellbookName={this.state.selectedSpellbookName} />
+                        } />
                     <Route exact path="/Spellbook/Details/:spellbookId"
                         render={(props) =>
-                            <SpellbookDetails {...props} selectCallback={this.setSelectedSpellbook} />
+                            <SpellbookDetails {...props}
+                                spellbookNameCallback={this.setSelectedSpellbook} />
                         } />
                     <Route exact path="/Spellbook">
                         <SpellbookList spellbooks={this.state.spellbooks} />

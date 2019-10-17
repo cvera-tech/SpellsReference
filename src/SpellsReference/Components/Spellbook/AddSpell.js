@@ -123,7 +123,7 @@ class AddSpell extends Component {
                 })
                 .then(response => {
                     if (response.ok) {
-                        this.props.callback();  // Update spellbook list
+                        this.props.submitCallback();  // Update spellbook list
                         this.setState((prevState) => {
                             return {
                                 spellAdded: true
