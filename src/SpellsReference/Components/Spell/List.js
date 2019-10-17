@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
 
 class Spell extends Component {
     render() {
         return (
-            <tr>
+            <tr id="spellRow">
                 <td>{this.props.spell.name}</td>
                 <td>{this.props.spell.level}</td>
                 <td>{this.props.spell.school}</td>
@@ -21,7 +20,7 @@ class Spell extends Component {
     }
 }
 
-class SpellList extends Component {
+export class SpellList extends Component {
     render() {
         return (
             <div>
@@ -53,5 +52,3 @@ class SpellList extends Component {
         );
     }
 }
-
-export default SpellList;

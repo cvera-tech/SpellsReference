@@ -137,6 +137,27 @@ namespace SpellsReference.Data.Repositories
             return nonmemberSpells;
         }
 
+        public async Task<List<Spell>> GetNonmemberSpellsAsync(int spellbookId)
+        {
+            var spellbook = await _context.Spellbooks
+                .Include(sb => sb.Spells)
+                .SingleOrDefaultAsync(sb => sb.Id == spellbookId);
+            if (spellbook == null)
+            {
+                return null;
+            }
+            else
+            {
+                var memberSpellIds = spellbook.Spells
+                    .Select(s => s.Id);
+                var nonmemberSpells = await _context.Spells
+                    .Where(s => !memberSpellIds.Contains(s.Id))
+                    .ToListAsync();
+
+                return nonmemberSpells;
+            }
+        }
+
         public List<Spellbook> List()
         {
             return _context.Spellbooks.ToList();
@@ -213,7 +234,7 @@ namespace SpellsReference.Data.Repositories
 
                 // Update the spellbook
                 spellbook.Name = entity.Name;
-                
+
                 await _context.SaveChangesAsync();
                 return true;
             }
