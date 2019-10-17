@@ -31,14 +31,17 @@ class Index extends Component {
 
         this.state = {
             spells: [],
+            filteredSpells: [],
             previousSort: null,
             spellSelected: false,
             spellRedirect: null
+
         };
 
-        this.mySort = this.mySort.bind(this);
-        this.handleBodyClick = this.handleBodyClick.bind(this);
+        this.handleFilterChange = this.handleFilterChange.bind(this);
         this.handleHeaderClick = this.handleHeaderClick.bind(this);
+        this.handleBodyClick = this.handleBodyClick.bind(this);
+        this.mySort = this.mySort.bind(this);
     }
 
     handleHeaderClick = (event) => {
@@ -55,7 +58,7 @@ class Index extends Component {
                 return text;
             }
         };
-
+        debugger;
         const columnText = getColumnText(th.innerText);
 
         if (this.state.previousSort === sortByColumn && !(this.state.previousSortState === null)) {
@@ -63,7 +66,7 @@ class Index extends Component {
                 th.innerText = columnText + ' ▲';
                 this.setState((state) => {
                     return {
-                        spells: this.mySort(state.spells, sortByColumn, columnType, 'ascending'),
+                        filteredSpells: this.mySort(state.filteredSpells, sortByColumn, columnType, 'ascending'),
                         previousSortState: "ascending",
                         previousSort: sortByColumn
                     };
@@ -73,7 +76,7 @@ class Index extends Component {
                 th.innerText = columnText;
                 this.setState((state) => {
                     return {
-                        spells: this.mySort(state.spells, sortByColumn, columnType, 'none'),
+                        filteredSpells: this.mySort(state.filteredSpells, sortByColumn, columnType, 'none'),
                         previousSortState: null,
                         previousSort: sortByColumn
                     };
@@ -96,7 +99,7 @@ class Index extends Component {
             th.innerText = columnText + ' ▼';
             this.setState((state) => {
                 return {
-                    spells: this.mySort(state.spells, sortByColumn, columnType, 'descending'),
+                    filteredSpells: this.mySort(state.filteredSpells, sortByColumn, columnType, 'descending'),
                     previousSortState: "descending",
                     previousSort: sortByColumn
                 };
@@ -155,12 +158,47 @@ class Index extends Component {
         }
     }
 
+    handleFilterChange = (event) => {
+        const stringFilter = event.target.value;
+
+        let uniqueStringFilteredSpells = [];
+        
+        if (stringFilter !== '') {
+            let allStringFilteredSpells = [];
+
+            const nameFilteredSpells = this.state.spells
+                .filter(spell => spell.name.toLowerCase().includes(stringFilter.toLowerCase()))
+            const castingTimeFilteredSpells = this.state.spells
+                .filter(spell => spell.castingTime.toLowerCase().includes(stringFilter.toLowerCase()))
+            const rangeFilteredSpells = this.state.spells
+                .filter(spell => spell.range.toLowerCase().includes(stringFilter.toLowerCase()))
+            const durationFilteredSpells = this.state.spells
+                .filter(spell => spell.duration.toLowerCase().includes(stringFilter.toLowerCase()))
+            const materialsFilteredSpells = this.state.spells
+                .filter(spell => spell.materials.toLowerCase().includes(stringFilter.toLowerCase()))
+
+            allStringFilteredSpells.push.apply(allStringFilteredSpells, nameFilteredSpells);
+            allStringFilteredSpells.push.apply(allStringFilteredSpells, castingTimeFilteredSpells);
+            allStringFilteredSpells.push.apply(allStringFilteredSpells, rangeFilteredSpells);
+            allStringFilteredSpells.push.apply(allStringFilteredSpells, durationFilteredSpells);
+            allStringFilteredSpells.push.apply(allStringFilteredSpells, materialsFilteredSpells);
+
+            uniqueStringFilteredSpells = [...new Set(allStringFilteredSpells)];
+
+            this.setState({ filteredSpells: uniqueStringFilteredSpells });
+        }
+        else {
+            this.setState({ filteredSpells: this.state.spells });
+        }
+    }
+
     componentDidMount() {
         fetch('http://localhost:61211/api/spell')
             .then(response => response.json())
             .then(data => {
                 this.setState({
-                    spells: data.spells
+                    spells: data.spells,
+                    filteredSpells: data.spells,
                 });
             });
     }
@@ -179,7 +217,7 @@ class Index extends Component {
                         <Link to="/Spell/Create" className="btn btn-primary btn-lg mb-2">Create Spell</Link>
                         <Link to="/Spell/Filter" className="btn btn-outline-secondary btn-lg mb-2 ml-2">Filter</Link>
                     </div>
-                    <div className="form-group row">
+                    <div className="form-group row" onChange={this.handleFilterChange}>
                         <div className="col-sm-3">
                             <input id="stringFilter" className="form-control" placeholder="Keywords. . ." type="text"></input>
                         </div>
@@ -200,7 +238,7 @@ class Index extends Component {
                             </tr>
                         </thead>
                         <tbody id="tbody" onClick={this.handleBodyClick}>
-                            {this.state.spells.map(spell => (
+                            {this.state.filteredSpells.map(spell => (
                                 <Spell spell={spell} key={spell.id} />
                             ))}
                         </tbody>
