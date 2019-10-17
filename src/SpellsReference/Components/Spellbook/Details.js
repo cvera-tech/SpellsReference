@@ -44,10 +44,10 @@ export default class SpellbookDetails extends Component {
             return (
                 <div>
                     <h1>{this.state.spellbook.name}</h1>
-                    <ul>
-                        <li><Link to={`/Spellbook/Details/${this.state.spellbookId}/AddSpell`}>Add Spell</Link></li>
-                        <li><Link to={`/Spellbook/Details/${this.state.spellbookId}/RemoveSpell`}>Remove Spell</Link></li>
-                    </ul>
+                    <div>
+                        <Link to={`/Spellbook/Details/${this.state.spellbookId}/AddSpell`} className="btn btn-outline-success">Add Spell</Link>
+                        <Link to={`/Spellbook/Details/${this.state.spellbookId}/RemoveSpell`} className="btn btn-outline-danger ml-2">Remove Spell</Link>
+                    </div>
                     <SpellList spells={this.state.spellbook.spells} />
                 </div>
             );

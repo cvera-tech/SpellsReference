@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 class Spell extends Component {
     render() {
@@ -14,7 +15,7 @@ class Spell extends Component {
                 <td>{this.props.spell.materials}</td>
                 <td>{this.props.spell.duration}</td>
                 <td>{this.props.spell.ritual ? 'True' : 'False'}</td>
-                <td>{this.props.spell.description}</td>
+                <td><Link to={`/Spell/Select/${this.props.spell.id}`}>Details</Link></td>
             </tr>
         );
     }
@@ -24,8 +25,8 @@ export class SpellList extends Component {
     render() {
         return (
             <div>
-                <table>
-                    <thead>
+                <table className="table table-sm table-hover mt-2">
+                    <thead className="thead thead-dark">
                         <tr>
                             <th>Name</th>
                             <th>Level</th>
@@ -37,7 +38,7 @@ export class SpellList extends Component {
                             <th>Materials</th>
                             <th>Duration</th>
                             <th>Ritual</th>
-                            <th>Description</th>
+                            <th>&nbsp;</th>
                         </tr>
                     </thead>
                     <tbody>

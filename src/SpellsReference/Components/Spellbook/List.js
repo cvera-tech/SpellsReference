@@ -16,10 +16,9 @@ class Spellbook extends Component {
 class SpellbookList extends Component {
     render() {
         return (
-            <div>
-                <h1>Hello, this is a list of Spellbooks.</h1>
-                <table>
-                    <thead>
+            <div className="mt-4">
+                <table className="table table-sm table-hover">
+                    <thead className="thead thead-dark">
                         <tr>
                             <th>Name</th>
                             <th>Number of Spells</th>
