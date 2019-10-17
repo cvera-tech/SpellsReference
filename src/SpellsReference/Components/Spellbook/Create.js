@@ -32,10 +32,9 @@ class SpellbookCreate extends Component {
             body: JSON.stringify(requestBody)
         })
             .then(response => {
-                debugger;
                 if (response.ok) {
                     const redirectLink = response.headers.get('location');
-                    this.props.submitCallback();
+                    this.props.submitCallback();    // Update the spellbook list in the Index component
                     this.setState({
                         redirectLink: redirectLink
                     });

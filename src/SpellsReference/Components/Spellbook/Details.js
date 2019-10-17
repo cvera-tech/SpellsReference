@@ -5,7 +5,7 @@ import {
 } from 'react-router-dom';
 import { SpellList } from '../Spell/List';
 
-class SpellbookDetails extends Component {
+export default class SpellbookDetails extends Component {
     constructor(props) {
         super(props);
 
@@ -30,7 +30,7 @@ class SpellbookDetails extends Component {
                 }
             })
             .then(obj => {
-                this.props.callback(obj.name);  // Pass spellbook name to Index component
+                this.props.spellbookNameCallback(obj.name);  // Pass spellbook name to Index component
                 this.setState({
                     success: true,
                     spellbook: obj
@@ -43,24 +43,11 @@ class SpellbookDetails extends Component {
         if (this.state.success === true) {
             return (
                 <div>
-                    <h1>Spellbook Details</h1>
-                    <Link to={`/Spellbook/Details/${this.state.spellbookId}/AddSpell`}>Add Spell</Link>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>Id</td>
-                                <td>{this.state.spellbook.id}</td>
-                            </tr>
-                            <tr>
-                                <td>Name</td>
-                                <td>{this.state.spellbook.name}</td>
-                            </tr>
-                            <tr>
-                                <td>Number of Spells</td>
-                                <td>{this.state.spellbook.numberOfSpells}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h1>{this.state.spellbook.name}</h1>
+                    <ul>
+                        <li><Link to={`/Spellbook/Details/${this.state.spellbookId}/AddSpell`}>Add Spell</Link></li>
+                        <li><Link to={`/Spellbook/Details/${this.state.spellbookId}/RemoveSpell`}>Remove Spell</Link></li>
+                    </ul>
                     <SpellList spells={this.state.spellbook.spells} />
                 </div>
             );
@@ -77,5 +64,3 @@ class SpellbookDetails extends Component {
         }
     }
 }
-
-export default SpellbookDetails;
