@@ -7,6 +7,7 @@ import SpellbookList from './List';
 import SpellbookCreate from './Create';
 import SpellbookDetails from './Details';
 import AddSpell from './AddSpell';
+import RemoveSpell from './RemoveSpell';
 import ErrorMessages from '../ErrorMessages';
 
 class SpellbookIndex extends Component {
@@ -64,8 +65,12 @@ class SpellbookIndex extends Component {
                     <Route path="/Spellbook/Details/:spellbookId/AddSpell"
                         render={(props) =>
                             <AddSpell {...props}
-                                submitCallback={this.fetchSpellbooks}
-                                spellbookName={this.state.selectedSpellbookName} />
+                                submitCallback={this.fetchSpellbooks} />
+                        } />
+                    <Route path="/Spellbook/Details/:spellbookId/RemoveSpell"
+                        render={(props) =>
+                            <RemoveSpell {...props}
+                                submitCallback={this.fetchSpellbooks} />
                         } />
                     <Route exact path="/Spellbook/Details/:spellbookId"
                         render={(props) =>
