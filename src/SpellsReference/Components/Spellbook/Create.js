@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-
+import config from '../config';
 
 class SpellbookCreate extends Component {
     constructor(props) {
@@ -24,7 +24,7 @@ class SpellbookCreate extends Component {
         const requestBody = {
             name: this.state.name
         };
-        fetch('http://localhost:61211/api/spellbook', {
+        fetch('${config.apiBaseUrl}/api/spellbook', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

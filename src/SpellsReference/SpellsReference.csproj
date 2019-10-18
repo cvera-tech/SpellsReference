@@ -147,6 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Components\App.js" />
+    <Content Include="Components\config.js" />
     <Content Include="Components\ErrorMessages.js" />
     <Content Include="Components\Spellbook\AddSpell.js" />
     <Content Include="Components\Spellbook\Create.js" />
@@ -220,6 +221,11 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201910180416424_Initial.cs" />
+    <Compile Include="Migrations\201910180416424_Initial.Designer.cs">
+      <DependentUpon>201910180416424_Initial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SchoolOfMagic.cs" />
     <Compile Include="Models\Spell.cs" />
     <Compile Include="Models\Spellbook.cs" />
@@ -260,12 +266,21 @@
     <Content Include=".babelrc" />
     <Content Include="package-lock.json" />
     <Content Include="Views\React\Index.cshtml" />
+    <None Include="Properties\PublishProfiles\spellsreference - Web Deploy.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201910180416424_Initial.resx">
+      <DependentUpon>201910180416424_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup />
   <PropertyGroup>

@@ -31,7 +31,7 @@ namespace SpellsReference
             var jsonFormatter = GlobalConfiguration.Configuration.Formatters.JsonFormatter;
             jsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
 
-            Database.SetInitializer(new DatabaseInitializer());
+            //Database.SetInitializer(new DatabaseInitializer());
 
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Spell, SpellViewModel>());
             var mapper = config.CreateMapper();

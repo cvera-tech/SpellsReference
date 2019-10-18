@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import { Spell, SpellList } from './Spell';
 import ErrorMessages from '../ErrorMessages';
+import config from '../config';
 
 // This component is very similar to AddSpell.
 // Perhaps they can be merged into one component.
@@ -21,7 +22,7 @@ export default class RemoveSpell extends Component {
 
     componentDidMount() {
         // Fetch the spellbook.
-        fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}`)
+        fetch(`${config.apiBaseUrl}/api/spellbook/${this.state.spellbookId}`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -41,7 +42,7 @@ export default class RemoveSpell extends Component {
             const requestBody = {
                 spellId: parseInt(options.spellId)
             };
-            fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}/remove`, {
+            fetch(`${config.apiBaseUrl}/api/spellbook/${this.state.spellbookId}/remove`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

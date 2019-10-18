@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import ErrorMessages from '../ErrorMessages';
 import { Spell, SpellList } from './Spell';
+import config from '../config';
 
 class AddSpell extends Component {
     constructor(props) {
@@ -19,8 +20,8 @@ class AddSpell extends Component {
 
     componentDidMount() {
         // Promise.all([
-        //     fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}/name`),
-        //     fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}/nonmemberspells`)])
+        //     fetch(`${config.apiBaseUrl}/api/spellbook/${this.state.spellbookId}/name`),
+        //     fetch(`${config.apiBaseUrl}/api/spellbook/${this.state.spellbookId}/nonmemberspells`)])
         //     .then(responses => {
         //         let data = [];
         //         let errors = [];
@@ -32,7 +33,7 @@ class AddSpell extends Component {
         //     });
         
         // Fetch the spellbook's name.
-        fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}/name`)
+        fetch(`${config.apiBaseUrl}/api/spellbook/${this.state.spellbookId}/name`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -46,7 +47,7 @@ class AddSpell extends Component {
             .catch((message) => { this.setState(() => { return { error: [message] }; }) });
 
         // Fetch the list of spells that are not part of the spellbook.
-        fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}/nonmemberspells`)
+        fetch(`${config.apiBaseUrl}/api/spellbook/${this.state.spellbookId}/nonmemberspells`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
@@ -64,7 +65,7 @@ class AddSpell extends Component {
             const requestBody = {
                 spellId: parseInt(options.spellId)
             };
-            fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}/add`, {
+            fetch(`${config.apiBaseUrl}/api/spellbook/${this.state.spellbookId}/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -6,6 +6,7 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
+import config from '../config';
 
 class Create extends Component {
   constructor(props) {
@@ -47,7 +48,7 @@ class Create extends Component {
       description: event.target.description.value,
       materials: event.target.materials.value
     };
-    fetch('http://localhost:61211/api/spell', {
+    fetch(`${config.apiBaseUrl}/api/spell`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

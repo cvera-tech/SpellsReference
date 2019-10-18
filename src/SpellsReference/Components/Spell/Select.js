@@ -6,6 +6,7 @@ import {
     Link,
     Redirect
 } from "react-router-dom";
+import config from '../config';
 
 class Select extends Component {
     constructor(props) {
@@ -37,7 +38,7 @@ class Select extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:61211/api/spell/${this.props.match.params.id}`)
+        fetch(`${config.apiBaseUrl}/api/spell/${this.props.match.params.id}`)
             .then(response => {
                 return response.json();
             })
@@ -101,7 +102,7 @@ class Select extends Component {
             materials: this.state.materials
         };
 
-        fetch(`http://localhost:61211/api/spell/${this.state.id}`, {
+        fetch(`${config.apiBaseUrl}/api/spell/${this.state.id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -128,7 +129,7 @@ class Select extends Component {
 
         var deleteReponse = prompt('Please type the name of the spell to confirm delete.','');
         if (deleteReponse.toLowerCase() === this.state.name.toLowerCase()) {
-            fetch(`http://localhost:61211/api/spell/${this.state.id}`, {
+            fetch(`${config.apiBaseUrl}/api/spell/${this.state.id}`, {
                 method: 'DELETE'
             })
             .then(response => response.json())

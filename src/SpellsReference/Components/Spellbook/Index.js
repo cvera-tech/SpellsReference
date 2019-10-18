@@ -9,6 +9,7 @@ import SpellbookDetails from './Details';
 import AddSpell from './AddSpell';
 import RemoveSpell from './RemoveSpell';
 import ErrorMessages from '../ErrorMessages';
+import config from '../config';
 
 class SpellbookIndex extends Component {
     constructor(props) {
@@ -24,7 +25,7 @@ class SpellbookIndex extends Component {
     }
 
     fetchSpellbooks() {
-        fetch('http://localhost:61211/api/spellbook')
+        fetch('${config.apiBaseUrl}/api/spellbook')
             .then(response => {
                 if (response.ok) {
                     return response.json();

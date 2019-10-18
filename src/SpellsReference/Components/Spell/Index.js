@@ -6,6 +6,7 @@ import {
     Link,
     Redirect
 } from "react-router-dom";
+import config from '../config';
 
 function Spell({ spell }) {
     return (
@@ -209,7 +210,7 @@ class Index extends Component {
     }
 
     componentDidMount() {
-        fetch('http://localhost:61211/api/spell')
+        fetch(`${config.apiBaseUrl}/api/spell`)
             .then(response => response.json())
             .then(data => {
                 this.setState({

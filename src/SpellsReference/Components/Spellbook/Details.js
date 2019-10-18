@@ -4,6 +4,7 @@ import {
     Redirect
 } from 'react-router-dom';
 import { SpellList } from '../Spell/List';
+import config from '../config';
 
 export default class SpellbookDetails extends Component {
     constructor(props) {
@@ -17,7 +18,7 @@ export default class SpellbookDetails extends Component {
     }
 
     componentDidMount() {
-        fetch(`http://localhost:61211/api/spellbook/${this.state.spellbookId}`)
+        fetch(`${config.apiBaseUrl}/api/spellbook/${this.state.spellbookId}`)
             .then(response => {
                 if (response.ok) {
                     return response.json();
