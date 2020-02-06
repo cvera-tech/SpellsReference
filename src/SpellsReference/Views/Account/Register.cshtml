@@ -4,38 +4,43 @@
     ViewBag.Title = "Register";
 }
 
-<h2>Register</h2>
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
 
-    @Html.ValidationSummary()
+<div class="col-lg-4">
+    <h2>Register</h2>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-    <fieldset>
-        @Html.LabelFor(model => model.FirstName)
-        @Html.TextBoxFor(model => model.FirstName)
-        @Html.ValidationMessageFor(model => model.FirstName)
-    </fieldset>
+        @Html.ValidationSummary()
 
-    <fieldset>
-        @Html.LabelFor(model => model.LastName)
-        @Html.TextBoxFor(model => model.LastName)
-        @Html.ValidationMessageFor(model => model.LastName)
-    </fieldset>
+        <fieldset class="form-group">
+            @Html.LabelFor(model => model.FirstName, htmlAttributes: new { @class = "form-text" })
+            @Html.TextBoxFor(model => model.FirstName, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.FirstName)
+        </fieldset>
 
-    <fieldset>
-        @Html.LabelFor(model => model.Email)
-        @Html.TextBoxFor(model => model.Email)
-        @Html.ValidationMessageFor(model => model.Email)
-    </fieldset>
+        <fieldset class="form-group">
+            @Html.LabelFor(model => model.LastName, htmlAttributes: new { @class = "form-text" })
+            @Html.TextBoxFor(model => model.LastName, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.LastName)
+        </fieldset>
 
-    <fieldset>
-        @Html.LabelFor(model => model.Password)
-        @Html.PasswordFor(model => model.Password)
-        @Html.ValidationMessageFor(model => model.Password)
-    </fieldset>
+        <fieldset class="form-group">
+            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "form-text" })
+            @Html.TextBoxFor(model => model.Email, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Email)
+        </fieldset>
 
-    <input type="submit" value="Sign up" />
-    @Html.ActionLink("Cancel", "Index", "Home");
-}
+        <fieldset class="form-group">
+            @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "form-text" })
+            @Html.PasswordFor(model => model.Password, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Password)
+        </fieldset>
+
+        <fieldset class="form-group">
+            <input type="submit" value="Sign up" class="btn btn-primary" />
+            <a href="/" class="btn btn-secondary">Cancel</a>
+        </fieldset>
+    }
+</div>

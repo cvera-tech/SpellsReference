@@ -2,6 +2,7 @@
 using SpellsReference.Data.Repositories;
 using SpellsReference.Models;
 using SpellsReference.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
 
@@ -17,18 +18,20 @@ namespace SpellsReference.Controllers
         }
 
         [AllowAnonymous]
-        public ActionResult Index()
+        public ActionResult Index(SpellFilterViewModel filter)
         {
-            List<Spell> spells = _spellRepo.List();
-
-            return View(spells);
+            var viewModel = new SpellListViewModel()
+            {
+                Spells = filter.HasValues ? _spellRepo.List(filter) : _spellRepo.List()
+            };
+            return View(viewModel);
         }
 
         // Selects a single spell from a list of spells. This might later be moved 
         // to a functionality from spellbook. The Spell Edit and Delete will be tied into this view. 
         // Also, maybe [Authorize], not sure.
         [AllowAnonymous]
-        public ActionResult Select(int id)
+        public ActionResult Select(int id, int? spellbookId)
         {
             Spell spell = _spellRepo.Get(id);
 
@@ -47,20 +50,26 @@ namespace SpellsReference.Controllers
             viewModel.Somatic = spell.Somatic;
             viewModel.Materials = spell.Materials;
             viewModel.Ritual = spell.Ritual;
-            viewModel.Description = spell.Description; 
+            viewModel.Description = spell.Description;
+
+            if (spellbookId != null)
+            {
+                viewModel.SpellbookId = spellbookId;
+            }
 
             return View(viewModel);
         }
 
-        public ActionResult Create()
+        public ActionResult Create(int? spellbookId)
         {
             var viewModel = new SpellViewModel();
+            viewModel.SpellbookId = spellbookId;
             return View(viewModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(SpellViewModel viewModel)
+        public ActionResult Create(int? spellbookId, SpellViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -82,6 +91,10 @@ namespace SpellsReference.Controllers
                 var success = _spellRepo.Add(spell);
                 if (success.HasValue)
                 {
+                    if (spellbookId != null)
+                    {
+                        return RedirectToAction("AddSpell", "Spellbook", new { id = spellbookId });
+                    }
                     return RedirectToAction("Index", "Spell");
                 }
                 else
@@ -166,12 +179,32 @@ namespace SpellsReference.Controllers
             if (success)
             {
                 return RedirectToAction("Index", "Spell");
-            } 
+            }
             else
             {
                 ModelState.AddModelError("", "Unable to delete Spell");
                 return View(viewModel);
             }
+        }
+
+        [AllowAnonymous]
+        public ActionResult Filter()
+        {
+            var viewModel = new SpellFilterViewModel();
+            return View(viewModel);
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        public ActionResult Filter(SpellFilterViewModel viewModel)
+        {
+            var routeValues = new
+            {
+                name = viewModel.Name,
+                level = viewModel.Level.ToString(),
+                school = viewModel.School.ToString()
+            };
+            return RedirectToAction("Index", routeValues: routeValues);
         }
     }
 }

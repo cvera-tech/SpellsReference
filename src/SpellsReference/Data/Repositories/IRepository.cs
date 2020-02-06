@@ -16,6 +16,12 @@ namespace SpellsReference.Data.Repositories
         /// <returns>The entity's ID in the database if successful; null otherwise.</returns>
         int? Add(TEntityType entity);
 
+        /// <summary>
+        /// Attempts to delete an entity from the database.
+        /// </summary>
+        /// <param name="id">The entity's ID in the database.</param>
+        /// <returns>True if the entity was successfully deleted; false otherwise.</returns>
+        bool Delete(int id);
 
         /// <summary>
         /// Attempts to retrieve an entity from the database given its ID.
@@ -36,12 +42,5 @@ namespace SpellsReference.Data.Repositories
         /// <param name="entity">The entity to update.</param>
         /// <returns>True if the entity was successfully updated; false otherwise.</returns>
         bool Update(TEntityType entity);
-
-        /// <summary>
-        /// Attempts to delete an entity in the database by it's Id.
-        /// </summary>
-        /// <param name="entity">The entity to delete.</param>
-        /// <returns>True if the entity was successfully deleted; false otherwise.</returns>
-        bool Delete(int id);
     }
 }

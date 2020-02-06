@@ -2,12 +2,22 @@
 using System;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.Diagnostics;
 using System.Linq;
 
 namespace SpellsReference.Data
 {
     public class Context : DbContext, IContext
     {
+        // Query Debugger
+        public Context()
+        {
+            Database.Log = (message) =>
+            {
+                Debug.WriteLine(message);
+            };
+        }
+
         public DbSet<User> Users { get; set; }
         public DbSet<Spellbook> Spellbooks { get; set; }
         public DbSet<Spell> Spells { get; set; }
@@ -15,6 +25,16 @@ namespace SpellsReference.Data
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+
+            modelBuilder.Entity<Spellbook>()
+                .HasMany<Spell>(sb => sb.Spells)
+                .WithMany(s => s.Spellbooks)
+                .Map(cs =>
+                {
+                    cs.MapLeftKey("SpellbookId");
+                    cs.MapRightKey("SpellId");
+                    cs.ToTable("SpellbookSpell");
+                });
         }
 
         /// <summary>

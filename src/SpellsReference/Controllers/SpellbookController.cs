@@ -96,6 +96,36 @@ namespace SpellsReference.Controllers
             return View(viewModel);
         }
 
+        public ActionResult Edit(int id)
+        {
+            Spellbook spellbook = _spellbookRepo.Get(id);
+
+            var viewModel = new SpellbookViewModel();
+            viewModel.Name = spellbook.Name;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, SpellbookViewModel viewModel)
+        {
+            var spellbook = new Spellbook() {          
+                Id = id,
+                Name = viewModel.Name
+            };
+            if  (_spellbookRepo.Update(spellbook))
+            {
+                return RedirectToAction("Select", "Spellbook",
+                    routeValues: new { id = spellbook.Id });
+            }
+            else
+            {
+                ModelState.AddModelError("", "Unable to update Spellbook");
+                return View(viewModel);
+            }
+        }
+
 
         public ActionResult Delete(int id)
         {

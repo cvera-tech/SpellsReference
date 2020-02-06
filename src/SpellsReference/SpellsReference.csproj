@@ -146,14 +146,63 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Components\App.js" />
+    <Content Include="Components\ErrorMessages.js" />
+    <Content Include="Components\Spellbook\AddSpell.js" />
+    <Content Include="Components\Spellbook\Create.js" />
+    <Content Include="Components\Spellbook\Details.js" />
+    <Content Include="Components\Spellbook\Index.js" />
+    <Content Include="Components\Spellbook\List.js" />
+    <Content Include="Components\Spellbook\RemoveSpell.js" />
+    <Content Include="Components\Spellbook\Spell.js" />
+    <Content Include="Components\Spell\Create.js" />
+    <Content Include="Components\index.js" />
+    <Content Include="Components\Spell\Create.js" />
+    <Content Include="Components\Spell\Filter.js" />
+    <Content Include="Components\Spell\Index.js" />
+    <Content Include="Components\Spell\List.js" />
+    <Content Include="Components\Spell\Select.js" />
     <Content Include="Content\main.css" />
     <Content Include="Global.asax" />
+    <Content Include="Scripts\dist\bundle.js" />
     <Content Include="Web.config" />
+    <Content Include="webpack.config.js" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\IApiRepository.cs" />
+    <Compile Include="Api\Models\ModelExtensions.cs" />
+    <Compile Include="Api\Models\ShortSpellbookInfo.cs" />
+    <Compile Include="Api\Models\SpellbookAddSpellRequest.cs" />
+    <Compile Include="Api\Models\SpellbookAddSpellResponse.cs" />
+    <Compile Include="Api\Models\SpellbookInfo.cs" />
+    <Compile Include="Api\SpellbookController.cs" />
+    <Compile Include="Api\Models\SpellbookCreateRequest.cs" />
+    <Compile Include="Api\Models\SpellbookCreateResponse.cs" />
+    <Compile Include="Api\Models\SpellbookDeleteRequest.cs" />
+    <Compile Include="Api\Models\SpellbookDeleteResponse.cs" />
+    <Compile Include="Api\Models\SpellbookDetailsResponse.cs" />
+    <Compile Include="Api\Models\ISpellbookInfo.cs" />
+    <Compile Include="Api\Models\SpellbookListRequest.cs" />
+    <Compile Include="Api\Models\SpellbookListResponse.cs" />
+    <Compile Include="Api\Models\SpellbookRemoveSpellRequest.cs" />
+    <Compile Include="Api\Models\SpellbookRemoveSpellResponse.cs" />
+    <Compile Include="Api\Models\SpellbookUpdateRequest.cs" />
+    <Compile Include="Api\Models\SpellbookUpdateResponse.cs" />
+    <Compile Include="Api\Models\SpellCreateRequest.cs" />
+    <Compile Include="Api\Models\SpellCreateResponse.cs" />
+    <Compile Include="Api\Models\SpellDeleteRequest.cs" />
+    <Compile Include="Api\Models\SpellDeleteResponse.cs" />
+    <Compile Include="Api\Models\SpellDetailsResponse.cs" />
+    <Compile Include="Api\Models\SpellInfo.cs" />
+    <Compile Include="Api\Models\SpellListFilter.cs" />
+    <Compile Include="Api\Models\SpellListResponse.cs" />
+    <Compile Include="Api\Models\SpellUpdateRequest.cs" />
+    <Compile Include="Api\Models\SpellUpdateResponse.cs" />
+    <Compile Include="Api\SpellController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ReactController.cs" />
     <Compile Include="Controllers\SpellbookController.cs" />
     <Compile Include="Controllers\SpellController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -179,6 +228,8 @@
     <Compile Include="Models\ViewModels\LoginViewModel.cs" />
     <Compile Include="Models\ViewModels\RegisterViewModel.cs" />
     <Compile Include="Models\ViewModels\SpellbookViewModel.cs" />
+    <Compile Include="Models\ViewModels\SpellFilterViewModel.cs" />
+    <Compile Include="Models\ViewModels\SpellListViewModel.cs" />
     <Compile Include="Models\ViewModels\SpellViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\CustomIdentity.cs" />
@@ -203,6 +254,12 @@
     <Content Include="Views\Spellbook\Create.cshtml" />
     <Content Include="Views\Spellbook\AddSpell.cshtml" />
     <Content Include="Views\Spellbook\Delete.cshtml" />
+    <Content Include="Views\Spell\Filter.cshtml" />
+    <Content Include="Views\Spellbook\Edit.cshtml" />
+    <Content Include="package.json" />
+    <Content Include=".babelrc" />
+    <Content Include="package-lock.json" />
+    <Content Include="Views\React\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

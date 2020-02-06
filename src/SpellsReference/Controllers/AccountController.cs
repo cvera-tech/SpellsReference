@@ -32,7 +32,8 @@ namespace SpellsReference.Controllers
                 if (_accountRepo.Authenticate(viewModel.EmailAddress, viewModel.Password))
                 {
                     FormsAuthentication.SetAuthCookie(viewModel.EmailAddress, false);
-                    return RedirectToAction("Index", "Home");
+                    //return RedirectToAction("Index", "React");
+                    return Redirect("/");
                 }
                 else
                 {
@@ -46,12 +47,16 @@ namespace SpellsReference.Controllers
         public ActionResult Logout()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "React");
         }
 
         [AllowAnonymous]
         public ActionResult Register()
         {
+            if (Request.IsAuthenticated)
+            {
+                return Redirect("/");
+            }
             var viewModel = new RegisterViewModel();
             return View(viewModel);
         }
@@ -74,7 +79,7 @@ namespace SpellsReference.Controllers
                 if (success.HasValue)
                 {
                     FormsAuthentication.SetAuthCookie(user.Email, false);
-                    return RedirectToAction("Index", "Home");
+                    return Redirect("/");
                 }
                 else
                 {
