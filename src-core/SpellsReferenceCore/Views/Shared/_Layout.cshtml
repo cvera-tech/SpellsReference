@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+
+    @*
+        The following tags are included depending on the current hosting environment.
+    *@
+    <environment include="Development">
+
+    </environment>
+    <environment exclude="Development">
+
+    </environment>
+</head>
+<body>
+    <header>
+        <p>Header</p>
+    </header>
+    <nav>
+        <ul>
+            <li>@Html.ActionLink("Home", "Index", "Default")</li>
+            <li>@Html.ActionLink("Spellbooks", "Index", "Spellbook")</li>
+            <li>@Html.ActionLink("Spells", "Index", "Spell")</li>
+            <li>@Html.ActionLink("Accounts", "Index", "Account")</li>
+        </ul>
+    </nav>
+    @RenderBody()
+
+    <footer>
+        <p>Footer</p>
+    </footer>
+    <environment include="Development">
+
+    </environment>
+    <environment exclude="Development">
+
+    </environment>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>
