@@ -24,20 +24,13 @@ namespace SpellsReferenceCore.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-
-            //modelBuilder.Entity<Spellbook>()
-            //    .HasMany<Spell>(sb => sb.Spells)
-            //    .WithMany(s => s.Spellbooks)
-            //    .Map(cs =>
-            //    {
-            //        cs.MapLeftKey("SpellbookId");
-            //        cs.MapRightKey("SpellId");
-            //        cs.ToTable("SpellbookSpell");
-            //    });
-
             modelBuilder.Entity<SpellbookSpell>()
                 .HasKey(k => new { k.SpellbookId, k.SpellId });
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlServer(@"Server=localhost;Database=SpellsReferenceCore;Trusted_Connection=True;");
         }
 
         ///// <summary>

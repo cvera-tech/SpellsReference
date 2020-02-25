@@ -30,6 +30,6 @@ namespace SpellsReferenceCore.Data.Models
         [Required]
         public string Description { get; set; }
 
-        public List<Spellbook> Spellbooks { get; set; }
+        //public List<Spellbook> Spellbooks { get; set; }
     }
 }
