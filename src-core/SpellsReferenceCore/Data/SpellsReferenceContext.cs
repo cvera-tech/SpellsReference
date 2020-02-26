@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SpellsReferenceCore.Data
 {
-    public class Context : DbContext
+    public class SpellsReferenceContext : DbContext, ISpellsReferenceContext
     {
         // Query Debugger
         //public Context()
@@ -26,6 +26,11 @@ namespace SpellsReferenceCore.Data
         {
             modelBuilder.Entity<SpellbookSpell>()
                 .HasKey(k => new { k.SpellbookId, k.SpellId });
+
+            //var seedData = new SeedData();
+            //modelBuilder.Entity<Spell>().HasData(seedData.Spells);
+            //modelBuilder.Entity<Spellbook>().HasData(seedData.Spellbooks);
+            //modelBuilder.Entity<SpellbookSpell>().HasData(seedData.SpellbookSpells);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

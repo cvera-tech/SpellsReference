@@ -9,7 +9,7 @@ using SpellsReferenceCore.Data;
 
 namespace SpellsReferenceCore.Migrations
 {
-    [DbContext(typeof(Context))]
+    [DbContext(typeof(SpellsReferenceContext))]
     [Migration("20200225211803_Initial")]
     partial class Initial
     {

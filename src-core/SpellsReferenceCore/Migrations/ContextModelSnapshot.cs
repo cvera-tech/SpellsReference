@@ -8,7 +8,7 @@ using SpellsReferenceCore.Data;
 
 namespace SpellsReferenceCore.Migrations
 {
-    [DbContext(typeof(Context))]
+    [DbContext(typeof(SpellsReferenceContext))]
     partial class ContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

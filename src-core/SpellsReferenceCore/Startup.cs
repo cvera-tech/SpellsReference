@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using SpellsReferenceCore.Data;
 
 namespace SpellsReferenceCore
 {
@@ -18,6 +19,8 @@ namespace SpellsReferenceCore
         {
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddTransient<ISpellsReferenceContext, SpellsReferenceContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +38,19 @@ namespace SpellsReferenceCore
                 endpoints.MapControllerRoute("Default", "{controller=Default}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetService<ISpellsReferenceContext>();
+                if (!context.Spells.Any())
+                {
+                    var seedData = new SeedData();
+                    context.Spells.AddRange(seedData.Spells);
+                    context.SaveChanges();
+                    context.Spellbooks.AddRange(seedData.Spellbooks);
+                    context.SaveChanges();
+                }
+            }
         }
     }
 }
