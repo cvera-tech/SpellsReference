@@ -21,16 +21,29 @@ namespace SpellsReferenceCore.Data
         //public DbSet<User> Users { get; set; }
         public DbSet<Spellbook> Spellbooks { get; set; }
         public DbSet<Spell> Spells { get; set; }
+        public DbSet<SpellbookSpell> SpellbookSpells { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SpellbookSpell>()
-                .HasKey(k => new { k.SpellbookId, k.SpellId });
+            // EF Core does not support code-first many-to-many relationships.
+            // As a workaround, we can use a bridge table and create two
+            // one-to-many relationships.
 
-            //var seedData = new SeedData();
-            //modelBuilder.Entity<Spell>().HasData(seedData.Spells);
-            //modelBuilder.Entity<Spellbook>().HasData(seedData.Spellbooks);
-            //modelBuilder.Entity<SpellbookSpell>().HasData(seedData.SpellbookSpells);
+            // Set the SpellbookSpell composite primary key
+            modelBuilder.Entity<SpellbookSpell>()
+                .HasKey(sbs => new { sbs.SpellbookId, sbs.SpellId });
+
+            // Define the Spell to SpellbookSpell relationship
+            modelBuilder.Entity<SpellbookSpell>()
+                .HasOne(sbs => sbs.Spell)
+                .WithMany(s => s.SpellbookSpells)
+                .HasForeignKey(sbs => sbs.SpellId);
+
+            // Define the Spellbook to SpellbookSpell relationship
+            modelBuilder.Entity<SpellbookSpell>()
+                .HasOne(sbs => sbs.Spellbook)
+                .WithMany(sb => sb.SpellbookSpells)
+                .HasForeignKey(sbs => sbs.SpellbookId);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

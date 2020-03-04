@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SpellsReferenceCore.Data;
@@ -44,10 +40,24 @@ namespace SpellsReferenceCore
                 var context = serviceScope.ServiceProvider.GetService<ISpellsReferenceContext>();
                 if (!context.Spells.Any())
                 {
-                    var seedData = new SeedData();
-                    context.Spells.AddRange(seedData.Spells);
+                    var fileName = @"spells.txt";
+                    var databaseModel = SeedData.ReadDatabaseModel(fileName);
+
+                    // Reset the Ids to add entities into the database.
+                    foreach (var spell in databaseModel.Spells)
+                    {
+                        spell.Id = 0;
+                    }
+                    foreach (var spellbook in databaseModel.Spellbooks)
+                    {
+                        spellbook.Id = 0;
+                    }
+                    
+                    context.Spells.AddRange(databaseModel.Spells);
                     context.SaveChanges();
-                    context.Spellbooks.AddRange(seedData.Spellbooks);
+                    context.Spellbooks.AddRange(databaseModel.Spellbooks);
+                    context.SaveChanges();
+                    context.SpellbookSpells.AddRange(databaseModel.SpellbookSpells);
                     context.SaveChanges();
                 }
             }

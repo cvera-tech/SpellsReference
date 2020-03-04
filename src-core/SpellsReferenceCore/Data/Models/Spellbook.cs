@@ -7,7 +7,7 @@ namespace SpellsReferenceCore.Data.Models
     {
         public Spellbook()
         {
-            Spells = new List<Spell>();
+            SpellbookSpells = new List<SpellbookSpell>();
         }
 
         public Spellbook(string name) : this()
@@ -20,6 +20,8 @@ namespace SpellsReferenceCore.Data.Models
         [Required]
         public string Name { get; set; }
 
-        public List<Spell> Spells { get; set; }
+        // EF Core has no built-in support for many-to-many relationships 
+        // outside of modeling a bridge table.
+        public List<SpellbookSpell> SpellbookSpells { get; set; }
     }
 }

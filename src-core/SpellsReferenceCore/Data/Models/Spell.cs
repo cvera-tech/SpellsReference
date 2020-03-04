@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace SpellsReferenceCore.Data.Models
 {
@@ -30,6 +27,8 @@ namespace SpellsReferenceCore.Data.Models
         [Required]
         public string Description { get; set; }
 
-        //public List<Spellbook> Spellbooks { get; set; }
+        // EF Core has no built-in support for many-to-many relationships 
+        // outside of modeling a bridge table.
+        public List<SpellbookSpell> SpellbookSpells { get; set; }
     }
 }
