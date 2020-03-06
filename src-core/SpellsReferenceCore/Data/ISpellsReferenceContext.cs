@@ -3,7 +3,7 @@ using SpellsReferenceCore.Data.Models;
 
 namespace SpellsReferenceCore.Data
 {
-    interface ISpellsReferenceContext
+    public interface ISpellsReferenceContext
     {
         DbSet<Spell> Spells { get; set; }
         DbSet<Spellbook> Spellbooks { get; set; }

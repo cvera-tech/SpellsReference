@@ -1,9 +1,10 @@
-using System.Linq;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using SpellsReferenceCore.Data;
+using SpellsReferenceCore.Data.Repositories;
+using System.Linq;
 
 namespace SpellsReferenceCore
 {
@@ -17,6 +18,7 @@ namespace SpellsReferenceCore
             services.AddRazorPages();
 
             services.AddTransient<ISpellsReferenceContext, SpellsReferenceContext>();
+            services.AddTransient<ISpellRepository, SpellRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

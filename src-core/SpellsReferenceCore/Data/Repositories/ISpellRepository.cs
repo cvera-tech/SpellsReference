@@ -1,6 +1,4 @@
 ﻿using SpellsReferenceCore.Data.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace SpellsReferenceCore.Data.Repositories
 {
