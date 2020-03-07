@@ -1,12 +1,13 @@
 ﻿using SpellsReferenceCore.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace SpellsReferenceCore.Data.Repositories
 {
     public class SpellRepository : ISpellRepository
     {
-        private ISpellsReferenceContext _context;
+        private readonly ISpellsReferenceContext _context;
 
         public SpellRepository(ISpellsReferenceContext context)
         {
@@ -15,7 +16,16 @@ namespace SpellsReferenceCore.Data.Repositories
 
         public int? Add(Spell entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Spells.Add(entity);
+                _context.SaveChanges();
+                return entity.Id;
+            }
+            catch
+            {
+                return null;
+            }
         }
 
         public bool Delete(int id)
@@ -25,12 +35,12 @@ namespace SpellsReferenceCore.Data.Repositories
 
         public Spell Get(int id)
         {
-            throw new NotImplementedException();
+            return _context.Spells.Find(id);
         }
 
         public List<Spell> List()
         {
-            throw new NotImplementedException();
+            return _context.Spells.ToList();
         }
 
         public bool Update(Spell entity)

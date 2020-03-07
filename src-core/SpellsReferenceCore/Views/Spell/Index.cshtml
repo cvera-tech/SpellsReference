@@ -1,7 +1,44 @@
-﻿
+﻿@model SpellsReferenceCore.Data.ViewModels.SpellListViewModel
+
 @{
     ViewData["Title"] = "Index";
 }
 
-<h1>Spell</h1>
+<h1>Spells</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.Spells[0].Name)</th>
+            <th>@Html.DisplayNameFor(model => model.Spells[0].Level)</th>
+            <th>@Html.DisplayNameFor(model => model.Spells[0].School)</th>
+            <th>@Html.DisplayNameFor(model => model.Spells[0].CastingTime)</th>
+            <th>@Html.DisplayNameFor(model => model.Spells[0].Range)</th>
+            <th>@Html.DisplayNameFor(model => model.Spells[0].Verbal)</th>
+            <th>@Html.DisplayNameFor(model => model.Spells[0].Somatic)</th>
+            <th>@Html.DisplayNameFor(model => model.Spells[0].Materials)</th>
+            <th>@Html.DisplayNameFor(model => model.Spells[0].Duration)</th>
+            <th>@Html.DisplayNameFor(model => model.Spells[0].Ritual)</th>
+            @*<th>@Html.DisplayNameFor(model => model.Spells[0].Description)</th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var spell in Model.Spells)
+        {
+            <tr>
+                <td>@spell.Name</td>
+                <td>@spell.Level</td>
+                <td>@spell.School</td>
+                <td>@spell.CastingTime</td>
+                <td>@spell.Range</td>
+                <td>@spell.Verbal</td>
+                <td>@spell.Somatic</td>
+                <td>@spell.Materials</td>
+                <td>@spell.Duration</td>
+                <td>@spell.Ritual</td>
+                @*<td>@spell.Description</td>*@
+            </tr>
+        }
+    </tbody>
+</table>
 

@@ -1,0 +1,112 @@
+﻿@model SpellsReferenceCore.Data.ViewModels.SpellDetailsViewModel
+
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>Spell Details</h1>
+
+
+<h4>@Html.DisplayFor(model => model.Name)</h4>
+<table class="row">
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Id)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.Id)
+        </td>
+    </tr>
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </td>
+    </tr>
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Level)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.Level)
+        </td>
+    </tr>
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.School)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.School)
+        </td>
+    </tr>
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.CastingTime)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.CastingTime)
+        </td>
+    </tr>
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Range)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.Range)
+        </td>
+    </tr>
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Verbal)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.Verbal)
+        </td>
+    </tr>
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Somatic)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.Somatic)
+        </td>
+    </tr>
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Materials)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.Materials)
+        </td>
+    </tr>
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Duration)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.Duration)
+        </td>
+    </tr>
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Ritual)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.Ritual)
+        </td>
+    </tr>
+    <tr>
+        <td class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </td>
+        <td class="col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </td>
+    </tr>
+</table>
+<div>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    <a asp-action="Index">Back to List</a>
+</div>
