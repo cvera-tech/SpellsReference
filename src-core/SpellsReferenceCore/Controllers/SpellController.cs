@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SpellsReferenceCore.Data.Models;
 using SpellsReferenceCore.Data.Repositories;
 using SpellsReferenceCore.Data.ViewModels;
 
@@ -13,15 +14,49 @@ namespace SpellsReferenceCore.Controllers
             _spellRepo = spellRepo;
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Create()
         {
-            var viewModel = new SpellListViewModel()
+            var viewModel = new SpellCreateViewModel();
+            return View(viewModel);
+        }
+        
+        [HttpPost]
+        public IActionResult Create(SpellCreateViewModel viewModel)
+        {
+            if (ModelState.IsValid)
             {
-                Spells = _spellRepo.List()
-            };
+                var spell = new Spell()
+                {
+                    Name = viewModel.Name,
+                    Level = viewModel.Level,
+                    School = viewModel.School,
+                    CastingTime = viewModel.CastingTime,
+                    Range = viewModel.Range,
+                    Verbal = viewModel.Verbal,
+                    Somatic = viewModel.Somatic,
+                    Materials = viewModel.Materials,
+                    Duration = viewModel.Duration,
+                    Ritual = viewModel.Ritual,
+                    Description = viewModel.Description
+                };
+
+                var success = _spellRepo.Add(spell);
+                if (success.HasValue)
+                {
+                    return RedirectToAction("Index", "Spell");
+                }
+                else
+                {
+                    ModelState.AddModelError("", "Unable to create spell.");
+                }
+            }
+
             return View(viewModel);
         }
 
+
+        [HttpGet]
         public IActionResult Details(int id)
         {
             var spell = _spellRepo.Get(id);
@@ -42,5 +77,16 @@ namespace SpellsReferenceCore.Controllers
             };
             return View(viewModel);
         }
+
+        [HttpGet]
+        public IActionResult Index()
+        {
+            var viewModel = new SpellListViewModel()
+            {
+                Spells = _spellRepo.List()
+            };
+            return View(viewModel);
+        }
+
     }
 }

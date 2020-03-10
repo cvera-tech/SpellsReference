@@ -1,0 +1,82 @@
+﻿@model SpellsReferenceCore.Data.ViewModels.SpellCreateViewModel
+
+@{
+    ViewData["Title"] = "Create Spell";
+}
+
+<h1>Create Spell</h1>
+
+<hr />
+<div>
+    <div>
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly"></div>
+            <div>
+                <label asp-for="Name"></label>
+                <input asp-for="Name" />
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div>
+                <label asp-for="Level"></label>
+                <input asp-for="Level" />
+                <span asp-validation-for="Level"></span>
+            </div>
+            <div>
+                <label asp-for="School"></label>
+                <input asp-for="School" />
+                <span asp-validation-for="School"></span>
+            </div>
+            <div>
+                <label asp-for="CastingTime"></label>
+                <input asp-for="CastingTime" />
+                <span asp-validation-for="CastingTime"></span>
+            </div>
+            <div>
+                <label asp-for="Range"></label>
+                <input asp-for="Range" />
+                <span asp-validation-for="Range"></span>
+            </div>
+            <div>
+                <label>
+                    <input asp-for="Verbal" /> @Html.DisplayNameFor(model => model.Verbal)
+                </label>
+            </div>
+            <div>
+                <label>
+                    <input asp-for="Somatic" /> @Html.DisplayNameFor(model => model.Somatic)
+                </label>
+            </div>
+            <div>
+                <label asp-for="Materials"></label>
+                <input asp-for="Materials" />
+                <span asp-validation-for="Materials"></span>
+            </div>
+            <div>
+                <label asp-for="Duration"></label>
+                <input asp-for="Duration" />
+                <span asp-validation-for="Duration"></span>
+            </div>
+            <div>
+                <label>
+                    <input asp-for="Ritual" /> @Html.DisplayNameFor(model => model.Ritual)
+                </label>
+            </div>
+            <div>
+                <label asp-for="Description"></label>
+                <input asp-for="Description" />
+                <span asp-validation-for="Description"></span>
+            </div>
+            <div>
+                <input type="submit" value="Create" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@
