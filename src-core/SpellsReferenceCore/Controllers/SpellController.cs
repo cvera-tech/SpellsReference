@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using SpellsReferenceCore.Data.Models;
 using SpellsReferenceCore.Data.Repositories;
 using SpellsReferenceCore.Data.ViewModels;
@@ -20,7 +21,7 @@ namespace SpellsReferenceCore.Controllers
             var viewModel = new SpellCreateViewModel();
             return View(viewModel);
         }
-        
+
         [HttpPost]
         public IActionResult Create(SpellCreateViewModel viewModel)
         {
@@ -55,6 +56,42 @@ namespace SpellsReferenceCore.Controllers
             return View(viewModel);
         }
 
+        [HttpGet, HttpPost]
+        public IActionResult Delete(int id)
+        {
+            var spell = _spellRepo.Get(id);
+
+            if (spell == null)
+            {
+                // TODO: Handle invalid spell ID
+                return RedirectToAction("Index");
+            }
+
+            var viewModel = new SpellDeleteViewModel()
+            {
+                Id = spell.Id,
+                Name = spell.Name
+            };
+
+             if (HttpMethods.IsGet(Request.Method))
+            {
+                viewModel.Deleted = false;
+                return View(viewModel);
+            }
+            else if (HttpMethods.IsPost(Request.Method))  // TODO: CONVERT TO DELETE
+            {
+                var success = _spellRepo.Delete(id);
+                if (success == true)
+                {
+                    viewModel.Deleted = true;
+                }
+                return View(viewModel);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+        }
 
         [HttpGet]
         public IActionResult Details(int id)

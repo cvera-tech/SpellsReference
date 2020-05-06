@@ -30,7 +30,20 @@ namespace SpellsReferenceCore.Data.Repositories
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                // The following will load a spell into memory if necessary.
+                // Unfortunately, this means it will query the database if the spell isn't preloaded.
+                var spell = _context.Spells.SingleOrDefault(s => s.Id == id);
+                _context.Spells.Remove(spell);
+                _context.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public Spell Get(int id)

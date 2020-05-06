@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SpellsReferenceCore.Data.ViewModels;
 
 namespace SpellsReferenceCore.Data
 {
@@ -50,6 +51,8 @@ namespace SpellsReferenceCore.Data
         {
             optionsBuilder.UseSqlServer(@"Server=localhost;Database=SpellsReferenceCore;Trusted_Connection=True;");
         }
+
+        public DbSet<SpellsReferenceCore.Data.ViewModels.SpellDeleteViewModel> SpellDeleteViewModel { get; set; }
 
         ///// <summary>
         ///// This method updates a row in the database through an entity represented by 

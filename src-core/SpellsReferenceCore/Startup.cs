@@ -14,8 +14,11 @@ namespace SpellsReferenceCore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add Views
             services.AddControllersWithViews();
-            services.AddRazorPages();
+
+            // Add support for tag helpers
+            //services.AddRazorPages();
 
             services.AddTransient<ISpellsReferenceContext, SpellsReferenceContext>();
             services.AddTransient<ISpellRepository, SpellRepository>();
@@ -34,7 +37,7 @@ namespace SpellsReferenceCore
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("Default", "{controller=Default}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                //endpoints.MapRazorPages();
             });
 
             using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
